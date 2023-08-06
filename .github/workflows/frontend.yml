@@ -11,10 +11,6 @@ on:
     paths:
       - 'frontend/**'
 
-defaults:
-  run:
-    working-directory: frontend
-
 jobs:
   build:
     name: Build @kenrick-cart-lamar/frontend
@@ -26,12 +22,15 @@ jobs:
         with:
           node-version: 18.17
 
+      - name: Change directory to frontend
+        run: cd frontend
+
       - name: Setup yarn
         run: npm install -g yarn
-
+        
       - name: Install dependencies
         run: yarn --immutable
-
+        
       - name: Build
         run: yarn build
   

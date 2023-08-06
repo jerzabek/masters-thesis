@@ -4,7 +4,7 @@ services:
 
   kcl-frontend:
     build:
-      context: /frontend
+      context: ../frontend
       dockerfile: Dockerfile
     image: kcl-frontend:1.0.0
     container_name: kcl-frontend

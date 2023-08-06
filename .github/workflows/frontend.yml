@@ -1,4 +1,4 @@
-name: Build & deploy @kendrick-cart-lamar/frontend
+name: "@kendrick-cart-lamar/frontend Workflow"
 
 on:
   push:

@@ -9,4 +9,4 @@ services:
     image: kcl-frontend:1.0.0
     container_name: kcl-frontend
     ports:
-      - "80:3000"
+      - "4500:3000"

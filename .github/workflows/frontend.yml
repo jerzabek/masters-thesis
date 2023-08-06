@@ -1,4 +1,4 @@
-name: Build and test @kendrick-cart-lamar/frontend
+name: Build & deploy @kendrick-cart-lamar/frontend
 
 on:
   push:

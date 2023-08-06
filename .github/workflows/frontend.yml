@@ -23,15 +23,15 @@ jobs:
           node-version: 18.17
 
       - name: Setup yarn
-        working-directory: ./frontend
+        working-directory: frontend
         run: npm install -g yarn
         
       - name: Install dependencies
-        working-directory: ./frontend
+        working-directory: frontend
         run: yarn --immutable
         
       - name: Build
-        working-directory: ./frontend
+        working-directory: frontend
         run: yarn build
   
   docker-image:

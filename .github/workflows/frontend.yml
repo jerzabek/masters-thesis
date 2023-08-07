@@ -1,4 +1,4 @@
-name: "@kendrick-cart-lamar/frontend Workflow"
+name: "@pinehaus/frontend Workflow"
 
 on:
   push:
@@ -13,7 +13,7 @@ on:
 
 jobs:
   build:
-    name: Build @kenrick-cart-lamar/frontend
+    name: Build @pinehaus/frontend
     runs-on: [self-hosted]
 
     steps:
@@ -35,7 +35,7 @@ jobs:
         run: yarn build
 
   docker-image:
-    name: Build @kenrick-cart-lamar/frontend docker image
+    name: Build @pinehaus/frontend docker image
     needs: build
     runs-on: [self-hosted]
 

@@ -1,0 +1,49 @@
+name: "@kendrick-cart-lamar/frontend Workflow"
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "frontend/**"
+
+  pull_request:
+    branches: [master]
+    paths:
+      - "frontend/**"
+
+jobs:
+  build:
+    name: Build @kenrick-cart-lamar/frontend
+    runs-on: [self-hosted]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.17
+
+      - name: Setup yarn
+        working-directory: frontend
+        run: npm install -g yarn
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: yarn --immutable
+
+      - name: Build
+        working-directory: frontend
+        run: yarn build
+
+  docker-image:
+    name: Build @kenrick-cart-lamar/frontend docker image
+    needs: build
+    runs-on: [self-hosted]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build docker image
+        run: docker compose -f docker/docker-compose.yml build
+
+      - name: Run docker image
+        run: docker compose -f docker/docker-compose.yml up -d

@@ -2,11 +2,11 @@ version: "3.9"
 
 services:
 
-  kcl-frontend:
+  pinehaus-frontend:
     build:
       context: ../frontend
       dockerfile: Dockerfile
-    image: kcl-frontend:1.0.0
-    container_name: kcl-frontend
+    image: pinehaus-frontend:1.0.0
+    container_name: pinehaus-frontend
     ports:
       - "4500:3000"

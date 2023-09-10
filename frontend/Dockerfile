@@ -1,5 +1,5 @@
 # First stage: Install dependencies
-FROM node:18.17-alpine as deps
+FROM oven/bun:1.0 as deps
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ COPY package.json bun.lockb ./
 RUN bun install
 
 # Second stage: Build the application
-FROM node:18.17-alpine as builder
+FROM oven/bun:1.0 as builder
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ COPY --from=deps /app/node_modules ./node_modules
 RUN bun run build
 
 # Production image, copy all the files and run next
-FROM node:18.17-alpine AS runner
+FROM oven/bun:1.0 AS runner
 WORKDIR /app
 
 ENV NODE_ENV production

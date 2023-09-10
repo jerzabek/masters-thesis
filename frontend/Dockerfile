@@ -18,7 +18,7 @@ COPY --from=deps /app/node_modules ./node_modules
 RUN bun run build
 
 # Production image, copy all the files and run next
-FROM oven/bun:1.0 AS runner
+FROM node:18.17-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
@@ -30,4 +30,6 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/bun.lockb ./bun.lockb
 
-CMD ["bun", "run", "start"]
+RUN node --version
+
+CMD ["npm", "start"]

@@ -5,11 +5,15 @@ on:
     branches: [master]
     paths:
       - "frontend/**"
+      - ".github/workflows/frontend.*"
+      - "docker/frontend.*"
 
   pull_request:
     branches: [master]
     paths:
       - "frontend/**"
+      - ".github/workflows/frontend.*"
+      - "docker/frontend.*"
 
 jobs:
   build:

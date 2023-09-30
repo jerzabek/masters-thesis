@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+
+  pinehaus-frontend-staging:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    image: pinehaus-frontend-staging:1.0.0
+    container_name: pinehaus-frontend-staging
+    ports:
+      - "5500:3000"

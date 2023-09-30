@@ -1,6 +1,12 @@
 name: "@pinehaus/frontend Development Workflow"
 
 on:
+  push:
+    branches:
+      - "master"
+    paths:
+      - "frontend/**"
+
   pull_request:
     branches:
       - "master"

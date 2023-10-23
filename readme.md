@@ -1,4 +1,4 @@
-# Master's thesis
+# Pinehaus
 
 Directory structure:
 

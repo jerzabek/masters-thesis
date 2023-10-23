@@ -1,6 +1,8 @@
-import 'bootstrap/dist/js/bootstrap.min.js'
 import * as S from './styles'
 import { Carousel, CarouselItem } from 'react-bootstrap'
+import dynamic from 'next/dynamic'
+
+const DynamicBootstrap = dynamic(() => require('bootstrap/dist/js/bootstrap.min.js'), { ssr: false })
 
 export default function LandingBanner() {
   const stores = [

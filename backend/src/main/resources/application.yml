@@ -1,0 +1,13 @@
+server:
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    url: ${BACKEND_DATASOURCE_URL}
+    username: ${BACKEND_DATASOURCE_USERNAME}
+    password: ${BACKEND_DATASOURCE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

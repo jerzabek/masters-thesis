@@ -1,10 +1,8 @@
-import 'bootstrap/dist/css/bootstrap.css'
-
-import StyledComponentsRegistry from './modules/ui/StyledComponentRegistry'
+import { StyledComponentsRegistry } from 'shared/ui/StyledComponentRegistry'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-bs-theme="dark">
+    <html lang="en">
       <body>
         <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
       </body>

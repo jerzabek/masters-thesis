@@ -17,6 +17,7 @@
     "typescript": "5.1.6"
   },
   "dependencies": {
+    "eslint-plugin-import": "^2.29.1",
     "next": "13.4.12",
     "prettier": "^3.0.1",
     "react": "18.2.0",

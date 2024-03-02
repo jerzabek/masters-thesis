@@ -1,6 +1,6 @@
 import { ChakraProvider } from '@chakra-ui/react'
-import { StyledComponentsRegistry } from 'shared/ui/StyledComponentRegistry'
-import 'app/(styles)/globals.css'
+import { StyledComponentsRegistry } from 'utils/ui/StyledComponentRegistry'
+import 'styles/global/globals.css'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

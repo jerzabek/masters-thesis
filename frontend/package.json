@@ -17,6 +17,7 @@
     "typescript": "5.1.6"
   },
   "dependencies": {
+    "@carbon/icons-react": "^11.37.0",
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",

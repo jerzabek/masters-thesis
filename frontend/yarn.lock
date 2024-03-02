@@ -1534,6 +1534,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@carbon/icon-helpers@npm:^10.46.0":
+  version: 10.46.0
+  resolution: "@carbon/icon-helpers@npm:10.46.0"
+  checksum: 10/479973b8fbe087c20ec933d85231669d4213de876e33ae07ba66428703b6cb899cbfdc5d09ee54a23784cd974b99c100dd143b164be1104a8a172f05c8cc5682
+  languageName: node
+  linkType: hard
+
+"@carbon/icons-react@npm:^11.37.0":
+  version: 11.37.0
+  resolution: "@carbon/icons-react@npm:11.37.0"
+  dependencies:
+    "@carbon/icon-helpers": "npm:^10.46.0"
+    "@carbon/telemetry": "npm:0.1.0"
+    prop-types: "npm:^15.7.2"
+  peerDependencies:
+    react: ">=16"
+  checksum: 10/9b7f06d10322172af0eefae07864e5a576033a3c22eeed14bb49753ea6e442a3c21049c1703145a22c9a2744c77068e5e2c8242175f185ecdb607e8c46d55c8e
+  languageName: node
+  linkType: hard
+
+"@carbon/telemetry@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@carbon/telemetry@npm:0.1.0"
+  bin:
+    carbon-telemetry: bin/carbon-telemetry.js
+  checksum: 10/4a803573ab2ff78088d972a6b5570cc8bce3230306882d58eee99a37bbf98b167143401cb1435c0c5b607436de603e23fe3cdd9bb39d41e56a172bedcde8c1f3
+  languageName: node
+  linkType: hard
+
 "@chakra-ui/accordion@npm:2.3.1":
   version: 2.3.1
   resolution: "@chakra-ui/accordion@npm:2.3.1"
@@ -3202,6 +3231,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pinehaus/frontend@workspace:."
   dependencies:
+    "@carbon/icons-react": "npm:^11.37.0"
     "@chakra-ui/react": "npm:^2.8.2"
     "@emotion/react": "npm:^11"
     "@emotion/styled": "npm:^11"
@@ -6960,7 +6990,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:

@@ -1,13 +1,9 @@
-import { Flex, Text } from '@chakra-ui/react'
+import Home from 'modules/Home'
 
-export default function Home() {
+export default function Page() {
   return (
     <main>
-      <Flex h="100%" justify="center" align="center">
-        <Text as="h1" fontSize="2.5em">
-          Hello world
-        </Text>
-      </Flex>
+      <Home />
     </main>
   )
 }

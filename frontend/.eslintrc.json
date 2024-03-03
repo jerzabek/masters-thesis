@@ -1,3 +1,50 @@
 {
-  "extends": "next/core-web-vitals"
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "@typescript-eslint/no-unused-vars": ["error", { "ignoreRestSiblings": true, "varsIgnorePattern": "^_" }],
+    "@typescript-eslint/ban-ts-comment": "off",
+    "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "react/display-name": "off",
+    "import/no-duplicates": ["warn"],
+    "import/order": [
+      "warn",
+      {
+        "newlines-between": "always",
+        "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"]],
+        "pathGroups": [
+          { "pattern": "src/**", "group": "internal" },
+          { "pattern": "model/**", "group": "internal" },
+          { "pattern": "model", "group": "internal" },
+          { "pattern": "api/**", "group": "internal" },
+          { "pattern": "api", "group": "internal" },
+          { "pattern": "store/**", "group": "internal" },
+          { "pattern": "store", "group": "internal" },
+          { "pattern": "modules/**", "group": "internal" },
+          { "pattern": "components/**", "group": "internal" },
+          { "pattern": "components", "group": "internal" },
+          { "pattern": "utils/**", "group": "internal" },
+          { "pattern": "utils", "group": "internal" },
+          { "pattern": "styles/**", "group": "internal" },
+          { "pattern": "styles", "group": "internal" }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"]
+      }
+    ]
+  }
 }

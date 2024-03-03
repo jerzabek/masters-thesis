@@ -3,7 +3,7 @@ import Link from 'components/Link'
 
 export default function Footer() {
   return (
-    <Box borderTop="1px solid" borderTopColor="gray.300" p="48px 100px 36px">
+    <Box borderTop="1px solid" borderTopColor="gray.300" p="48px 100px 36px" bottom={0} position="absolute" w="100%">
       <Flex borderBottom="1px solid" borderBottomColor="gray.300" justify="space-between" pb="48px" mb="36px">
         <Box flex={1}>
           <Text fontWeight="bold" fontSize={32} mb={12}>

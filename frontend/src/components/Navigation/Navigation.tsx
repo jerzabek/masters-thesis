@@ -5,7 +5,7 @@ import Link from 'components/Link'
 
 export default function Navigation() {
   return (
-    <Grid px={8} py={4} position="relative" templateColumns="repeat(3, 1fr)">
+    <Grid px={12} py={4} position="relative" templateColumns="repeat(3, 1fr)">
       <NextLink href={`/`}>
         <Flex align="center">
           <Box w={8} h={8} bg="gray.200" mr={4} />
@@ -38,7 +38,7 @@ export default function Navigation() {
       </Flex>
 
       <Flex top={0} p="inherit" position="absolute" right={0} h="100%" align="center" gap={4}>
-        <Link href={`/login`}>
+        <Link href={`/login`} mr={12}>
           <UserAvatar width={32} height={32} />
         </Link>
       </Flex>

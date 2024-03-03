@@ -1,0 +1,56 @@
+name: "@pinehaus/backend Development Workflow"
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend.*"
+      - "docker/backend.*"
+
+jobs:
+  build:
+    name: Build @pinehaus/backend
+    runs-on: [self-hosted]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: "21"
+          distribution: "corretto"
+
+      - name: Set up the Maven dependencies caching
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Install Maven dependencies
+        run: mvn clean install
+
+      # - name: Run tests
+      #   run: mvn --batch-mode --update-snapshots verify
+
+  docker-image:
+    name: Build @pinehaus/backend staging environment docker image
+    environment: Staging
+    needs: build
+    runs-on: [self-hosted]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .env file
+        env:
+          ENV_FILE: ${{ secrets.ENV_FILE }}
+        run: echo $ENV_FILE | base64 --decode > .env
+
+      - name: Build docker image
+        run: docker compose -f docker/backend.staging.yml --env-file .env build
+
+      - name: Run docker image
+        run: docker compose -f docker/backend.staging.yml up -d

@@ -23,7 +23,7 @@ services:
     container_name: pinehaus-database-staging
     restart: always
     environment:
-      POSTGRES_DB: "pinehausdbstaging"
+      POSTGRES_DB: ${PINEHAUS_DB_NAME}
       POSTGRES_USER: ${PINEHAUS_DB_USERNAME}
       POSTGRES_PASSWORD: ${PINEHAUS_DB_PASSWORD}
     ports:

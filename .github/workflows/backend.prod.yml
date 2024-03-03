@@ -59,4 +59,4 @@ jobs:
         run: docker compose -f docker/backend.prod.yml --env-file .env build
 
       - name: Run docker image
-        run: docker compose -f docker/backend.prod.yml up -d
+        run: docker compose -f docker/backend.prod.yml --env-file .env up -d

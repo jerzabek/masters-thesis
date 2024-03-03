@@ -59,4 +59,4 @@ jobs:
         run: docker compose -f docker/backend.staging.yml --env-file .env build
 
       - name: Run docker image
-        run: docker compose -f docker/backend.staging.yml up -d
+        run: docker compose -f docker/backend.staging.yml --env-file .env up -d

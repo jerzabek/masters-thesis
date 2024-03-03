@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  pinehaus-backend-staging:
+    image: pinehaus-backend-staging:1.0.0
+    container_name: pinehaus-backend-staging
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    environment:
+      BACKEND_DATASOURCE_URL: ${BACKEND_DATASOURCE_URL}
+      BACKEND_DATASOURCE_USERNAME: ${BACKEND_DATASOURCE_USERNAME}
+      BACKEND_DATASOURCE_PASSWORD: ${BACKEND_DATASOURCE_PASSWORD}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+    depends_on:
+      - pinehaus-database-staging
+    ports:
+      - "5501:8080"
+
+  pinehaus-database-staging:
+    image: postgres
+    container_name: pinehaus-database-staging
+    restart: always
+    environment:
+      POSTGRES_DB: "pinehausdbstaging"
+      POSTGRES_USER: ${PINEHAUS_DB_USERNAME}
+      POSTGRES_PASSWORD: ${PINEHAUS_DB_PASSWORD}
+    ports:
+      - "5502:5432"

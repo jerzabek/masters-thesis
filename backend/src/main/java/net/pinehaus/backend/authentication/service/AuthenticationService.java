@@ -5,6 +5,7 @@ import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.pinehaus.backend.user.model.UserEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class AuthenticationService {
 
   private final TokenService tokenService;
   public static final String AUTH_COOKIE_NAME = "pinehaus_auth";
+
+  @Value("${app.frontend.cookieDomain}")
+  public String COOKIE_DOMAIN;
 
 
   public String createNewUserSession(UserEntity user) {
@@ -32,7 +36,7 @@ public class AuthenticationService {
   public HttpCookie createSessionCookie(String sessionId) {
     return ResponseCookie.from(AUTH_COOKIE_NAME, sessionId)
                          .httpOnly(true)
-                         .domain("localhost")
+                         .domain(COOKIE_DOMAIN)
                          .path("/")
                          .maxAge(tokenService.jwtExpirationInMs * 1000L)
                          .build();

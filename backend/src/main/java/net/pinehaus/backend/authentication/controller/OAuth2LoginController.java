@@ -70,14 +70,14 @@ public class OAuth2LoginController {
         }
 
         if (authenticationService.isUserSessionValid(user)) {
-          return ResponseEntity.ok().header("Location", "localhost:3000/").build();
+          return ResponseEntity.ok().header("Location", "/").build();
         } else {
           String sessionId = authenticationService.createNewUserSession(user);
           HttpCookie cookie = authenticationService.createSessionCookie(sessionId);
-
+          log.info("User {} logged in", user.getEmail());
           return ResponseEntity.ok()
                                .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                               .header("Location", "localhost:3000/")
+                               .header("Location", "/")
                                .build();
         }
       default:

@@ -6,7 +6,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
-import java.sql.Timestamp;
 import java.util.Date;
 import javax.crypto.SecretKey;
 import lombok.extern.slf4j.Slf4j;
@@ -20,17 +19,6 @@ public class TokenService {
 
   public final int jwtExpirationInMs;
   private final SecretKey secretSigningKey;
-
-  public String createNewUserSession(UserEntity user) {
-    Date expiryDate = new Date(System.currentTimeMillis() + jwtExpirationInMs);
-
-    String sessionId = generateTokenForUser(user, expiryDate);
-
-    user.setSessionId(sessionId);
-    user.setSessionExpiresAt(new Timestamp(expiryDate.getTime()));
-
-    return sessionId;
-  }
 
   private TokenService(@Value("${app.jwtSecret}") String jwtSecret,
       @Value("${app.jwtExpirationInMs}") int jwtExpirationInMs) {

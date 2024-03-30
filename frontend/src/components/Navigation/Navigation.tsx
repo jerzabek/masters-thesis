@@ -1,9 +1,14 @@
+'use client'
+
 import { UserAvatar } from '@carbon/icons-react'
-import { Box, Flex, Grid, Text } from '@chakra-ui/react'
+import { Box, Flex, Grid, Image, Text } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import Link from 'components/Link'
+import { useUser } from 'hooks/authentication'
 
 export default function Navigation() {
+  const user = useUser()
+
   return (
     <Grid px={12} py={4} position="relative" templateColumns="repeat(3, 1fr)">
       <NextLink href={`/`}>
@@ -39,7 +44,11 @@ export default function Navigation() {
 
       <Flex top={0} p="inherit" position="absolute" right={0} h="100%" align="center" gap={4}>
         <Link href={`/login`} mr={12}>
-          <UserAvatar width={32} height={32} />
+          {user?.avatarUrl ? (
+            <img src={user.avatarUrl} alt="User avatar" width={48} height={48} style={{ borderRadius: '50%' }} />
+          ) : (
+            <UserAvatar width={48} height={48} />
+          )}
         </Link>
       </Flex>
     </Grid>

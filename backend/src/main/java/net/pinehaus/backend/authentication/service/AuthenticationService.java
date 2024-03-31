@@ -21,7 +21,6 @@ public class AuthenticationService {
   @Value("${app.frontend.cookieDomain}")
   public String COOKIE_DOMAIN;
 
-
   public String createNewUserSession(UserEntity user) {
     Date expiryDate = new Date(System.currentTimeMillis() + tokenService.jwtExpirationInMs);
 

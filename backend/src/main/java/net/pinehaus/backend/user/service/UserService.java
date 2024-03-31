@@ -1,21 +1,27 @@
 package net.pinehaus.backend.user.service;
 
-import lombok.RequiredArgsConstructor;
-import net.pinehaus.backend.user.model.User;
-import net.pinehaus.backend.user.repository.UserRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import net.pinehaus.backend.user.model.UserEntity;
+import net.pinehaus.backend.user.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    public Optional<User> getUserById(UUID id) {
-        return userRepository.findUserById(id);
-    }
+  public Optional<UserEntity> getUserById(UUID id) {
+    return userRepository.findUserById(id);
+  }
 
+  public Optional<UserEntity> getUserByGoogleId(String googleId) {
+    return userRepository.findUserByGoogleId(googleId);
+  }
+
+  public UserEntity save(UserEntity user) {
+    return userRepository.save(user);
+  }
 }

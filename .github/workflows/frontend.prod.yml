@@ -33,14 +33,22 @@ jobs:
 
   docker-image:
     name: Build @pinehaus/frontend docker image
+    environment: Production
     needs: build
     runs-on: [self-hosted]
 
     steps:
       - uses: actions/checkout@v3
 
+      - name: Setup .env file
+        env:
+          ENV_FILE: ${{ secrets.ENV_FILE }}
+        run: |
+          echo $ENV_FILE | base64 --decode > .env
+          cp .env frontend/.env
+
       - name: Build docker image
-        run: docker compose -f docker/frontend.prod.yml build
+        run: docker compose -f docker/frontend.prod.yml --env-file .env build
 
       - name: Run docker image
         run: docker compose -f docker/frontend.prod.yml up -d

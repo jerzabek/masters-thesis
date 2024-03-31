@@ -1985,6 +1985,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@chakra-ui/next-js@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@chakra-ui/next-js@npm:2.2.0"
+  dependencies:
+    "@emotion/cache": "npm:^11.11.0"
+  peerDependencies:
+    "@chakra-ui/react": ">=2.4.0"
+    "@emotion/react": ">=11"
+    next: ">=13"
+    react: ">=18"
+  checksum: 10/e69800e99be5bfbbd10d97a6a5b055208f98e8619cd6b8e1f4715dc861018e606af1e642d8ee0a6baf294a65d49049fd0530293e76a93e631079d9c9c91fc47b
+  languageName: node
+  linkType: hard
+
 "@chakra-ui/number-input@npm:2.1.2":
   version: 2.1.2
   resolution: "@chakra-ui/number-input@npm:2.1.2"
@@ -3232,6 +3246,7 @@ __metadata:
   resolution: "@pinehaus/frontend@workspace:."
   dependencies:
     "@carbon/icons-react": "npm:^11.37.0"
+    "@chakra-ui/next-js": "npm:^2.2.0"
     "@chakra-ui/react": "npm:^2.8.2"
     "@emotion/react": "npm:^11"
     "@emotion/styled": "npm:^11"

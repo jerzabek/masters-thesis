@@ -1,20 +1,20 @@
-import { ChakraProvider } from '@chakra-ui/react'
-import { StyledComponentsRegistry } from 'utils/ui/StyledComponentRegistry'
+import { Box } from '@chakra-ui/react'
 import 'styles/global/globals.css'
 import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
+import Providers from 'components/Providers'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
-        <ChakraProvider>
-          <StyledComponentsRegistry>
-            <Navigation />
+      <body style={{ display: 'flex', minHeight: '100%', flexDirection: 'column' }}>
+        <Providers>
+          <Navigation />
+          <Box as="main" flex={1}>
             {children}
-            <Footer />
-          </StyledComponentsRegistry>
-        </ChakraProvider>
+          </Box>
+          <Footer />
+        </Providers>
       </body>
     </html>
   )

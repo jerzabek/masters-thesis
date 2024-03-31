@@ -34,6 +34,7 @@ jobs:
 
   docker-image:
     name: Build @pinehaus/frontend staging environment docker image
+    environment: Staging
     needs: build
     runs-on: [self-hosted]
 
@@ -43,9 +44,7 @@ jobs:
       - name: Setup .env file
         env:
           ENV_FILE: ${{ secrets.ENV_FILE }}
-        run: |
-          echo $ENV_FILE | base64 --decode > .env
-          cp .env frontend/.env
+        run: echo $ENV_FILE | base64 --decode > .env
 
       - name: Build docker image
         run: |

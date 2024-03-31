@@ -6,9 +6,9 @@ services:
       context: ../frontend
       dockerfile: Dockerfile
     environment:
-      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
-      API_URL: ${API_URL}
-      PINEHAUS_URL: ${PINEHAUS_URL}
+      NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+      NEXT_PUBLIC_PINEHAUS_URL: ${NEXT_PUBLIC_PINEHAUS_URL}
     image: pinehaus-frontend:1.0.0
     container_name: pinehaus-frontend
     ports:

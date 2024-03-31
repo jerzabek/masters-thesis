@@ -6,6 +6,10 @@ services:
     build:
       context: ../frontend
       dockerfile: Dockerfile
+    environtment:
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      API_URL: ${API_URL}
+      PINEHAUS_URL: ${PINEHAUS_URL}
     image: pinehaus-frontend-staging:1.0.0
     container_name: pinehaus-frontend-staging
     ports:

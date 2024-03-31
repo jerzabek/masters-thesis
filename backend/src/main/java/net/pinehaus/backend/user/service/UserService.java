@@ -20,4 +20,8 @@ public class UserService {
   public Optional<UserEntity> getUserByGoogleId(String googleId) {
     return userRepository.findUserByGoogleId(googleId);
   }
+
+  public UserEntity save(UserEntity user) {
+    return userRepository.save(user);
+  }
 }

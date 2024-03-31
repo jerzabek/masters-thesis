@@ -59,14 +59,14 @@ public class OAuth2LoginController {
           String lastName = (String) payload.get("family_name");
           String firstName = (String) payload.get("given_name");
 
-          user = UserEntity.builder()
-                           .email(userEmail)
-                           .firstName(firstName)
-                           .lastName(lastName)
-                           .avatarUrl(pictureUrl)
-                           .googleId(userGoogleId)
-                           .authenticationProvider(AuthenticationProvider.GOOGLE)
-                           .build();
+          user = userService.save(UserEntity.builder()
+                                            .email(userEmail)
+                                            .firstName(firstName)
+                                            .lastName(lastName)
+                                            .avatarUrl(pictureUrl)
+                                            .googleId(userGoogleId)
+                                            .authenticationProvider(AuthenticationProvider.GOOGLE)
+                                            .build());
         }
 
         if (authenticationService.isUserSessionValid(user)) {

@@ -41,7 +41,7 @@ jobs:
 
       - name: Setup .env file
         env:
-          ENV_FILE: ${{ secrets.FRONTEND_ENV_FILE }}
+          ENV_FILE: ${{ secrets.ENV_FILE }}
         run: echo $ENV_FILE | base64 --decode > .env
 
       - name: Build docker image

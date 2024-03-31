@@ -40,8 +40,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Setup .env file
+        env:
+          ENV_FILE: ${{ secrets.FRONTEND_ENV_FILE }}
+        run: echo $ENV_FILE | base64 --decode > .env
+
       - name: Build docker image
-        run: docker compose -f docker/frontend.staging.yml build
+        run: docker compose -f docker/frontend.staging.yml --env-file .env build
 
       - name: Run docker image
         run: docker compose -f docker/frontend.staging.yml up -d

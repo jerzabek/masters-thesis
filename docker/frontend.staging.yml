@@ -1,12 +1,11 @@
 version: "3.9"
 
 services:
-
   pinehaus-frontend-staging:
     build:
       context: ../frontend
       dockerfile: Dockerfile
-    environtment:
+    environment:
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       API_URL: ${API_URL}
       PINEHAUS_URL: ${PINEHAUS_URL}

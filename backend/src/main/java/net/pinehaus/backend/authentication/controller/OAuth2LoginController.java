@@ -11,6 +11,7 @@ import net.pinehaus.backend.authentication.service.AuthenticationService;
 import net.pinehaus.backend.user.model.UserEntity;
 import net.pinehaus.backend.user.service.UserService;
 import org.apache.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,9 @@ public class OAuth2LoginController {
   private final GoogleAuthenticationService googleAuthenticationService;
   private final UserService userService;
 
+  @Value("${app.frontend.url}")
+  public String FRONTEND_URL;
+
   @PostMapping("/login/oauth2/code/{provider}")
   @Transactional
   public ResponseEntity<String> loginSuccess(@PathVariable String provider,
@@ -39,7 +43,7 @@ public class OAuth2LoginController {
 
         if (googleIdTokenOptional.isEmpty()) {
           return ResponseEntity.status(HttpStatus.SC_MOVED_TEMPORARILY)
-                               .header("Location", "/login?e")
+                               .header("Location", FRONTEND_URL + "/login?e")
                                .build();
         }
 
@@ -70,19 +74,21 @@ public class OAuth2LoginController {
         }
 
         if (authenticationService.isUserSessionValid(user)) {
-          return ResponseEntity.ok().header("Location", "/").build();
+          return ResponseEntity.status(HttpStatus.SC_MOVED_TEMPORARILY)
+                               .header("Location", FRONTEND_URL + "/")
+                               .build();
         } else {
           String sessionId = authenticationService.createNewUserSession(user);
           HttpCookie cookie = authenticationService.createSessionCookie(sessionId);
           log.info("User {} logged in", user.getEmail());
-          return ResponseEntity.ok()
+          return ResponseEntity.status(HttpStatus.SC_MOVED_TEMPORARILY)
                                .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                               .header("Location", "/")
+                               .header("Location", FRONTEND_URL + "/")
                                .build();
         }
       default:
         return ResponseEntity.status(HttpStatus.SC_MOVED_TEMPORARILY)
-                             .header("Location", "/login")
+                             .header("Location", FRONTEND_URL + "/login")
                              .build();
     }
   }

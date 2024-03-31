@@ -48,7 +48,10 @@ jobs:
           cp .env frontend/.env
 
       - name: Build docker image
-        run: docker compose -f docker/frontend.staging.yml --env-file .env build
+        run: |
+          cat .env
+          cat frontend/.env
+          docker compose -f docker/frontend.staging.yml --env-file .env build
 
       - name: Run docker image
         run: docker compose -f docker/frontend.staging.yml up -d

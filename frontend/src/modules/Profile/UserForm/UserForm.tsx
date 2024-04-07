@@ -37,7 +37,7 @@ function UserForm() {
           <Input type="email" value={values.email} disabled />
         </FormControl>
 
-        <Box flex={2} />
+        <Box flex={[0, 2]} />
       </Flex>
 
       <Flex gap={4} mb={4}>
@@ -53,7 +53,7 @@ function UserForm() {
           {!!errors.lastName && <FormErrorMessage>{errors.lastName}</FormErrorMessage>}
         </FormControl>
 
-        <Box flex={1} />
+        <Box flex={[0, 1]} />
       </Flex>
 
       <Flex gap={4} mb={4}>
@@ -62,7 +62,7 @@ function UserForm() {
           <Input value={values.username} onChange={handleUsernameChange} />
         </FormControl>
 
-        <Box flex={2} />
+        <Box flex={[0, 2]} />
       </Flex>
 
       <Flex justify="end">

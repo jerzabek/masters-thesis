@@ -1,8 +1,8 @@
 'use client'
 
-import { Information } from '@carbon/icons-react'
+import { ChevronRight, Information } from '@carbon/icons-react'
 import { Text } from '@chakra-ui/layout'
-import { Box, Container, Divider, Flex } from '@chakra-ui/react'
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Container, Divider, Flex } from '@chakra-ui/react'
 import { FormikHelpers } from 'formik'
 import { useUser } from 'hooks/authentication'
 import { UserForm } from 'modules/Profile'
@@ -41,10 +41,20 @@ export default function ProfilePage() {
           fill
         />
 
-        <Flex justify="center" align="center" h="100%">
+        <Flex flexDir="column" justify="center" align="center" h="100%">
           <Text as="h1" textStyle="h1" color="black">
             Hello, {user.firstName}.
           </Text>
+
+          <Breadcrumb spacing="8px" separator={<ChevronRight color="gray.500" />}>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Pinehaus</BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbItem isCurrentPage>
+              <BreadcrumbLink href="/profile">Profile</BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
         </Flex>
       </Box>
 

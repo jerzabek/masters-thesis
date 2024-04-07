@@ -7,7 +7,7 @@ import Link from 'components/Link'
 import { useUser } from 'hooks/authentication'
 
 export default function Navigation() {
-  const user = useUser()
+  const { user } = useUser()
 
   return (
     <Grid px={12} py={4} position="relative" templateColumns="repeat(3, 1fr)">

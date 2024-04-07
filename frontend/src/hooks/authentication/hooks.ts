@@ -8,5 +8,8 @@ export const useUser = () => {
     throw new Error('useUser must be used within a UserProvider')
   }
 
-  return userContext.user
+  const isUserLoading = userContext.isLoading
+  const isAuthenticated = typeof userContext.user !== 'undefined'
+
+  return { user: userContext.user, isAuthenticated, isUserLoading }
 }

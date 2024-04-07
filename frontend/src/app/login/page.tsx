@@ -1,10 +1,24 @@
+'use client'
+
 import { Box, Flex, Text } from '@chakra-ui/react'
 import { googleLoginRedirectRoute } from 'api/routes'
+import { useUser } from 'hooks/authentication'
+import { redirect } from 'next/navigation'
 import Script from 'next/script'
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
 
 export default function LoginPage() {
+  const { isUserLoading, isAuthenticated } = useUser()
+
+  if (isUserLoading) {
+    return null
+  }
+
+  if (isAuthenticated) {
+    redirect('/profile')
+  }
+
   return (
     <>
       <Script src="https://accounts.google.com/gsi/client" async defer />

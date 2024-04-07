@@ -16,6 +16,10 @@ const theme = extendTheme({
       fontFamily: 'poppins',
       fontWeight: '700',
     },
+    h2: {
+      fontSize: '1.5rem',
+      fontFamily: 'poppins',
+    },
   },
 })
 

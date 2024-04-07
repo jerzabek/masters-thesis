@@ -74,7 +74,10 @@ public class OAuth2LoginController {
         }
 
         if (authenticationService.isUserSessionValid(user)) {
+          HttpCookie cookie = authenticationService.createSessionCookie(user.getSessionId());
+
           return ResponseEntity.status(HttpStatus.SC_MOVED_TEMPORARILY)
+                               .header(HttpHeaders.SET_COOKIE, cookie.toString())
                                .header("Location", FRONTEND_URL + "/")
                                .build();
         } else {

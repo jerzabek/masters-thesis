@@ -1,13 +1,21 @@
 package net.pinehaus.backend.user.model;
 
-import jakarta.persistence.*;
-import lombok.*;
-import net.pinehaus.backend.authentication.AuthenticationProvider;
-import org.hibernate.annotations.CreationTimestamp;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import net.pinehaus.backend.authentication.AuthenticationProvider;
+import org.hibernate.annotations.CreationTimestamp;
 
 
 @Builder(toBuilder = true)
@@ -17,45 +25,52 @@ import java.util.UUID;
 @Getter
 @Entity(name = "user_entity")
 public class UserEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
 
-    @Column(nullable = false)
-    private String firstName;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
-
-    @Column(nullable = false)
-    private String lastName;
+  @Column(nullable = false)
+  private String firstName;
 
 
-    @Column(nullable = false)
-    private String email;
+  @Column(nullable = false)
+  private String lastName;
 
-    @Column
-    private Date dateOfBirth;
+  private String username;
 
-    @Column
-    private String avatarUrl;
+  @Column(nullable = false)
+  private String email;
+
+  @Column
+  private Date dateOfBirth;
+
+  @Column
+  private String avatarUrl;
 
 
-    @Column(nullable = false)
-    private AuthenticationProvider authenticationProvider;
+  @Column(nullable = false)
+  @JsonIgnore
+  private AuthenticationProvider authenticationProvider;
 
-    /**
-     * Unique Google account ID provided by Google. Actual field name is "sub" in the Google ID token.
-     */
-    @Column
-    private String googleId;
+  /**
+   * Unique Google account ID provided by Google. Actual field name is "sub" in the Google ID
+   * token.
+   */
+  @Column
+  @JsonIgnore
+  private String googleId;
 
-    @Column(length = 2048)
-    private String sessionId;
+  @Column(length = 2048)
+  @JsonIgnore
+  private String sessionId;
 
-    @Column
-    private Timestamp sessionExpiresAt;
+  @Column
+  @JsonIgnore
+  private Timestamp sessionExpiresAt;
 
-    @CreationTimestamp
-    @Column
-    private Timestamp createdAt;
+  @CreationTimestamp
+  @Column
+  private Timestamp createdAt;
 
 }

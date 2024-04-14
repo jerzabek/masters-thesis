@@ -26,8 +26,11 @@ public class UserPrincipal implements UserDetails {
 
   private Collection<? extends GrantedAuthority> authorities;
 
+  public static final String ADMIN = "ADMIN";
+  public static final String USER = "USER";
+
   public UserPrincipal(UserEntity user) {
-    List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("ADMIN", "USER");
+    List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(ADMIN, USER);
 
     this.id = user.getId();
     this.firstName = user.getFirstName();
@@ -71,5 +74,10 @@ public class UserPrincipal implements UserDetails {
   @Override
   public boolean isEnabled() {
     return true;
+  }
+
+  public boolean isAdmin() {
+    return authorities.stream()
+                      .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(ADMIN));
   }
 }

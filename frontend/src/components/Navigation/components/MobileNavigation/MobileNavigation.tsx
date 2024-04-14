@@ -24,7 +24,7 @@ const MobileDropdownNav = () => {
     }
   }, [containerRef, onToggle])
 
-  const { user } = useUser()
+  const { user, isAuthenticated } = useUser()
 
   return (
     <Flex direction="column" ref={containerRef}>
@@ -40,9 +40,16 @@ const MobileDropdownNav = () => {
         </NextLink>
 
         <Box ml="auto" mr={1}>
-          <Link href={`/login`}>
+          <Link href={isAuthenticated ? `/profile` : `/login`}>
             {user?.avatarUrl ? (
-              <img src={user.avatarUrl} alt="User avatar" width={48} height={48} style={{ borderRadius: '50%' }} />
+              <img
+                src={user.avatarUrl}
+                referrerPolicy="no-referrer"
+                alt="User avatar"
+                width={48}
+                height={48}
+                style={{ borderRadius: '50%' }}
+              />
             ) : (
               <UserAvatar width={48} height={48} />
             )}

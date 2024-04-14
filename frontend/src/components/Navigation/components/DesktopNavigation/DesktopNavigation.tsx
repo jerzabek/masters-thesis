@@ -5,7 +5,7 @@ import { useUser } from 'hooks/authentication'
 import { UserAvatar } from '@carbon/icons-react'
 
 export default function DesktopNavigation() {
-  const { user } = useUser()
+  const { user, isAuthenticated } = useUser()
 
   return (
     <Grid px={12} py={4} position="relative" templateColumns="repeat(3, 1fr)">
@@ -41,9 +41,16 @@ export default function DesktopNavigation() {
       </Flex>
 
       <Flex top={0} p="inherit" position="absolute" right={0} h="100%" align="center" gap={4}>
-        <Link href={`/login`} mr={12}>
+        <Link href={isAuthenticated ? `/profile` : `/login`} mr={12}>
           {user?.avatarUrl ? (
-            <img src={user.avatarUrl} alt="User avatar" width={48} height={48} style={{ borderRadius: '50%' }} />
+            <img
+              src={user.avatarUrl}
+              referrerPolicy="no-referrer"
+              alt="User avatar"
+              width={48}
+              height={48}
+              style={{ borderRadius: '50%' }}
+            />
           ) : (
             <UserAvatar width={48} height={48} />
           )}

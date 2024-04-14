@@ -1,5 +1,4 @@
-export interface User {
-  id: string
+export interface UserFormValues {
   email: string
   username?: string
   firstName: string

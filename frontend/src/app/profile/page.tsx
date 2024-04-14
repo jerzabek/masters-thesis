@@ -2,7 +2,19 @@
 
 import { ChevronRight, Information } from '@carbon/icons-react'
 import { Text } from '@chakra-ui/layout'
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Container, Divider, Flex } from '@chakra-ui/react'
+import {
+  Box,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Button,
+  Container,
+  Divider,
+  Flex,
+  useToast,
+} from '@chakra-ui/react'
+import { updateUser } from 'api/User/repository'
+import { useErrorToast, useSavingToast, useSuccessToast } from 'components/Toast'
 import { FormikHelpers } from 'formik'
 import { useUser } from 'hooks/authentication'
 import { UserForm } from 'modules/Profile'
@@ -13,6 +25,12 @@ import { redirect } from 'next/navigation'
 export default function ProfilePage() {
   const { user, isUserLoading, isAuthenticated } = useUser()
 
+  const { close } = useToast()
+
+  const showSavingToast = useSavingToast()
+  const showSuccessToast = useSuccessToast()
+  const showErrorToast = useErrorToast()
+
   if (isUserLoading) {
     return null
   }
@@ -22,7 +40,15 @@ export default function ProfilePage() {
   }
 
   const handleSubmit = (values: UserFormValues, formikHelpers: FormikHelpers<UserFormValues>) => {
-    console.log(values)
+    const toastId = showSavingToast()
+
+    updateUser(user.id, values)
+      .then(() => showSuccessToast())
+      .catch(() => showErrorToast())
+      .finally(() => {
+        formikHelpers.setSubmitting(false)
+        close(toastId)
+      })
   }
 
   return (

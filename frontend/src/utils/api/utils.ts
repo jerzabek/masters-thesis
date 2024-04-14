@@ -29,3 +29,16 @@ export async function getJson<T = ApiResponse>(url: string) {
 
   return parseResponse<T>(response)
 }
+
+export async function putJson<T = ApiResponse>(url: string, body: any) {
+  const response = await fetch(url, {
+    credentials: 'include',
+    method: 'PUT',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  return parseResponse<T>(response)
+}

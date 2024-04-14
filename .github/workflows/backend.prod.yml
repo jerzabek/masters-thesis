@@ -8,6 +8,10 @@ on:
       - ".github/workflows/backend.*"
       - "docker/backend.*"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build @pinehaus/backend

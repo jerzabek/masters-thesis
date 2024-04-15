@@ -3,7 +3,8 @@ import NextLink from 'next/link'
 import { Box, Button, Flex, Text, useDisclosure, Collapse } from '@chakra-ui/react'
 import Link from 'components/Link'
 import { useUser } from 'hooks/authentication'
-import { Menu, UserAvatar } from '@carbon/icons-react'
+import { Logout, Menu, UserAvatar } from '@carbon/icons-react'
+import { logout } from 'api/repository'
 
 const MobileDropdownNav = () => {
   const { isOpen, onToggle, onClose } = useDisclosure()
@@ -24,6 +25,14 @@ const MobileDropdownNav = () => {
     }
   }, [containerRef, onToggle])
 
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+        location.href = '/'
+      })
+      .catch(e => console.log(e))
+  }
+
   const { user, isAuthenticated } = useUser()
 
   return (
@@ -42,14 +51,19 @@ const MobileDropdownNav = () => {
         <Box ml="auto" mr={1}>
           <Link href={isAuthenticated ? `/profile` : `/login`}>
             {user?.avatarUrl ? (
-              <img
-                src={user.avatarUrl}
-                referrerPolicy="no-referrer"
-                alt="User avatar"
-                width={48}
-                height={48}
-                style={{ borderRadius: '50%' }}
-              />
+              <>
+                <img
+                  src={user.avatarUrl}
+                  referrerPolicy="no-referrer"
+                  alt="User avatar"
+                  width={48}
+                  height={48}
+                  style={{ borderRadius: '50%' }}
+                />
+                <Button onClick={handleLogout} variant="unshielded">
+                  <Logout />
+                </Button>
+              </>
             ) : (
               <UserAvatar width={48} height={48} />
             )}

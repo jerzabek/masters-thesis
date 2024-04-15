@@ -1,11 +1,20 @@
-import { Box, Flex, Grid, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Grid, Text } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import Link from 'components/Link'
 import { useUser } from 'hooks/authentication'
-import { UserAvatar } from '@carbon/icons-react'
+import { Logout, UserAvatar } from '@carbon/icons-react'
+import { logout } from 'api/repository'
 
 export default function DesktopNavigation() {
   const { user, isAuthenticated } = useUser()
+
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+        location.href = '/'
+      })
+      .catch(e => console.log(e))
+  }
 
   return (
     <Grid px={12} py={4} position="relative" templateColumns="repeat(3, 1fr)">
@@ -41,7 +50,7 @@ export default function DesktopNavigation() {
       </Flex>
 
       <Flex top={0} p="inherit" position="absolute" right={0} h="100%" align="center" gap={4}>
-        <Link href={isAuthenticated ? `/profile` : `/login`} mr={12}>
+        <Link href={isAuthenticated ? `/profile` : `/login`}>
           {user?.avatarUrl ? (
             <img
               src={user.avatarUrl}
@@ -55,6 +64,10 @@ export default function DesktopNavigation() {
             <UserAvatar width={48} height={48} />
           )}
         </Link>
+
+        <Button onClick={handleLogout} variant="ghost" mr={12}>
+          <Logout width={24} height={24} />
+        </Button>
       </Flex>
     </Grid>
   )

@@ -8,6 +8,7 @@ import net.pinehaus.backend.authentication.AuthenticationProvider;
 import net.pinehaus.backend.authentication.google.model.GoogleLoginDTO;
 import net.pinehaus.backend.authentication.google.service.GoogleAuthenticationService;
 import net.pinehaus.backend.authentication.service.AuthenticationService;
+import net.pinehaus.backend.security.UserPrincipal;
 import net.pinehaus.backend.user.model.UserEntity;
 import net.pinehaus.backend.user.service.UserService;
 import org.apache.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -83,7 +85,7 @@ public class OAuth2LoginController {
         } else {
           String sessionId = authenticationService.createNewUserSession(user);
           HttpCookie cookie = authenticationService.createSessionCookie(sessionId);
-          log.info("User {} logged in", user.getEmail());
+
           return ResponseEntity.status(HttpStatus.SC_MOVED_TEMPORARILY)
                                .header(HttpHeaders.SET_COOKIE, cookie.toString())
                                .header("Location", FRONTEND_URL + "/")
@@ -94,5 +96,17 @@ public class OAuth2LoginController {
                              .header("Location", FRONTEND_URL + "/login")
                              .build();
     }
+  }
+
+  @PostMapping("/login/logout")
+  public ResponseEntity<String> logout(@AuthenticationPrincipal UserPrincipal user) {
+    authenticationService.logout(user.getId());
+
+    HttpCookie cookie = authenticationService.deleteCookie();
+
+    return ResponseEntity.ok()
+                         .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                         .header("Location", FRONTEND_URL + "/")
+                         .build();
   }
 }

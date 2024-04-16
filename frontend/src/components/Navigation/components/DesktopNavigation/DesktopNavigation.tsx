@@ -52,22 +52,26 @@ export default function DesktopNavigation() {
       <Flex top={0} p="inherit" position="absolute" right={0} h="100%" align="center" gap={4}>
         <Link href={isAuthenticated ? `/profile` : `/login`}>
           {user?.avatarUrl ? (
-            <img
-              src={user.avatarUrl}
-              referrerPolicy="no-referrer"
-              alt="User avatar"
-              width={48}
-              height={48}
-              style={{ borderRadius: '50%' }}
-            />
+            <Box borderRadius="50%" border="1px solid" color="gray.800">
+              <img
+                src={user.avatarUrl}
+                referrerPolicy="no-referrer"
+                alt="User avatar"
+                width={48}
+                height={48}
+                style={{ borderRadius: '50%' }}
+              />
+            </Box>
           ) : (
             <UserAvatar width={48} height={48} />
           )}
         </Link>
 
-        <Button onClick={handleLogout} variant="ghost" mr={12}>
-          <Logout width={24} height={24} />
-        </Button>
+        {isAuthenticated && (
+          <Button onClick={handleLogout} variant="ghost">
+            <Logout width={24} height={24} />
+          </Button>
+        )}
       </Flex>
     </Grid>
   )

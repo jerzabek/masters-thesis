@@ -51,7 +51,7 @@ const MobileDropdownNav = () => {
         <Box ml="auto" mr={1}>
           <Link href={isAuthenticated ? `/profile` : `/login`}>
             {user?.avatarUrl ? (
-              <>
+              <Box borderRadius="50%" border="1px solid" color="gray.800">
                 <img
                   src={user.avatarUrl}
                   referrerPolicy="no-referrer"
@@ -60,13 +60,8 @@ const MobileDropdownNav = () => {
                   height={48}
                   style={{ borderRadius: '50%' }}
                 />
-                <Button onClick={handleLogout} variant="unshielded">
-                  <Logout />
-                </Button>
-              </>
-            ) : (
-              <UserAvatar width={48} height={48} />
-            )}
+              </Box>
+            ) : null}
           </Link>
         </Box>
 
@@ -87,6 +82,25 @@ const MobileDropdownNav = () => {
             <Link href={`/about-us`} onClick={onClose}>
               <Text fontSize={20}>About</Text>
             </Link>
+            {isAuthenticated ? (
+              <Button onClick={handleLogout} variant="unshielded">
+                <Box mr={4}>
+                  <Logout />
+                </Box>
+                Sign out
+              </Button>
+            ) : (
+              <Box w="100%" textAlign="center">
+                <Link href={`/login`} onClick={onClose}>
+                  <Button variant="unshielded">
+                    <Box mr={4}>
+                      <UserAvatar width={24} height={24} />
+                    </Box>
+                    Sign in
+                  </Button>
+                </Link>
+              </Box>
+            )}
           </Flex>
         </Box>
       </Collapse>

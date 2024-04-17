@@ -3,7 +3,8 @@ import NextLink from 'next/link'
 import { Box, Button, Flex, Text, useDisclosure, Collapse } from '@chakra-ui/react'
 import Link from 'components/Link'
 import { useUser } from 'hooks/authentication'
-import { Menu, UserAvatar } from '@carbon/icons-react'
+import { Logout, Menu, UserAvatar } from '@carbon/icons-react'
+import { logout } from 'api/repository'
 
 const MobileDropdownNav = () => {
   const { isOpen, onToggle, onClose } = useDisclosure()
@@ -24,6 +25,14 @@ const MobileDropdownNav = () => {
     }
   }, [containerRef, onToggle])
 
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+        location.href = '/'
+      })
+      .catch(e => console.log(e))
+  }
+
   const { user, isAuthenticated } = useUser()
 
   return (
@@ -42,27 +51,27 @@ const MobileDropdownNav = () => {
         <Box ml="auto" mr={1}>
           <Link href={isAuthenticated ? `/profile` : `/login`}>
             {user?.avatarUrl ? (
-              <img
-                src={user.avatarUrl}
-                referrerPolicy="no-referrer"
-                alt="User avatar"
-                width={48}
-                height={48}
-                style={{ borderRadius: '50%' }}
-              />
-            ) : (
-              <UserAvatar width={48} height={48} />
-            )}
+              <Box borderRadius="50%" border="1px solid" color="gray.800">
+                <img
+                  src={user.avatarUrl}
+                  referrerPolicy="no-referrer"
+                  alt="User avatar"
+                  width={48}
+                  height={48}
+                  style={{ borderRadius: '50%' }}
+                />
+              </Box>
+            ) : null}
           </Link>
         </Box>
 
         <Button onClick={onToggle} variant="unshield">
-          <Menu />
+          <Menu width={24} height={24} />
         </Button>
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
-        <Box p="40px" shadow="md">
+        <Box px="40px" py="20px" shadow="md" borderBottom="1px solid" borderBottomColor="gray.400">
           <Flex direction="column">
             <Link href={`/`} onClick={onClose}>
               <Text fontSize={20}>Home</Text>
@@ -73,6 +82,25 @@ const MobileDropdownNav = () => {
             <Link href={`/about-us`} onClick={onClose}>
               <Text fontSize={20}>About</Text>
             </Link>
+            {isAuthenticated ? (
+              <Button onClick={handleLogout} variant="unshielded">
+                <Box mr={4}>
+                  <Logout width={20} height={20} />
+                </Box>
+                Sign out
+              </Button>
+            ) : (
+              <Box w="100%" textAlign="center">
+                <Link href={`/login`} onClick={onClose}>
+                  <Button variant="unshielded">
+                    <Box mr={4}>
+                      <UserAvatar width={24} height={24} />
+                    </Box>
+                    Sign in
+                  </Button>
+                </Link>
+              </Box>
+            )}
           </Flex>
         </Box>
       </Collapse>

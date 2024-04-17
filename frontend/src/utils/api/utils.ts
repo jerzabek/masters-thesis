@@ -5,15 +5,31 @@ interface ApiResponse {
 export function parseResponse<T = ApiResponse>(response: Response) {
   return new Promise<T>(async (resolve, reject) => {
     try {
+      const contentType = response.headers.get('content-type')
+      console.log(response)
+      const isSuccessStatus = response.status >= 200 && response.status < 400
+
       if (response.status === 204) {
         resolve({} as T)
-      } else {
-        const parsedResponse: T = await response.json()
+      } else if (contentType && contentType.includes('application/json')) {
+        if (isSuccessStatus) {
+          try {
+            const parsedResponse: T = await response.json()
 
-        if (response.status >= 200 && response.status < 400) {
-          resolve(parsedResponse)
+            resolve(parsedResponse)
+          } catch (error) {
+            resolve({} as T)
+          }
         } else {
+          const parsedResponse: T = await response.json()
+
           reject(parsedResponse)
+        }
+      } else {
+        if (isSuccessStatus) {
+          resolve({} as T)
+        } else {
+          reject({} as T)
         }
       }
     } catch (error) {
@@ -38,6 +54,20 @@ export async function putJson<T = ApiResponse>(url: string, body: any) {
     headers: {
       'Content-Type': 'application/json',
     },
+  })
+
+  return parseResponse<T>(response)
+}
+
+export async function postJson<T = ApiResponse>(url: string, body?: any, options?: RequestInit) {
+  const response = await fetch(url, {
+    credentials: 'include',
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    ...options,
   })
 
   return parseResponse<T>(response)

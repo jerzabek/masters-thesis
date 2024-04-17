@@ -21,6 +21,13 @@ const theme = extendTheme({
       fontFamily: 'poppins',
     },
   },
+  styles: {
+    global: {
+      body: {
+        fontFamily: 'poppins',
+      },
+    },
+  },
 })
 
 export default theme

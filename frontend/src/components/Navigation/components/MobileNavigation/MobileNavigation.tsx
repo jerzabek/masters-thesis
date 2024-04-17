@@ -66,12 +66,12 @@ const MobileDropdownNav = () => {
         </Box>
 
         <Button onClick={onToggle} variant="unshield">
-          <Menu />
+          <Menu width={24} height={24} />
         </Button>
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
-        <Box p="40px" shadow="md">
+        <Box px="40px" py="20px" shadow="md" borderBottom="1px solid" borderBottomColor="gray.400">
           <Flex direction="column">
             <Link href={`/`} onClick={onClose}>
               <Text fontSize={20}>Home</Text>
@@ -85,7 +85,7 @@ const MobileDropdownNav = () => {
             {isAuthenticated ? (
               <Button onClick={handleLogout} variant="unshielded">
                 <Box mr={4}>
-                  <Logout />
+                  <Logout width={20} height={20} />
                 </Box>
                 Sign out
               </Button>

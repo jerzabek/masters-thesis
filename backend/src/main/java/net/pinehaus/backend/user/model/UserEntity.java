@@ -1,6 +1,7 @@
 package net.pinehaus.backend.user.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,10 +32,12 @@ public class UserEntity {
   private UUID id;
 
   @Column(nullable = false)
+  @JsonView(UserViews.Public.class)
   private String firstName;
 
 
   @Column(nullable = false)
+  @JsonView(UserViews.Public.class)
   private String lastName;
 
   private String username;

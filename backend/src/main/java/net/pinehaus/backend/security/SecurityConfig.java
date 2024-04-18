@@ -46,7 +46,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(authorizeRequests -> authorizeRequests
             .requestMatchers("/swagger-ui/**", "/v3/**").permitAll()
             .requestMatchers("/login/**").permitAll()
-            .anyRequest().authenticated()
+            .anyRequest().permitAll()
         )
         .addFilterBefore(pinehausAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

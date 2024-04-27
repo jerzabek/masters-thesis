@@ -4,6 +4,9 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import net.pinehaus.backend.product.model.Product;
 import net.pinehaus.backend.product.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +21,29 @@ public class ProductService {
 
   public Optional<Product> getProductBySlug(String slug) {
     return productRepository.findBySlug(slug);
+  }
+
+  public Page<Product> getProductsByCategoryId(int categoryId, int page, int size,
+      Sort.Direction sortOrder) {
+    return productRepository.findAllByCategoryId(categoryId,
+        PageRequest.of(page, size, Sort.by(sortOrder, "price")));
+  }
+
+  public Page<Product> getProductsByCategoryIdAndPriceBetween(int categoryId, double min,
+      double max,
+      int page, int size, Sort.Direction sortOrder) {
+    return productRepository.findAllByCategoryIdAndPriceBetween(categoryId, min, max,
+        PageRequest.of(page, size, Sort.by(sortOrder, "price")));
+  }
+
+  public Page<Product> getProductsByPriceBetween(double min, double max, int page, int size,
+      Sort.Direction sortOrder) {
+    return productRepository.findAllByPriceBetween(min, max,
+        PageRequest.of(page, size, Sort.by(sortOrder, "price")));
+  }
+
+  public Page<Product> getAllProducts(int page, int size, Sort.Direction sortOrder) {
+    return productRepository.findAll(PageRequest.of(page, size, Sort.by(sortOrder, "price")));
   }
 
   public Optional<Product> getProductById(int id) {

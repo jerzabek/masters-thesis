@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.checkerframework.common.aliasing.qual.Unique;
 
 @Entity
 @Getter
@@ -20,6 +21,7 @@ public class Category {
   private int id;
 
   @Column(nullable = false)
+  @Unique
   private String name;
 
 }

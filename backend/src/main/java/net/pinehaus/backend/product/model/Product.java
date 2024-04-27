@@ -38,7 +38,7 @@ public class Product {
   @Column(nullable = false)
   private String description;
 
-  @Column(nullable = false, length = 6)
+  @Column(nullable = false, length = 10)
   private String sku;
 
   @Column(nullable = false)

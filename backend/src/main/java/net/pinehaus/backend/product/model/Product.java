@@ -47,6 +47,9 @@ public class Product {
   @Column(nullable = false)
   private double price;
 
+  @Column
+  private String thumbnail;
+
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
   private List<AttributeValue> attributes;
 

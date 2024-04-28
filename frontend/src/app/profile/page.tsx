@@ -57,12 +57,12 @@ export default function ProfilePage() {
         <Image
           src="/images/banners/profile-banner.jpg"
           alt="Profile page banner"
-          objectFit="cover"
-          objectPosition="center"
           sizes="100vw"
           style={{
             opacity: 0.3,
             zIndex: -1,
+            objectFit: 'cover',
+            objectPosition: 'center',
           }}
           fill
         />

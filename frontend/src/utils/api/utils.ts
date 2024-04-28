@@ -6,7 +6,6 @@ export function parseResponse<T = ApiResponse>(response: Response) {
   return new Promise<T>(async (resolve, reject) => {
     try {
       const contentType = response.headers.get('content-type')
-      console.log(response)
       const isSuccessStatus = response.status >= 200 && response.status < 400
 
       if (response.status === 204) {
@@ -40,7 +39,7 @@ export function parseResponse<T = ApiResponse>(response: Response) {
 
 export async function getJson<T = ApiResponse>(url: string) {
   const response = await fetch(url, {
-    credentials: 'include',
+    // credentials: 'include',
   })
 
   return parseResponse<T>(response)
@@ -74,5 +73,7 @@ export async function postJson<T = ApiResponse>(url: string, body?: any, options
 }
 
 export const query = (params: Record<string, any>) => {
+  if (Object.keys(params).length === 0) return ''
+
   return `?${new URLSearchParams(params).toString()}`
 }

@@ -1,20 +1,22 @@
 import { ChevronRight } from '@carbon/icons-react'
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Text } from '@chakra-ui/react'
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Container, Flex, Text } from '@chakra-ui/react'
+import { Products } from 'modules/Products'
 import Image from 'next/image'
+import { Suspense } from 'react'
 
-export default function page() {
+export default function Page() {
   return (
     <>
       <Box w="100%" h="350px" position="relative">
         <Image
           src="/images/banners/products-banner.jpg"
           alt="Product page banner"
-          objectFit="cover"
-          objectPosition="center"
           sizes="100vw"
           style={{
             opacity: 0.3,
             zIndex: -1,
+            objectFit: 'cover',
+            objectPosition: 'center',
           }}
           fill
         />
@@ -35,6 +37,12 @@ export default function page() {
           </Breadcrumb>
         </Flex>
       </Box>
+
+      <Container maxW="container.xl" py={16}>
+        <Suspense fallback={<>Loading...</>}>
+          <Products />
+        </Suspense>
+      </Container>
     </>
   )
 }

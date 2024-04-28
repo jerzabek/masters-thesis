@@ -1,17 +1,22 @@
-import { Box, Text } from '@chakra-ui/react'
+import { Box, Text, useColorModeValue } from '@chakra-ui/react'
 import { image } from 'api/routes'
 import { Product } from 'model/Product'
 import Link from 'next/link'
-import { productPage } from 'utils/pages'
+import { productPageUrl } from 'utils/pages'
 import { ProductImage } from './style'
-import { useProductsState } from 'modules/Products/context'
 
 export default function ProductSlot({ product }: { product: Product }) {
-  const { products } = useProductsState()
+  const bottomBoxBg = useColorModeValue('gray.50', 'gray.900')
 
   return (
-    <Link href={productPage(product.id, product.slug)}>
-      <Box _hover={{ cursor: 'pointer' }} border="1px solid" borderColor="gray.100" borderRadius={4}>
+    <Link href={productPageUrl(product.id, product.slug)}>
+      <Box
+        _hover={{ cursor: 'pointer' }}
+        border="1px solid"
+        borderColor="blackAlpha.400"
+        borderRadius={4}
+        overflow="hidden"
+      >
         <Box w={285} h={285} bg="gray.200" overflow="hidden">
           <ProductImage
             src={product.thumbnail ?? image('noimage.png')}
@@ -22,12 +27,12 @@ export default function ProductSlot({ product }: { product: Product }) {
           />
         </Box>
 
-        <Box w={285} h={160} p={4} bg="gray.50">
+        <Box w={285} h={130} p={4} bg={bottomBoxBg}>
           <Box fontSize="lg" fontWeight="semibold">
             {product.name}
           </Box>
 
-          <Text fontSize="md" color="gray.500" overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis">
+          <Text fontSize="md" opacity={0.8} overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis" mb={6}>
             {product.description}
           </Text>
 

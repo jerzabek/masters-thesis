@@ -12,7 +12,7 @@ interface Props {
 export default function ProductList({ products }: Props) {
   return (
     <ProductsProvider products={products}>
-      <Flex gap={4} flexWrap="wrap">
+      <Flex gap={6} flexWrap="wrap">
         {products.map(product => (
           <ProductSlot product={product} key={product.id} />
         ))}

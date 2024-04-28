@@ -13,3 +13,5 @@ export interface ProductListResponse {
   products: Product[]
   totalPages: number
 }
+
+export interface GetProductResponse extends Product {}

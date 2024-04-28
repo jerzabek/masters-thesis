@@ -22,7 +22,7 @@ export default function Page() {
         />
 
         <Flex flexDir="column" justify="center" align="center" h="100%">
-          <Text as="h1" textStyle="h1" color="black">
+          <Text as="h1" textStyle="h1">
             Explore our products
           </Text>
 

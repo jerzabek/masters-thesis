@@ -72,3 +72,7 @@ export async function postJson<T = ApiResponse>(url: string, body?: any, options
 
   return parseResponse<T>(response)
 }
+
+export const query = (params: Record<string, any>) => {
+  return `?${new URLSearchParams(params).toString()}`
+}

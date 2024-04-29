@@ -39,9 +39,7 @@ export default function Page() {
       </Box>
 
       <Container maxW="container.xl" py={16}>
-        <Suspense fallback={<>Loading...</>}>
-          <Products />
-        </Suspense>
+        <Products />
       </Container>
     </>
   )

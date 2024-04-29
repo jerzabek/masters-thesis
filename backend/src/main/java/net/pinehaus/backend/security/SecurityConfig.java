@@ -36,6 +36,7 @@ public class SecurityConfig {
           config.setAllowCredentials(true);
           config.addAllowedOrigin(FRONTEND_URL);
           config.addAllowedOrigin("null");
+          config.addAllowedOrigin("http://localhost");
           config.addAllowedHeader("*");
           config.addAllowedMethod("*");
 

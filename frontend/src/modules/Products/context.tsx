@@ -1,8 +1,9 @@
-import React, { createContext, useReducer } from 'react'
+import React, { createContext, useEffect, useReducer } from 'react'
 import { reducer } from './reducer/reducer'
 import { IProductsState } from './interface'
 import { ProductsActions } from './reducer/interface'
 import { Product } from 'model/Product'
+import { INITIAL_PRODUCTS_STATE } from './const'
 
 interface IProductsContext {
   state: IProductsState
@@ -11,8 +12,12 @@ interface IProductsContext {
 
 const ProductsContext = createContext<IProductsContext>({} as IProductsContext)
 
-export const ProductsProvider = ({ children, products }: React.PropsWithChildren<{ products: Product[] }>) => {
-  const [state, dispatch] = useReducer(reducer, { products } as IProductsState)
+export const ProductsProvider = ({
+  children,
+  products,
+  totalPages,
+}: React.PropsWithChildren<{ products: Product[]; totalPages: number }>) => {
+  const [state, dispatch] = useReducer(reducer, { ...INITIAL_PRODUCTS_STATE, products, totalPages } as IProductsState)
 
   return <ProductsContext.Provider value={{ state, dispatch }}>{children}</ProductsContext.Provider>
 }

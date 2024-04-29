@@ -9,4 +9,6 @@ export type SetProductsAction = Action<
   }
 >
 
-export type ProductsActions = SetProductsAction
+export type SetCurrentPageAction = Action<'SET_CURRENT_PAGE', number>
+
+export type ProductsActions = SetProductsAction | SetCurrentPageAction

@@ -1,6 +1,6 @@
 import { IProductsState } from './interface'
 
-export const PRODUCT_PAGE_SIZES = [5, 10, 20, 50]
+export const PRODUCT_PAGE_SIZES = [5, 12, 20, 50]
 
 const DEFAULT_PRODUCT_PAGE_SIZE = PRODUCT_PAGE_SIZES[1]
 

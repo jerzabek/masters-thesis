@@ -8,11 +8,12 @@ export default async function Products() {
     products = await getProducts({})
   } catch (e) {
     console.error(e)
+    return null
   }
 
   return (
     <>
-      <ProductList products={products?.products ?? []} />
+      <ProductList products={products.products} totalPages={products.totalPages} />
     </>
   )
 }

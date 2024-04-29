@@ -75,5 +75,7 @@ export async function postJson<T = ApiResponse>(url: string, body?: any, options
 export const query = (params: Record<string, any>) => {
   if (Object.keys(params).length === 0) return ''
 
+  Object.keys(params).forEach(key => params[key] === undefined && delete params[key])
+
   return `?${new URLSearchParams(params).toString()}`
 }

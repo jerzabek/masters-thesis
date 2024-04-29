@@ -1,5 +1,6 @@
 import { Product } from 'model/Product'
-import { SetCurrentPageAction, SetProductsAction } from './interface'
+import { SetCurrentPageAction, SetFiltersAction, SetProductsAction } from './interface'
+import { IProductsState } from '../interface'
 
 /** Products */
 
@@ -13,4 +14,11 @@ export const setProducts = (products: Product[], totalPages: number): SetProduct
 export const setCurrentPage = (currentPage: number): SetCurrentPageAction => ({
   type: 'SET_CURRENT_PAGE',
   payload: currentPage,
+})
+
+/** Filters */
+
+export const setFilters = (filters: IProductsState['filters']): SetFiltersAction => ({
+  type: 'SET_FILTERS',
+  payload: filters,
 })

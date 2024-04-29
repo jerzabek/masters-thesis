@@ -3,6 +3,7 @@ import { ProductsActions } from './interface'
 
 export const SET_PRODUCTS = 'SET_PRODUCTS'
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+export const SET_FILTERS = 'SET_FILTERS'
 
 export const reducer = (state: IProductsState, action: ProductsActions): IProductsState => {
   switch (action.type) {
@@ -22,6 +23,15 @@ export const reducer = (state: IProductsState, action: ProductsActions): IProduc
       return {
         ...state,
         currentPage,
+      }
+    }
+
+    case SET_FILTERS: {
+      const filters = action.payload
+
+      return {
+        ...state,
+        filters,
       }
     }
 

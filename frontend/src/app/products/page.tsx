@@ -38,9 +38,7 @@ export default function Page() {
         </Flex>
       </Box>
 
-      <Container maxW="container.xl" py={16}>
-        <Products />
-      </Container>
+      <Products />
     </>
   )
 }

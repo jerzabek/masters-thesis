@@ -1,5 +1,5 @@
 import { Product } from 'model/Product'
-import { SetCurrentPageAction, SetFiltersAction, SetProductsAction } from './interface'
+import { SetCurrentPageAction, SetFiltersAction, SetProductsAction, ToggleSortAction } from './interface'
 import { IProductsState } from '../interface'
 
 /** Products */
@@ -21,4 +21,9 @@ export const setCurrentPage = (currentPage: number): SetCurrentPageAction => ({
 export const setFilters = (filters: IProductsState['filters']): SetFiltersAction => ({
   type: 'SET_FILTERS',
   payload: filters,
+})
+
+export const toggleSort = (): ToggleSortAction => ({
+  type: 'TOGGLE_SORT',
+  payload: undefined,
 })

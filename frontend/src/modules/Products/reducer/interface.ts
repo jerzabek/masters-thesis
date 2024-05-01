@@ -14,4 +14,6 @@ export type SetCurrentPageAction = Action<'SET_CURRENT_PAGE', number>
 
 export type SetFiltersAction = Action<'SET_FILTERS', IProductsState['filters']>
 
-export type ProductsActions = SetProductsAction | SetCurrentPageAction | SetFiltersAction
+export type ToggleSortAction = Action<'TOGGLE_SORT', undefined>
+
+export type ProductsActions = SetProductsAction | SetCurrentPageAction | SetFiltersAction | ToggleSortAction

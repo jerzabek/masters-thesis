@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import net.pinehaus.backend.product.dto.CreateProductDTO;
 import net.pinehaus.backend.product.dto.ProductPageResponse;
 import net.pinehaus.backend.product.model.Product;
 import net.pinehaus.backend.product.service.ProductService;
@@ -83,13 +84,13 @@ public class ProductController {
   @PreAuthorize("hasAuthority('USER')")
   @Operation(summary = "Create a product.", description = "Create a new product.")
   @ApiResponses({@ApiResponse(responseCode = "200"), @ApiResponse(responseCode = "409")})
-  public Product createProduct(Product product) {
-    if (productService.existsBySku(product.getSku()) || productService.existsBySlug(
-        product.getSlug())) {
+  public Product createProduct(@RequestBody CreateProductDTO product,
+      @AuthenticationPrincipal UserPrincipal currentUser) {
+    if (productService.existsBySku(product.getSku())) {
       throw new ResponseStatusException(HttpStatus.CONFLICT, "Product already exists");
     }
 
-    return productService.createProduct(product);
+    return productService.createProduct(product, currentUser.getUser());
   }
 
   @PutMapping("/{id}")

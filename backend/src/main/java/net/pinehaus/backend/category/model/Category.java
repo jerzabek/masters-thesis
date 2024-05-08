@@ -1,5 +1,6 @@
 package net.pinehaus.backend.category.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import org.checkerframework.common.aliasing.qual.Unique;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@JsonView(CategoryViews.Public.class)
 public class Category {
 
   @Id

@@ -17,12 +17,12 @@ import lombok.Setter;
 import net.pinehaus.backend.attribute.model.AttributeValue;
 import net.pinehaus.backend.category.model.Category;
 import net.pinehaus.backend.user.model.UserEntity;
-import net.pinehaus.backend.user.model.UserViews;
 
 @Entity
 @Getter
 @Setter
 @RequiredArgsConstructor
+@JsonView(ProductViews.Public.class)
 public class Product {
 
   @Id
@@ -48,6 +48,7 @@ public class Product {
   private double price;
 
   @Column
+  @JsonView(ProductViews.Public.class)
   private String thumbnail;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
@@ -55,11 +56,11 @@ public class Product {
 
   @JoinColumn(nullable = false)
   @ManyToOne
-  @Getter(onMethod_ = {@JsonView(UserViews.Public.class)})
-  @JsonView(UserViews.Public.class)
+  @JsonView(ProductViews.Public.class)
   private UserEntity createdBy;
 
   @JoinColumn
   @ManyToOne
+  @JsonView(ProductViews.Public.class)
   private Category category;
 }

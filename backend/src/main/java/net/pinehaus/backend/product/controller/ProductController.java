@@ -9,10 +9,11 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import net.pinehaus.backend.product.dto.CreateProductDTO;
 import net.pinehaus.backend.product.dto.ProductPageResponse;
+import net.pinehaus.backend.product.dto.UpdateProductDTO;
 import net.pinehaus.backend.product.model.Product;
+import net.pinehaus.backend.product.model.ProductViews;
 import net.pinehaus.backend.product.service.ProductService;
 import net.pinehaus.backend.security.UserPrincipal;
-import net.pinehaus.backend.user.model.UserViews;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -43,6 +44,7 @@ public class ProductController {
   @Operation(summary = "Get paginated products list.",
       description = "Fetch paginated products list, optionally filtered by category and price range.")
   @ApiResponses({@ApiResponse(responseCode = "200"), @ApiResponse(responseCode = "404")})
+  @JsonView(ProductViews.Public.class)
   public ProductPageResponse getProduct(@RequestParam(required = false) Optional<Integer> page,
       @RequestParam(required = false) Optional<Integer> size,
       @RequestParam(required = false) Optional<String> sort,
@@ -72,6 +74,7 @@ public class ProductController {
   }
 
   @GetMapping("/{id}")
+  @JsonView(ProductViews.Public.class)
   @Operation(summary = "Get a product by ID.", description = "Fetch product by ID, if it exists.")
   @ApiResponses({@ApiResponse(responseCode = "200"), @ApiResponse(responseCode = "404")})
   public Product getProduct(@PathVariable int id) {
@@ -82,6 +85,7 @@ public class ProductController {
 
   @PostMapping
   @PreAuthorize("hasAuthority('USER')")
+  @JsonView(ProductViews.Public.class)
   @Operation(summary = "Create a product.", description = "Create a new product.")
   @ApiResponses({@ApiResponse(responseCode = "200"), @ApiResponse(responseCode = "409")})
   public Product createProduct(@RequestBody CreateProductDTO product,
@@ -95,12 +99,13 @@ public class ProductController {
 
   @PutMapping("/{id}")
   @PreAuthorize("hasAuthority('USER')")
-  @JsonView(UserViews.Public.class)
+  @JsonView(ProductViews.Public.class)
   @Operation(summary = "Update a product.", description = "Update an existing product.")
   @ApiResponses({@ApiResponse(responseCode = "200"), @ApiResponse(responseCode = "404"),
       @ApiResponse(responseCode = "403")})
   public Product updateProduct(@PathVariable int id,
-      @AuthenticationPrincipal UserPrincipal currentUser, @RequestBody Product productUpdate) {
+      @AuthenticationPrincipal UserPrincipal currentUser,
+      @RequestBody UpdateProductDTO productUpdate) {
     Optional<Product> existingProduct = productService.getProductById(id);
 
     if (existingProduct.isEmpty()) {
@@ -114,7 +119,7 @@ public class ProductController {
           "You are not allowed to update this product");
     }
 
-    return productService.updateProduct(product);
+    return productService.updateProduct(product, productUpdate);
   }
 
 

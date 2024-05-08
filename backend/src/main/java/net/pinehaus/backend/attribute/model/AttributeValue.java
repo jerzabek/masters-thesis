@@ -1,6 +1,6 @@
 package net.pinehaus.backend.attribute.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -23,15 +23,16 @@ public class AttributeValue {
   @Id
   @ManyToOne
   @JoinColumn
+  @JsonView(AttributeValueViews.Public.class)
   private Attribute attribute;
 
   @Id
   @ManyToOne
   @JoinColumn
-  @JsonIgnore
   private Product product;
 
   @Column
+  @JsonView(AttributeValueViews.Public.class)
   private String value;
 
   @Getter

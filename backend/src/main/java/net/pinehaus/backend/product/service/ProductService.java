@@ -11,6 +11,7 @@ import net.pinehaus.backend.attribute.service.AttributeValueService;
 import net.pinehaus.backend.category.model.Category;
 import net.pinehaus.backend.category.service.CategoryService;
 import net.pinehaus.backend.product.dto.CreateProductDTO;
+import net.pinehaus.backend.product.dto.UpdateProductDTO;
 import net.pinehaus.backend.product.model.Product;
 import net.pinehaus.backend.product.repository.ProductRepository;
 import net.pinehaus.backend.user.model.UserEntity;
@@ -44,8 +45,7 @@ public class ProductService {
   }
 
   public Page<Product> getProductsByCategoryIdAndPriceBetween(int categoryId, double min,
-      double max,
-      int page, int size, Sort.Direction sortOrder) {
+      double max, int page, int size, Sort.Direction sortOrder) {
     return productRepository.findAllByCategoryIdAndPriceBetween(categoryId, min, max,
         PageRequest.of(page, size, Sort.by(sortOrder, "price")));
   }
@@ -90,11 +90,9 @@ public class ProductService {
             "Attribute with id " + attribute.getAttributeId() + " does not exist.");
       }
 
-      newProduct.getAttributes().add(attributeValueService.setProductAttribute(
-          newProduct,
-          attributeOptional.get(),
-          attribute.getValue()
-      ));
+      newProduct.getAttributes()
+                .add(attributeValueService.setProductAttribute(newProduct, attributeOptional.get(),
+                    attribute.getValue()));
     }
 
     /* Set category */
@@ -122,7 +120,27 @@ public class ProductService {
     return productRepository.existsById(id);
   }
 
-  public Product updateProduct(Product product) {
+  public Product updateProduct(Product product, UpdateProductDTO payload) {
+    product.setName(payload.getName());
+    product.setDescription(payload.getDescription());
+    product.setSku(payload.getSku());
+    product.setQuantity(payload.getQuantity());
+    product.setPrice(payload.getPrice());
+    product.setThumbnail(payload.getThumbnail());
+    product.setSlug(Slugify.slugify(payload.getName()));
+
+    /* Set category */
+    Optional<Category> category = categoryService.getCategoryById(payload.getCategoryId());
+
+    if (category.isEmpty()) {
+      throw new IllegalArgumentException(
+          "Category with id " + payload.getCategoryId() + " does not exist.");
+    }
+
+    product.setCategory(category.get());
+
+    attributeValueService.compareAndUpdateAttributeValues(product, payload.getAttributes());
+
     return productRepository.save(product);
   }
 }

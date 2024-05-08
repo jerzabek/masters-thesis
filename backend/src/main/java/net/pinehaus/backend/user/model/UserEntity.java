@@ -29,6 +29,7 @@ public class UserEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
+  @JsonView(UserViews.Public.class)
   private UUID id;
 
   @Column(nullable = false)
@@ -40,15 +41,19 @@ public class UserEntity {
   @JsonView(UserViews.Public.class)
   private String lastName;
 
+  @JsonView(UserViews.Public.class)
   private String username;
 
   @Column(nullable = false)
+  @JsonView(UserViews.Public.class)
   private String email;
 
   @Column
+  @JsonView(UserViews.Public.class)
   private Date dateOfBirth;
 
   @Column
+  @JsonView(UserViews.Public.class)
   private String avatarUrl;
 
 
@@ -61,15 +66,12 @@ public class UserEntity {
    * token.
    */
   @Column
-  @JsonIgnore
   private String googleId;
 
   @Column(length = 2048)
-  @JsonIgnore
   private String sessionId;
 
   @Column
-  @JsonIgnore
   private Timestamp sessionExpiresAt;
 
   @CreationTimestamp

@@ -16,8 +16,8 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react'
-import { useProductsDispatch, useProductsState } from 'modules/Products/context'
-import { setFilters } from 'modules/Products/reducer/actions'
+import { useProductsDispatch, useProductsState } from 'modules/Products/List/context'
+import { setFilters } from 'modules/Products/List/reducer/actions'
 import { useEffect, useState } from 'react'
 
 interface Props {

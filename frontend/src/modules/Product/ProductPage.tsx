@@ -26,6 +26,10 @@ interface Props {
 export default function ProductPage({ product }: Props) {
   const breadcrumbBarBg = useColorModeValue('yellow.200', 'orange.700')
 
+  const hasAttributesWithOptions = product.attributes.some(
+    ({ attribute }) => !!attribute.options && attribute.options.length > 0
+  )
+
   return (
     <>
       <Flex h="70px" bg={breadcrumbBarBg} align="center">
@@ -63,15 +67,36 @@ export default function ProductPage({ product }: Props) {
             <Text fontSize={24} opacity={0.7} mb={2}>
               {product.price} &euro;
             </Text>
-
             <Divider mb={4} />
-
             <Box minH="140px" mb={4}>
               <Text>{product.description}</Text>
             </Box>
 
-            <Divider mb={4} />
+            <Divider my={4} />
 
+            {hasAttributesWithOptions && (
+              <Box mb={8}>
+                <Text fontSize={18} mb={4}>
+                  Select options:
+                </Text>
+
+                {product.attributes
+                  .filter(({ attribute }) => !!attribute.options?.length)
+                  .map(({ attribute }) => (
+                    <Box key={attribute.id} mb={4}>
+                      <Text opacity={0.7}>{attribute.name}</Text>
+
+                      <Flex>
+                        {attribute.options?.map(option => (
+                          <Button key={option} variant="outline" size="sm" mr={4}>
+                            {option}
+                          </Button>
+                        ))}
+                      </Flex>
+                    </Box>
+                  ))}
+              </Box>
+            )}
             <Flex gap={8}>
               <NumberInput inputProps={{ placeholder: 'Quantity', w: '70px' }} />
 
@@ -79,13 +104,10 @@ export default function ProductPage({ product }: Props) {
                 Add to cart
               </Button>
             </Flex>
-
             <Divider my={4} />
-
             <Text fontSize={18} mb={4}>
               Details:
             </Text>
-
             {product.attributes.map(({ attribute, value }) => (
               <Flex key={attribute.id} mb={4}>
                 <Box w="160px" opacity={0.7}>

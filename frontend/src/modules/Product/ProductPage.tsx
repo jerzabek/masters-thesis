@@ -46,14 +46,14 @@ export default function ProductPage({ product }: Props) {
             </BreadcrumbItem>
 
             <BreadcrumbItem isCurrentPage>
-              <BreadcrumbLink href={productPageUrl(product.id, product.slug)}>{product.category.name}</BreadcrumbLink>
+              <BreadcrumbLink href={productPageUrl(product.id, product.slug)}>{product.name}</BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
         </Container>
       </Flex>
 
       <Container maxW="container.xl" py={16}>
-        <Flex justify="space-between">
+        <Flex justify="space-between" align="flex-start">
           <Box border="1px solid" borderColor="gray.300" borderRadius={4}>
             <Image src={product.thumbnail ?? image('noimage.png')} alt={product.name} width={500} height={500} />
           </Box>
@@ -79,6 +79,26 @@ export default function ProductPage({ product }: Props) {
                 Add to cart
               </Button>
             </Flex>
+
+            <Divider my={4} />
+
+            <Text fontSize={18} mb={4}>
+              Details:
+            </Text>
+
+            {product.attributes.map(({ attribute, value }) => (
+              <Flex key={attribute.id} mb={4}>
+                <Box w="160px" opacity={0.7}>
+                  <Text>{attribute.name}</Text>
+                </Box>
+
+                <Text mx={4} opacity={0.7}>
+                  :
+                </Text>
+
+                <Text opacity={0.7}>{value}</Text>
+              </Flex>
+            ))}
           </Box>
         </Flex>
       </Container>

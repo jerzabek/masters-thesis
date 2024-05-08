@@ -10,4 +10,10 @@ export interface ProductAttribute {
   name: string
   type: ProductAttributeType
   value: string
+  options: string[] | null
+}
+
+export interface ProductAttributeValue {
+  attribute: ProductAttribute
+  value: string
 }

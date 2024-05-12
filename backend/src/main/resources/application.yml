@@ -16,6 +16,8 @@ app:
   frontend:
     url: ${FRONTEND_URL}
     cookieDomain: ${FRONTEND_COOKIE_DOMAIN}
+  image:
+    path: ${IMAGE_PATH}
 
 spring:
   datasource:

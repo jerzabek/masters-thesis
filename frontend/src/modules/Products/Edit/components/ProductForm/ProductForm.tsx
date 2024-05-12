@@ -15,11 +15,13 @@ import {
   Text,
   Textarea,
 } from '@chakra-ui/react'
-import { getCategories } from 'api/Category/repository'
 import { Formik, FormikHelpers, useFormikContext } from 'formik'
+import { useEffect, useState } from 'react'
+
+import { getCategories } from 'api/Category/repository'
 import { Category } from 'model/Category'
 import { Product } from 'model/Product'
-import { useEffect, useState } from 'react'
+
 import { Attributes } from './components'
 import { ProductFormValues } from './interface'
 import { ProductFormValidationSchema, mapProductToUserFormValues } from './utils'

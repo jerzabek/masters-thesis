@@ -1,8 +1,10 @@
 import { Box, Text, useColorModeValue } from '@chakra-ui/react'
+import Link from 'next/link'
+
 import { image } from 'api/routes'
 import { Product } from 'model/Product'
-import Link from 'next/link'
 import { productPageUrl } from 'utils/pages'
+
 import { ProductImage } from './style'
 
 export default function ProductSlot({ product }: { product: Product }) {

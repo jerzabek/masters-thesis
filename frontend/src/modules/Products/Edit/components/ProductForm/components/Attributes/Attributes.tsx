@@ -14,10 +14,12 @@ import {
   Tr,
   useDisclosure,
 } from '@chakra-ui/react'
-import { getAttributes } from 'api/Attribute/repository'
 import { useFormikContext } from 'formik'
-import { ProductAttribute } from 'model/Product'
 import { useEffect, useState } from 'react'
+
+import { getAttributes } from 'api/Attribute/repository'
+import { ProductAttribute } from 'model/Product'
+
 import { ProductFormValues } from '../../interface'
 import { DeleteAttributeModal, EditAttributeModal } from './components'
 
@@ -31,7 +33,7 @@ export default function Attributes() {
   const [editingAttribute, setEditingAttribute] = useState<ProductAttribute>()
   const [deletingAttribute, setDeletingAttribute] = useState<ProductAttribute>()
 
-  const { values, errors, setFieldValue } = useFormikContext<ProductFormValues>()
+  const { values, setFieldValue } = useFormikContext<ProductFormValues>()
 
   useEffect(() => {
     getAttributes().then(setAttributes).catch(console.error)

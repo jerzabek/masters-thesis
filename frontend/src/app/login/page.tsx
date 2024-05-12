@@ -1,10 +1,11 @@
 'use client'
 
 import { Box, Flex, Text } from '@chakra-ui/react'
-import { googleLoginRedirectRoute } from 'api/routes'
-import { useUser } from 'hooks/authentication'
 import { redirect } from 'next/navigation'
 import Script from 'next/script'
+
+import { googleLoginRedirectRoute } from 'api/routes'
+import { useUser } from 'hooks/authentication'
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
 

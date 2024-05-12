@@ -1,9 +1,11 @@
-import React, { createContext, useEffect, useReducer } from 'react'
-import { reducer } from './reducer/reducer'
+import React, { createContext, useReducer } from 'react'
+
+import { Product } from 'model/Product'
+
+import { INITIAL_PRODUCTS_STATE } from './const'
 import { IProductsState } from './interface'
 import { ProductsActions } from './reducer/interface'
-import { Product } from 'model/Product'
-import { INITIAL_PRODUCTS_STATE } from './const'
+import { reducer } from './reducer/reducer'
 
 interface IProductsContext {
   state: IProductsState

@@ -22,6 +22,7 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/display-name": "off",
     "import/no-duplicates": ["warn"],
+    "react-hooks/exhaustive-deps": "off",
     "import/order": [
       "warn",
       {

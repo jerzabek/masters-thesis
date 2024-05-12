@@ -1,5 +1,5 @@
-import { ToastId, useToast } from '@chakra-ui/react'
-import { useCallback, useEffect, useState } from 'react'
+import { useToast } from '@chakra-ui/react'
+import { useCallback } from 'react'
 
 export const useSavingToast = () => {
   const toast = useToast()

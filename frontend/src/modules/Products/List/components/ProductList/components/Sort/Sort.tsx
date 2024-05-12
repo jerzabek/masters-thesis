@@ -1,5 +1,6 @@
 import { ChevronDown, ChevronUp } from '@carbon/icons-react'
 import { Box, Flex, Text } from '@chakra-ui/react'
+
 import { useProductsDispatch, useProductsState } from 'modules/Products/List/context'
 import { toggleSort } from 'modules/Products/List/reducer/actions'
 

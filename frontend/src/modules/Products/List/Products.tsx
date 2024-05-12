@@ -1,4 +1,5 @@
 import { getProducts } from 'api/Product/repository'
+
 import { ProductList } from './components'
 
 export default async function Products() {

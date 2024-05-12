@@ -1,12 +1,14 @@
 'use client'
 
 import { Container, useToast } from '@chakra-ui/react'
+import { FormikHelpers } from 'formik'
+import { useRouter } from 'next/navigation'
+
 import { RevalidateProductAction } from 'actions'
 import { updateProduct } from 'api/Product/repository'
 import { useErrorToast, useSavingToast, useSuccessToast } from 'components/Toast'
-import { FormikHelpers } from 'formik'
 import { Product } from 'model/Product'
-import { useRouter } from 'next/navigation'
+
 import { ProductForm } from './components'
 import { ProductFormValues } from './components/ProductForm'
 

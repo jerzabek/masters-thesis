@@ -1,8 +1,8 @@
 import { ChevronRight } from '@carbon/icons-react'
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Container, Flex, Text } from '@chakra-ui/react'
-import { Products } from 'modules/Products/List'
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Text } from '@chakra-ui/react'
 import Image from 'next/image'
-import { Suspense } from 'react'
+
+import { Products } from 'modules/Products/List'
 
 export default function Page() {
   return (

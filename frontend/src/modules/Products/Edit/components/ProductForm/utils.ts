@@ -1,5 +1,7 @@
-import { Product } from 'model/Product'
 import * as yup from 'yup'
+
+import { Product } from 'model/Product'
+
 import { ProductFormValues } from './interface'
 
 export const ProductFormValidationSchema = yup.object().shape({})

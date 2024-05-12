@@ -1,5 +1,6 @@
 import { BASE_API_URL } from 'api/routes'
 import { query } from 'utils/api'
+
 import { ProductListFilters } from './interface'
 
 export const getProductList = (queryObject: ProductListFilters) => `${BASE_API_URL}/products${query(queryObject)}`

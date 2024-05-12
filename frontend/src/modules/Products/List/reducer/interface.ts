@@ -1,5 +1,6 @@
 import { Product } from 'model/Product'
 import { Action } from 'utils/interface'
+
 import { IProductsState } from '../interface'
 
 export type SetProductsAction = Action<

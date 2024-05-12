@@ -13,10 +13,12 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
+import Image from 'next/image'
+
 import { image } from 'api/routes'
 import NumberInput from 'components/NumberInput'
 import { Product } from 'model/Product'
-import Image from 'next/image'
+import { ProductAttributeType } from 'model/Product/ProductAttribute'
 import { categoryPageUrl, productPageUrl } from 'utils/pages'
 
 interface Props {
@@ -81,13 +83,13 @@ export default function ProductPage({ product }: Props) {
                 </Text>
 
                 {product.attributes
-                  .filter(({ attribute }) => !!attribute.options?.length)
+                  .filter(({ attribute }) => attribute.type === ProductAttributeType.ENUM)
                   .map(({ attribute }) => (
                     <Box key={attribute.id} mb={4}>
                       <Text opacity={0.7}>{attribute.name}</Text>
 
                       <Flex>
-                        {attribute.options?.map(option => (
+                        {(attribute.options as string[])?.map(option => (
                           <Button key={option} variant="outline" size="sm" mr={4}>
                             {option}
                           </Button>

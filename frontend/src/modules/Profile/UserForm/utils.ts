@@ -1,6 +1,8 @@
-import { User } from 'model/User'
-import { UserFormValues } from './interface'
 import * as yup from 'yup'
+
+import { User } from 'model/User'
+
+import { UserFormValues } from './interface'
 
 export const mapUserToUserFormValues = (user?: User): UserFormValues => {
   if (!user) {

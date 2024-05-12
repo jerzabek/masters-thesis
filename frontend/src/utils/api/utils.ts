@@ -1,9 +1,10 @@
 interface ApiResponse {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
 }
 
 export function parseResponse<T = ApiResponse>(response: Response) {
-  return new Promise<T>(async (resolve, reject) => {
+  return new Promise<T>((resolve, reject) => {
     try {
       const contentType = response.headers.get('content-type')
       const isSuccessStatus = response.status >= 200 && response.status < 400
@@ -12,17 +13,15 @@ export function parseResponse<T = ApiResponse>(response: Response) {
         resolve({} as T)
       } else if (contentType && contentType.includes('application/json')) {
         if (isSuccessStatus) {
-          try {
-            const parsedResponse: T = await response.json()
-
-            resolve(parsedResponse)
-          } catch (error) {
-            resolve({} as T)
-          }
+          response
+            .json()
+            .then(parsedResponse => resolve(parsedResponse as T))
+            .catch(() => resolve({} as T))
         } else {
-          const parsedResponse: T = await response.json()
-
-          reject(parsedResponse)
+          response
+            .json()
+            .then(parsedResponse => reject(parsedResponse as T))
+            .catch(() => reject({} as T))
         }
       } else {
         if (isSuccessStatus) {
@@ -46,6 +45,7 @@ export async function getJson<T = ApiResponse>(url: string, options?: RequestIni
   return parseResponse<T>(response)
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function putJson<T = ApiResponse>(url: string, body: any) {
   const response = await fetch(url, {
     credentials: 'include',
@@ -59,6 +59,7 @@ export async function putJson<T = ApiResponse>(url: string, body: any) {
   return parseResponse<T>(response)
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function postJson<T = ApiResponse>(url: string, body?: any, options?: RequestInit) {
   const response = await fetch(url, {
     credentials: 'include',
@@ -73,6 +74,7 @@ export async function postJson<T = ApiResponse>(url: string, body?: any, options
   return parseResponse<T>(response)
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const query = (params: Record<string, any>) => {
   if (Object.keys(params).length === 0) return ''
 

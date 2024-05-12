@@ -18,9 +18,10 @@ import {
   NumberInputField,
   Select,
 } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
+
 import { ProductAttribute } from 'model/Product'
 import { ProductAttributeType } from 'model/Product/ProductAttribute'
-import { useEffect, useState } from 'react'
 
 interface Props {
   isOpen: boolean

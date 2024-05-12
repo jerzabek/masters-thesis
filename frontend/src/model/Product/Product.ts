@@ -1,5 +1,6 @@
 import { Category } from 'model/Category'
 import { User } from 'model/User'
+
 import { ProductAttributeValue } from './ProductAttribute'
 
 export interface Product {

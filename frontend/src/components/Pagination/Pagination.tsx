@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight } from '@carbon/icons-react'
 import { Button, Flex, FlexProps } from '@chakra-ui/react'
+
 import { getPages } from './utils'
 
 interface Props extends FlexProps {

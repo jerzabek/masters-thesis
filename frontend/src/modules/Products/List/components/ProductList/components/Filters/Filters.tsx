@@ -16,9 +16,10 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
+
 import { useProductsDispatch, useProductsState } from 'modules/Products/List/context'
 import { setFilters } from 'modules/Products/List/reducer/actions'
-import { useEffect, useState } from 'react'
 
 interface Props {
   isOpen: boolean
@@ -48,7 +49,7 @@ export default function Filters({ isOpen, onClose }: Props) {
   useEffect(() => {
     setMin(filters.min)
     setMax(filters.max)
-  }, [isOpen])
+  }, [isOpen, filters])
 
   useEffect(() => {
     if (min === undefined || max === undefined) {

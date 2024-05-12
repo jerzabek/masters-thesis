@@ -1,25 +1,16 @@
 'use client'
 
-import { ChevronRight, Filter } from '@carbon/icons-react'
-import {
-  Box,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  Button,
-  Container,
-  Divider,
-  Flex,
-  useColorModeValue,
-  useDisclosure,
-} from '@chakra-ui/react'
+import { Filter } from '@carbon/icons-react'
+import { Box, Button, Container, Divider, Flex, useColorModeValue, useDisclosure } from '@chakra-ui/react'
+import { useEffect, useRef, useState } from 'react'
+
 import { getProducts } from 'api/Product/repository'
 import Pagination from 'components/Pagination'
 import { ProductSlot } from 'components/Product'
 import { Product } from 'model/Product'
 import { ProductsProvider, useProductsDispatch, useProductsState } from 'modules/Products/List/context'
 import { setCurrentPage, setProducts } from 'modules/Products/List/reducer/actions'
-import { useEffect, useRef, useState } from 'react'
+
 import { Filters, Sort } from './components'
 
 interface Props {
@@ -27,7 +18,7 @@ interface Props {
   totalPages: number
 }
 
-function ProductList({}: Props) {
+function ProductList() {
   const isFirstLoad = useRef(true)
 
   const [isLoading, setIsLoading] = useState(false)
@@ -51,7 +42,7 @@ function ProductList({}: Props) {
       .then(({ products, totalPages }) => dispatch(setProducts(products, totalPages)))
       .catch(console.error)
       .finally(() => setIsLoading(false))
-  }, [currentPage, size, sort, filters])
+  }, [dispatch, currentPage, size, sort, filters])
 
   const handlePageChange = (page: number) => dispatch(setCurrentPage(page))
 

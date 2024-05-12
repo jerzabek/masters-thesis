@@ -1,4 +1,5 @@
 import { Product } from 'model/Product'
+
 import { SetCurrentPageAction, SetFiltersAction, SetProductsAction, ToggleSortAction } from './interface'
 import { IProductsState } from '../interface'
 

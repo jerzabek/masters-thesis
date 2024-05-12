@@ -37,9 +37,10 @@ export function parseResponse<T = ApiResponse>(response: Response) {
   })
 }
 
-export async function getJson<T = ApiResponse>(url: string) {
+export async function getJson<T = ApiResponse>(url: string, options?: RequestInit) {
   const response = await fetch(url, {
     credentials: 'include',
+    ...options,
   })
 
   return parseResponse<T>(response)

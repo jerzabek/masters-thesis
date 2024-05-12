@@ -5,13 +5,31 @@ export enum ProductAttributeType {
   BOOLEAN = 'BOOLEAN',
 }
 
-export interface ProductAttribute {
+interface ProductAttributeCommon {
   id: number
   name: string
-  type: ProductAttributeType
   value: string
-  options: string[] | null
 }
+
+export type ProductAttribute = ProductAttributeCommon &
+  (
+    | {
+        type: ProductAttributeType.ENUM
+        options: string[]
+      }
+    | {
+        type: ProductAttributeType.STRING
+        options: string
+      }
+    | {
+        type: ProductAttributeType.NUMBER
+        options: string
+      }
+    | {
+        type: ProductAttributeType.BOOLEAN
+        options: string
+      }
+  )
 
 export interface ProductAttributeValue {
   attribute: ProductAttribute

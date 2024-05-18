@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Select as ChakraSelect,
   Checkbox,
   Flex,
   FormControl,
@@ -16,12 +17,13 @@ import {
   ModalOverlay,
   NumberInput,
   NumberInputField,
-  Select,
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 
 import { ProductAttribute } from 'model/Product'
 import { ProductAttributeType } from 'model/Product/ProductAttribute'
+
+import { EnumValueSelector } from './components'
 
 interface Props {
   isOpen: boolean
@@ -45,15 +47,12 @@ export default function EditAttributeModal({ attributes, attribute, isOpen, subm
     setIsValid(!!selectedAttribute && !!attributeValue.trim())
   }, [selectedAttribute, attributeValue])
 
-  useEffect(() => {
-    setAttributeValue('')
-  }, [selectedAttribute])
-
   const handleSelectedAttributeChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setSelectedAttribute(attributes.find(attribute => attribute.id === +e.target.value))
 
-  const handleAttributeValueChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+  const handleAttributeValueChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setAttributeValue(e.target.value)
+  }
 
   const toggleCheckboxValue = () => {
     setAttributeValue(attributeValue === 'true' ? 'false' : 'true')
@@ -79,13 +78,17 @@ export default function EditAttributeModal({ attributes, attribute, isOpen, subm
             <Box flex={2}>
               <FormControl isRequired>
                 <FormLabel>Attribute</FormLabel>
-                <Select placeholder="Attribute" value={selectedAttribute?.id} onChange={handleSelectedAttributeChange}>
+                <ChakraSelect
+                  placeholder="Attribute"
+                  value={selectedAttribute?.id}
+                  onChange={handleSelectedAttributeChange}
+                >
                   {attributes.map(attribute => (
                     <option key={attribute.id} value={attribute.id}>
                       {attribute.name}
                     </option>
                   ))}
-                </Select>
+                </ChakraSelect>
               </FormControl>
             </Box>
 
@@ -94,18 +97,12 @@ export default function EditAttributeModal({ attributes, attribute, isOpen, subm
                 <>
                   {selectedAttribute.type === ProductAttributeType.ENUM ? (
                     <FormControl isRequired>
-                      <FormLabel>Value</FormLabel>
-                      <Select
-                        placeholder="Select an option..."
-                        value={selectedAttribute.value}
-                        onChange={handleAttributeValueChange}
-                      >
-                        {selectedAttribute.options.map(option => (
-                          <option key={option} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </Select>
+                      <FormLabel>List of possible values</FormLabel>
+                      <EnumValueSelector
+                        options={selectedAttribute.options.join(',')}
+                        value={attributeValue}
+                        onChange={setAttributeValue}
+                      />
 
                       {!isValid && <FormErrorMessage>You must define an attribute value</FormErrorMessage>}
                     </FormControl>

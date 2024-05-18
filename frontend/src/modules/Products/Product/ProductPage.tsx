@@ -84,19 +84,25 @@ export default function ProductPage({ product }: Props) {
 
                 {product.attributes
                   .filter(({ attribute }) => attribute.type === ProductAttributeType.ENUM)
-                  .map(({ attribute }) => (
-                    <Box key={attribute.id} mb={4}>
-                      <Text opacity={0.7}>{attribute.name}</Text>
+                  .map(({ attribute, value }) => {
+                    let attributeOptions = value.split(',')
 
-                      <Flex>
-                        {(attribute.options as string[])?.map(option => (
-                          <Button key={option} variant="outline" size="sm" mr={4}>
-                            {option}
-                          </Button>
-                        ))}
-                      </Flex>
-                    </Box>
-                  ))}
+                    if (!attributeOptions.length) attributeOptions = attribute.options as string[]
+
+                    return (
+                      <Box key={attribute.id} mb={4}>
+                        <Text opacity={0.7}>{attribute.name}</Text>
+
+                        <Flex>
+                          {attributeOptions.map(option => (
+                            <Button key={option} variant="outline" size="sm" mr={4}>
+                              {option}
+                            </Button>
+                          ))}
+                        </Flex>
+                      </Box>
+                    )
+                  })}
               </Box>
             )}
             <Flex gap={8}>

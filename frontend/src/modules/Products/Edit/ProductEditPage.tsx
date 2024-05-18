@@ -9,12 +9,10 @@ import Link from 'next/link'
 import { redirect, useRouter } from 'next/navigation'
 
 import { updateProduct } from 'api/Product/repository'
+import { ProductForm, ProductFormValues } from 'components/Product'
 import { useErrorToast, useSavingToast, useSuccessToast } from 'components/Toast'
 import { Product } from 'model/Product'
 import { productPageUrl } from 'utils/pages'
-
-import { ProductFormValues } from '../../../components/Product/ProductForm'
-import { ProductForm } from './components'
 
 interface Props {
   product: Product

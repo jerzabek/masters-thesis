@@ -1,2 +1,2 @@
-export { default } from './ProductForm'
+export { default as ProductForm } from './ProductForm'
 export type { ProductFormValues } from './interface'

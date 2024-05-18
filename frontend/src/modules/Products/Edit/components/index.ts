@@ -1,1 +1,1 @@
-export { default as ProductForm } from './ProductForm'
+export { default as ProductForm } from '../../../../components/Product/ProductForm'

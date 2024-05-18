@@ -1,5 +1,5 @@
+import { ProductFormValues } from 'components/Product/ProductForm'
 import { Product } from 'model/Product'
-import { ProductFormValues } from 'modules/Products/Edit/components/ProductForm'
 import { getJson, putJson } from 'utils/api'
 
 import * as I from './interface'

@@ -116,19 +116,21 @@ export default function ProductPage({ product }: Props) {
             <Text fontSize={18} mb={4}>
               Details:
             </Text>
-            {product.attributes.map(({ attribute, value }) => (
-              <Flex key={attribute.id} mb={4}>
-                <Box w="160px" opacity={0.7}>
-                  <Text>{attribute.name}</Text>
-                </Box>
+            {product.attributes
+              .filter(({ attribute }) => attribute.type !== ProductAttributeType.ENUM)
+              .map(({ attribute, value }) => (
+                <Flex key={attribute.id} mb={4}>
+                  <Box w="160px" opacity={0.7}>
+                    <Text>{attribute.name}</Text>
+                  </Box>
 
-                <Text mx={4} opacity={0.7}>
-                  :
-                </Text>
+                  <Text mx={4} opacity={0.7}>
+                    :
+                  </Text>
 
-                <Text opacity={0.7}>{value}</Text>
-              </Flex>
-            ))}
+                  <Text opacity={0.7}>{value}</Text>
+                </Flex>
+              ))}
           </Box>
         </Flex>
       </Container>

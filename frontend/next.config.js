@@ -16,6 +16,11 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    serverActions: {
+      allowedOrigins: ['*.pinehaus.net', 'localhost:3000', 'localhost:8080'],
+    },
+  },
 }
 
 module.exports = nextConfig

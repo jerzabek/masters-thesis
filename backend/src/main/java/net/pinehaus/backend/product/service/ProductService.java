@@ -77,6 +77,8 @@ public class ProductService {
     newProduct.setAttributes(new ArrayList<>());
     newProduct.setSlug(Slugify.slugify(product.getName()));
 
+    newProduct = productRepository.save(newProduct);
+    
     /* Set attributes */
     List<AttributeValueDTO> attributes = product.getAttributes();
 

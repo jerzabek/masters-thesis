@@ -10,3 +10,5 @@ export const getProduct = (id: number) => `${BASE_API_URL}/products/${id}`
 export const updateProduct = (id: number) => `${BASE_API_URL}/products/${id}`
 
 export const createProduct = () => `${BASE_API_URL}/products`
+
+export const deleteProduct = (id: number) => `${BASE_API_URL}/products/${id}`

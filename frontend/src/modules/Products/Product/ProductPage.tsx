@@ -1,6 +1,6 @@
 'use client'
 
-import { ChevronRight, Edit } from '@carbon/icons-react'
+import { ChevronRight, Edit, TrashCan } from '@carbon/icons-react'
 import {
   Box,
   Breadcrumb,
@@ -10,15 +10,27 @@ import {
   Container,
   Divider,
   Flex,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Text,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react'
 import { useUser } from 'hooks/authentication'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
+import { deleteProduct } from 'api/Product/repository'
 import { image } from 'api/routes'
 import NumberInput from 'components/NumberInput'
+import { useErrorToast, useSavingToast, useSuccessToast } from 'components/Toast'
 import { Product } from 'model/Product'
 import { ProductAttributeType } from 'model/Product/ProductAttribute'
 import { categoryPageUrl, productEditUrl, productPageUrl } from 'utils/pages'
@@ -29,6 +41,39 @@ interface Props {
 
 export default function ProductPage({ product }: Props) {
   const { user } = useUser()
+
+  const router = useRouter()
+
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
+
+  const { close } = useToast()
+
+  const showSuccessToast = useSuccessToast()
+  const showErrorToast = useErrorToast()
+  const showSavingToast = useSavingToast()
+
+  const handleDeleteClick = () => setDeleteModalOpen(true)
+
+  const handleDeleteConfirm = () => {
+    const toastId = showSavingToast()
+
+    deleteProduct(product.id)
+      .then(() => {
+        showSuccessToast()
+        router.push('/products')
+      })
+      .catch(() => {
+        showErrorToast()
+      })
+      .finally(() => {
+        setDeleteModalOpen(false)
+        close(toastId)
+      })
+  }
+
+  const handleDeleteCancel = () => {
+    setDeleteModalOpen(false)
+  }
 
   const breadcrumbBarBg = useColorModeValue('yellow.200', 'orange.700')
 
@@ -73,17 +118,25 @@ export default function ProductPage({ product }: Props) {
               <Text fontSize={42}>{product.name}</Text>
 
               {product.createdBy.id === user?.id && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  colorScheme="green"
-                  as={Link}
-                  href={productEditUrl(product.id, product.slug)}
-                >
-                  <Flex align="center" gap={2}>
-                    <Edit /> Edit
-                  </Flex>
-                </Button>
+                <Flex gap={2}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    colorScheme="green"
+                    as={Link}
+                    href={productEditUrl(product.id, product.slug)}
+                  >
+                    <Flex align="center" gap={2}>
+                      <Edit /> Edit
+                    </Flex>
+                  </Button>
+
+                  <Button variant="outline" size="sm" colorScheme="red" onClick={handleDeleteClick}>
+                    <Flex align="center" gap={2}>
+                      <TrashCan /> Delete
+                    </Flex>
+                  </Button>
+                </Flex>
               )}
             </Flex>
             <Text fontSize={24} opacity={0.7} mb={2}>
@@ -154,6 +207,23 @@ export default function ProductPage({ product }: Props) {
           </Box>
         </Flex>
       </Container>
+
+      <Modal isOpen={isDeleteModalOpen} onClose={handleDeleteCancel} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Delete {product.name}?</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>Are you sure you want to delete this product?</ModalBody>
+          <ModalFooter>
+            <Button colorScheme="red" mr={3} onClick={handleDeleteConfirm}>
+              Delete
+            </Button>
+            <Button variant="ghost" onClick={handleDeleteCancel}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   )
 }

@@ -22,11 +22,17 @@ public class ImageService {
   private static final List<String> ALLOWED_MIME_TYPES = Arrays.asList("image/jpeg", "image/png");
   private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList(".jpg", ".jpeg", ".png");
 
-  public void saveImage(MultipartFile file) throws IOException {
+  public String saveImage(MultipartFile file, String name) throws IOException {
     validateImage(file);
-    Path path = Paths.get(getUploadDir() + file.getOriginalFilename());
+
+    String extension = getFileExtension(file);
+
+    Path path = Paths.get(getUploadDir() + name + extension);
     Files.write(path, file.getBytes());
+
+    return name + extension;
   }
+
 
   private String getUploadDir() {
     if (!UPLOAD_DIR.endsWith(File.separator)) {
@@ -35,6 +41,12 @@ public class ImageService {
     }
 
     return UPLOAD_DIR;
+  }
+
+  private String getFileExtension(MultipartFile file) {
+    String originalFilename = file.getOriginalFilename();
+    assert originalFilename != null;
+    return originalFilename.substring(originalFilename.lastIndexOf("."));
   }
 
   private void validateImage(MultipartFile file) throws IOException {
@@ -47,9 +59,7 @@ public class ImageService {
       throw new IOException("Invalid MIME type");
     }
 
-    String filename = file.getOriginalFilename();
-    assert filename != null;
-    String extension = filename.substring(filename.lastIndexOf("."));
+    String extension = getFileExtension(file);
     if (!ALLOWED_EXTENSIONS.contains(extension)) {
       throw new IOException("Invalid file extension");
     }

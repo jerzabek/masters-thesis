@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.HashMap;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.pinehaus.backend.image.service.ImageService;
@@ -31,12 +32,15 @@ public class ImageController {
   @PostMapping
   @Operation(summary = "Upload an image.",
       description = "Upload an image file to the server.")
-  @ApiResponses({@ApiResponse(responseCode = "204")})
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "Image uploaded successfully and in body returned is image name on CDN.")})
   public ResponseEntity<HashMap<String, String>> uploadImage(
       @RequestParam("file") MultipartFile file) {
     try {
-      imageService.saveImage(file);
-      return new ResponseEntity<>(ResponseUtilities.successResponse(), HttpStatus.NO_CONTENT);
+      String filename = imageService.saveImage(file, UUID.randomUUID().toString());
+
+      return new ResponseEntity<>(ResponseUtilities.createResponse("image", filename),
+          HttpStatus.OK);
     } catch (Exception e) {
       log.error("failed to upload image", e);
 

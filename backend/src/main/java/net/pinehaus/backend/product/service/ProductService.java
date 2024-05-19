@@ -72,13 +72,16 @@ public class ProductService {
     newProduct.setSku(product.getSku());
     newProduct.setQuantity(product.getQuantity());
     newProduct.setPrice(product.getPrice());
-    newProduct.setThumbnail(product.getThumbnail().isBlank() ? null : product.getThumbnail());
+    if (product.getThumbnail() != null) {
+      newProduct.setThumbnail(product.getThumbnail().isBlank() ? null : product.getThumbnail());
+    }
+
     newProduct.setCreatedBy(user);
     newProduct.setAttributes(new ArrayList<>());
     newProduct.setSlug(Slugify.slugify(product.getName()));
 
     newProduct = productRepository.save(newProduct);
-    
+
     /* Set attributes */
     List<AttributeValueDTO> attributes = product.getAttributes();
 

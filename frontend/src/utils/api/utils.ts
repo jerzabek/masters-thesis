@@ -74,6 +74,19 @@ export async function postJson<T = ApiResponse>(url: string, body?: any, options
   return parseResponse<T>(response)
 }
 
+export async function deleteJson<T = ApiResponse>(url: string, options?: RequestInit) {
+  const response = await fetch(url, {
+    credentials: 'include',
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    ...options,
+  })
+
+  return parseResponse<T>(response)
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const query = (params: Record<string, any>) => {
   if (Object.keys(params).length === 0) return ''

@@ -6,6 +6,7 @@ import { useEffect, useRef } from 'react'
 
 import { logout } from 'api/repository'
 import Link from 'components/Link'
+import { USER_AVATAR_SIZE } from 'components/Navigation/const'
 
 const MobileDropdownNav = () => {
   const { isOpen, onToggle, onClose } = useDisclosure()
@@ -58,8 +59,8 @@ const MobileDropdownNav = () => {
                   src={user.avatarUrl}
                   referrerPolicy="no-referrer"
                   alt="User avatar"
-                  width={48}
-                  height={48}
+                  width={USER_AVATAR_SIZE}
+                  height={USER_AVATAR_SIZE}
                   style={{ borderRadius: '50%' }}
                 />
               </Box>

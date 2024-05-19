@@ -5,6 +5,7 @@ import NextLink from 'next/link'
 
 import { logout } from 'api/repository'
 import Link from 'components/Link'
+import { USER_AVATAR_SIZE } from 'components/Navigation/const'
 
 export default function DesktopNavigation() {
   const { user, isAuthenticated } = useUser()
@@ -59,13 +60,13 @@ export default function DesktopNavigation() {
                 src={user.avatarUrl}
                 referrerPolicy="no-referrer"
                 alt="User avatar"
-                width={48}
-                height={48}
+                width={USER_AVATAR_SIZE}
+                height={USER_AVATAR_SIZE}
                 style={{ borderRadius: '50%' }}
               />
             </Box>
           ) : (
-            <UserAvatar width={48} height={48} />
+            <UserAvatar width={USER_AVATAR_SIZE} height={USER_AVATAR_SIZE} />
           )}
         </Link>
 

@@ -21,7 +21,7 @@ export default function ProductSlot({ product }: { product: Product }) {
       >
         <Box w={285} h={285} bg="gray.200" overflow="hidden">
           <ProductImage
-            src={product.thumbnail ?? image('noimage.png')}
+            src={image(product.thumbnail) ?? image('noimage.png')!}
             alt={product.name}
             width={0}
             height={0}

@@ -27,6 +27,7 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "chakra-react-select": "^4.7.6",
+    "file-system-access": "^1.0.4",
     "formik": "^2.4.5",
     "framer-motion": "^6",
     "next": "14.1.0",

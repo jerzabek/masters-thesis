@@ -8,7 +8,9 @@ import { useUser } from 'hooks/authentication'
 import Link from 'next/link'
 import { redirect, useRouter } from 'next/navigation'
 
+import { uploadImage } from 'api/Image/repository'
 import { updateProduct } from 'api/Product/repository'
+import { image as imageUrl } from 'api/routes'
 import { ProductForm, ProductFormValues } from 'components/Product'
 import { useErrorToast, useSavingToast, useSuccessToast } from 'components/Toast'
 import { Product } from 'model/Product'
@@ -32,7 +34,14 @@ export default function ProductEditPage({ product }: Props) {
   const handleSubmit = (values: ProductFormValues, helpers: FormikHelpers<ProductFormValues>) => {
     const toastId = showSavingToast()
 
-    updateProduct(product.id, values)
+    let uploadThumbnail = Promise.resolve(values.thumbnail === null ? null : product.thumbnail)
+
+    if (values.thumbnail) {
+      uploadThumbnail = uploadImage(values.thumbnail).then(({ image }) => imageUrl(image)!)
+    }
+
+    uploadThumbnail
+      .then(thumbnail => updateProduct(product.id, { ...values, thumbnail }))
       .then(RevalidateProductAction)
       .then(() => {
         showSuccessToast()

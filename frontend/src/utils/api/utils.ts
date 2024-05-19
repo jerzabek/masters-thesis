@@ -61,13 +61,19 @@ export async function putJson<T = ApiResponse>(url: string, body: any) {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function postJson<T = ApiResponse>(url: string, body?: any, options?: RequestInit) {
+  const isFormData = body instanceof FormData
+
+  const headers: {
+    'Content-Type'?: string
+  } = { 'Content-Type': 'application/json', ...options?.headers }
+
+  if (isFormData) delete headers['Content-Type']
+
   const response = await fetch(url, {
     credentials: 'include',
     method: 'POST',
-    body: JSON.stringify(body),
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    body: isFormData ? body : JSON.stringify(body),
+    headers,
     ...options,
   })
 

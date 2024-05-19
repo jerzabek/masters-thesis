@@ -27,7 +27,6 @@ export const mapProductToUserFormValues = (product?: Product): ProductFormValues
       description: '',
       sku: '',
       quantity: 0,
-      thumbnail: '',
       attributes: [],
     }
   }
@@ -39,7 +38,6 @@ export const mapProductToUserFormValues = (product?: Product): ProductFormValues
     categoryId: product.category.id,
     sku: product.sku,
     quantity: product.quantity,
-    thumbnail: product.thumbnail,
     attributes: product.attributes.map(attribute => ({
       attributeId: attribute.attribute.id,
       value: attribute.value,

@@ -1,4 +1,3 @@
-import { ProductFormValues } from 'components/Product/ProductForm'
 import { Product } from 'model/Product'
 import { deleteJson, getJson, postJson, putJson } from 'utils/api'
 
@@ -9,8 +8,9 @@ export const getProducts = (query: I.ProductListFilters) => getJson<I.ProductLis
 
 export const getProduct = (id: number) => getJson<I.GetProductResponse>(R.getProduct(id), {})
 
-export const updateProduct = (id: number, payload: ProductFormValues) => putJson<Product>(R.updateProduct(id), payload)
+export const updateProduct = (id: number, payload: I.UpdateProductPayload) =>
+  putJson<Product>(R.updateProduct(id), payload)
 
-export const createProduct = (payload: ProductFormValues) => postJson<Product>(R.createProduct(), payload)
+export const createProduct = (payload: I.UpdateProductPayload) => postJson<Product>(R.createProduct(), payload)
 
 export const deleteProduct = (id: number) => deleteJson(R.deleteProduct(id))

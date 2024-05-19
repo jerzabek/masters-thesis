@@ -1,3 +1,4 @@
+import { ProductFormValues } from 'components/Product'
 import { Product } from 'model/Product'
 
 export interface ProductListFilters {
@@ -15,3 +16,7 @@ export interface ProductListResponse {
 }
 
 export interface GetProductResponse extends Product {}
+
+export interface UpdateProductPayload extends Omit<ProductFormValues, 'thumbnail'> {
+  thumbnail?: string | null
+}

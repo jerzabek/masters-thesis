@@ -9,5 +9,5 @@ export interface ProductFormValues {
     value: string
   }>
   categoryId?: number
-  thumbnail: string
+  thumbnail?: File
 }

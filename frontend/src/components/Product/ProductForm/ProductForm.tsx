@@ -1,4 +1,4 @@
-import { Save } from '@carbon/icons-react'
+import { CloudUpload, Delete, Save } from '@carbon/icons-react'
 import {
   Box,
   Button,
@@ -16,11 +16,14 @@ import {
   Textarea,
 } from '@chakra-ui/react'
 import { Formik, FormikHelpers, useFormikContext } from 'formik'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import { getCategories } from 'api/Category/repository'
+import { image } from 'api/routes'
 import { Category } from 'model/Category'
 import { Product } from 'model/Product'
+import { toBase64 } from 'utils/base64'
 
 import { Attributes } from './components'
 import { ProductFormValues } from './interface'
@@ -31,11 +34,30 @@ interface Props extends FlexProps {
   product?: Product
 }
 
+const DEAFULT_ACCEPT_IMAGE = {
+  'image/*': ['.png', '.jpeg', '.jpg'],
+}
+
 function ProductForm({ isNew }: { isNew: boolean }) {
   const [categories, setCategories] = useState<Category[]>()
 
-  const { values, errors, touched, setFieldValue, handleBlur, submitForm, isSubmitting, isValidating, isValid, dirty } =
-    useFormikContext<ProductFormValues>()
+  const {
+    values,
+    errors,
+    status,
+    touched,
+    setFieldValue,
+    handleBlur,
+    submitForm,
+    isSubmitting,
+    isValidating,
+    isValid,
+    dirty,
+  } = useFormikContext<ProductFormValues>()
+
+  const { thumbnail } = status as Product
+
+  const [encodedUploadedImage, setEncodedUploadedImage] = useState<string | undefined>(image(thumbnail))
 
   useEffect(() => {
     getCategories().then(setCategories).catch(console.error)
@@ -53,6 +75,36 @@ function ProductForm({ isNew }: { isNew: boolean }) {
 
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setFieldValue('description', e.target.value)
+
+  const showFilePicker = () => {
+    if (!('showOpenFilePicker' in window)) {
+      return
+    }
+
+    window
+      .showOpenFilePicker({
+        types: [
+          {
+            description: 'Product image',
+            accept: DEAFULT_ACCEPT_IMAGE,
+          },
+        ],
+      })
+      .then(([fileHandle]) => fileHandle.getFile())
+      .then(file => {
+        setFieldValue('thumbnail', file)
+
+        return toBase64(file)
+      })
+      .then(setEncodedUploadedImage)
+      // If user cancels operation exception is thrown
+      .catch(e => console.error('File picker operation canceled, probably', e))
+  }
+
+  const handleRemoveImage = () => {
+    setFieldValue('thumbnail', null)
+    setEncodedUploadedImage(undefined)
+  }
 
   if (!categories) {
     return (
@@ -176,6 +228,24 @@ function ProductForm({ isNew }: { isNew: boolean }) {
 
       <Box>
         <Attributes />
+      </Box>
+
+      <Box w="fit-content">
+        <Text mb={2}>Product thumbnail</Text>
+
+        <Flex gap={4} flexDirection="column">
+          <Box w={200} h={200} border="1px solid" borderColor="blackAlpha.400" borderRadius={4}>
+            <Image src={encodedUploadedImage ?? image('noimage.png')!} alt={values.name} width={500} height={500} />
+          </Box>
+
+          <Flex as={Button} align="center" gap={2} onClick={showFilePicker} colorScheme="green">
+            <CloudUpload width={24} height={24} /> Upload new
+          </Flex>
+
+          <Flex as={Button} align="center" gap={2} onClick={handleRemoveImage} colorScheme="red">
+            <Delete width={24} height={24} /> Remove image
+          </Flex>
+        </Flex>
       </Box>
     </>
   )

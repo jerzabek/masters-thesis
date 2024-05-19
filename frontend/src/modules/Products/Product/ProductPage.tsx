@@ -114,9 +114,14 @@ export default function ProductPage({ product }: Props) {
           flexDirection={['column', 'column', 'column', 'row']}
           gap={2}
         >
-          <Flex justify={['center', 'center', 'center', 'flex-start']} w="100%">
+          <Flex justify={['center', 'center', 'center', 'flex-start']} align="flex-start" w="100%">
             <Box border="1px solid" borderColor="gray.300" borderRadius={4}>
-              <Image src={product.thumbnail ?? image('noimage.png')} alt={product.name} width={500} height={500} />
+              <Image
+                src={image(product.thumbnail) ?? image('noimage.png')!}
+                alt={product.name}
+                width={500}
+                height={500}
+              />
             </Box>
           </Flex>
 

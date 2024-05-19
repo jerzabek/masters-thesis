@@ -72,15 +72,13 @@ public class ProductService {
     newProduct.setSku(product.getSku());
     newProduct.setQuantity(product.getQuantity());
     newProduct.setPrice(product.getPrice());
-    newProduct.setThumbnail(product.getThumbnail());
+    newProduct.setThumbnail(product.getThumbnail().isBlank() ? null : product.getThumbnail());
     newProduct.setCreatedBy(user);
     newProduct.setAttributes(new ArrayList<>());
     newProduct.setSlug(Slugify.slugify(product.getName()));
 
     /* Set attributes */
     List<AttributeValueDTO> attributes = product.getAttributes();
-
-    newProduct = productRepository.save(newProduct);
 
     for (AttributeValueDTO attribute : attributes) {
       Optional<Attribute> attributeOptional = attributeService.getById(attribute.getAttributeId());
@@ -104,6 +102,7 @@ public class ProductService {
     }
 
     newProduct.setCategory(category.get());
+    newProduct = productRepository.save(newProduct);
 
     return newProduct;
   }

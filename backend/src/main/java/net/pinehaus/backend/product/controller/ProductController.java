@@ -19,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -122,5 +123,30 @@ public class ProductController {
     return productService.updateProduct(product, productUpdate);
   }
 
+  @DeleteMapping("/{id}")
+  @PreAuthorize("hasAuthority('USER')")
+  @Operation(summary = "Delete a product.", description = "Delete an existing product.")
+  @ApiResponses({@ApiResponse(responseCode = "200"), @ApiResponse(responseCode = "404"),
+      @ApiResponse(responseCode = "403")})
+  public void deleteProduct(@PathVariable int id,
+      @AuthenticationPrincipal UserPrincipal currentUser) {
+    if (!productService.existsById(id)) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+    }
+
+    Optional<Product> existingProduct = productService.getProductById(id);
+
+    if (existingProduct.isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+    }
+
+    if (!existingProduct.get().getCreatedBy().getId().equals(currentUser.getId())
+        && !currentUser.isAdmin()) {
+      throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+          "You are not allowed to delete this product");
+    }
+
+    productService.deleteProduct(id);
+  }
 
 }

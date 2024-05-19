@@ -1,8 +1,10 @@
 import { ChevronRight } from '@carbon/icons-react'
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Text } from '@chakra-ui/react'
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Flex, Text } from '@chakra-ui/react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { Products } from 'modules/Products/List'
+import { productCreateUrl } from 'utils/pages'
 
 export default function Page() {
   return (
@@ -26,7 +28,7 @@ export default function Page() {
             Explore our products
           </Text>
 
-          <Breadcrumb spacing="8px" separator={<ChevronRight color="gray.500" />}>
+          <Breadcrumb spacing="8px" separator={<ChevronRight color="gray.500" />} mb={2}>
             <BreadcrumbItem>
               <BreadcrumbLink href="/">Pinehaus</BreadcrumbLink>
             </BreadcrumbItem>
@@ -35,6 +37,10 @@ export default function Page() {
               <BreadcrumbLink href="/products">Products</BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
+
+          <Button colorScheme="green" size="lg" as={Link} href={productCreateUrl()}>
+            Publish your own product
+          </Button>
         </Flex>
       </Box>
 

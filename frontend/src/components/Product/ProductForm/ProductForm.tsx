@@ -34,7 +34,7 @@ interface Props extends FlexProps {
 function ProductForm({ isNew }: { isNew: boolean }) {
   const [categories, setCategories] = useState<Category[]>()
 
-  const { values, errors, setFieldValue, submitForm, isSubmitting, isValidating, isValid, dirty } =
+  const { values, errors, touched, setFieldValue, handleBlur, submitForm, isSubmitting, isValidating, isValid, dirty } =
     useFormikContext<ProductFormValues>()
 
   useEffect(() => {
@@ -46,7 +46,10 @@ function ProductForm({ isNew }: { isNew: boolean }) {
 
   const handleNumberChange = (field: string) => (value: string) => setFieldValue(field, value)
 
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => setFieldValue('categoryId', +e.target.value)
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const categoryId = +e.target.value
+    setFieldValue('categoryId', categoryId === 0 ? undefined : categoryId)
+  }
 
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setFieldValue('description', e.target.value)
@@ -62,7 +65,7 @@ function ProductForm({ isNew }: { isNew: boolean }) {
   return (
     <>
       <Flex justify="space-between" align="center">
-        <Text textStyle="h1">{isNew ? 'Create new product' : 'Update product'}</Text>
+        <Text textStyle="h1">{isNew ? 'Create product listing' : 'Update product'}</Text>
 
         <Button
           onClick={submitForm}
@@ -75,35 +78,65 @@ function ProductForm({ isNew }: { isNew: boolean }) {
 
       {/* Product form fields */}
       <Flex gap={4}>
-        <FormControl flex={2} isRequired>
+        <FormControl
+          flex={2}
+          isRequired
+          isInvalid={typeof errors.name !== 'undefined' && touched.name}
+          onBlur={handleBlur}
+        >
           <FormLabel>Product name</FormLabel>
-          <Input isRequired value={values.name} onChange={handleFirstNameChange('name')} />
-          {!!errors.name && <FormErrorMessage>{errors.name}</FormErrorMessage>}
+          <Input
+            isRequired
+            value={values.name}
+            onChange={handleFirstNameChange('name')}
+            name="name"
+            onBlur={handleBlur}
+          />
+          <FormErrorMessage>{errors.name}</FormErrorMessage>
         </FormControl>
 
-        <FormControl flex={1} isRequired>
+        <FormControl flex={1} isRequired isInvalid={typeof errors.sku !== 'undefined' && touched.sku}>
           <FormLabel>SKU</FormLabel>
-          <Input isRequired value={values.sku} onChange={handleFirstNameChange('sku')} maxLength={10} />
-          {!!errors.sku && <FormErrorMessage>{errors.sku}</FormErrorMessage>}
+          <Input
+            isRequired
+            value={values.sku}
+            onChange={handleFirstNameChange('sku')}
+            name="sku"
+            maxLength={10}
+            onBlur={handleBlur}
+          />
+          <FormErrorMessage>{errors.sku}</FormErrorMessage>
         </FormControl>
       </Flex>
 
       <Flex gap={4}>
         <Flex flex={2} gap={4}>
-          <FormControl flex={1} isRequired>
+          <FormControl flex={1} isRequired isInvalid={typeof errors.price !== 'undefined' && touched.price}>
             <FormLabel>Price</FormLabel>
-            <NumberInput isRequired value={values.price} onChange={handleNumberChange('price')}>
+            <NumberInput
+              isRequired
+              value={values.price}
+              onChange={handleNumberChange('price')}
+              name="price"
+              onBlur={handleBlur}
+            >
               <NumberInputField />
             </NumberInput>
-            {!!errors.price && <FormErrorMessage>{errors.price}</FormErrorMessage>}
+            <FormErrorMessage>{errors.price}</FormErrorMessage>
           </FormControl>
 
-          <FormControl flex={1} isRequired>
+          <FormControl flex={1} isRequired isInvalid={typeof errors.quantity !== 'undefined' && touched.quantity}>
             <FormLabel>Quantity in stock</FormLabel>
-            <NumberInput isRequired value={values.quantity} onChange={handleNumberChange('quantity')}>
+            <NumberInput
+              isRequired
+              value={values.quantity}
+              onChange={handleNumberChange('quantity')}
+              name="quantity"
+              onBlur={handleBlur}
+            >
               <NumberInputField />
             </NumberInput>
-            {!!errors.quantity && <FormErrorMessage>{errors.quantity}</FormErrorMessage>}
+            <FormErrorMessage>{errors.quantity}</FormErrorMessage>
           </FormControl>
         </Flex>
 
@@ -112,15 +145,22 @@ function ProductForm({ isNew }: { isNew: boolean }) {
 
       <Flex gap={4}>
         <Flex flex={2}>
-          <FormControl isRequired>
+          <FormControl isRequired isInvalid={typeof errors.categoryId !== 'undefined' && touched.categoryId}>
             <FormLabel>Category</FormLabel>
-            <Select placeholder="Category" value={values.categoryId} onChange={handleCategoryChange}>
+            <Select
+              placeholder="Category"
+              value={values.categoryId}
+              onChange={handleCategoryChange}
+              onBlur={handleBlur}
+              name="categoryId"
+            >
               {categories.map(category => (
                 <option key={category.id} value={category.id}>
                   {category.name}
                 </option>
               ))}
             </Select>
+            <FormErrorMessage>{errors.categoryId}</FormErrorMessage>
           </FormControl>
         </Flex>
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { ArrowLeft } from '@carbon/icons-react'
-import { Container, Flex, useToast } from '@chakra-ui/react'
+import { Container, Flex, Spinner, useToast } from '@chakra-ui/react'
 import { RevalidateProductAction } from 'actions'
 import { FormikHelpers } from 'formik'
 import { useUser } from 'hooks/authentication'
@@ -37,7 +37,7 @@ export default function ProductEditPage({ product }: Props) {
       .then(() => {
         showSuccessToast()
 
-        push(`/products/${product.id}/${product.slug}`)
+        push(productPageUrl(product.id, product.slug))
       })
       .catch(e => {
         console.error(e)
@@ -50,7 +50,11 @@ export default function ProductEditPage({ product }: Props) {
   }
 
   if (isUserLoading) {
-    return null
+    return (
+      <Flex justify="center" align="center">
+        <Spinner />
+      </Flex>
+    )
   }
 
   if (!isAuthenticated || !user) {

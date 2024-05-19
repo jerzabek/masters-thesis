@@ -8,3 +8,5 @@ export const getProductList = (queryObject: ProductListFilters) => `${BASE_API_U
 export const getProduct = (id: number) => `${BASE_API_URL}/products/${id}`
 
 export const updateProduct = (id: number) => `${BASE_API_URL}/products/${id}`
+
+export const createProduct = () => `${BASE_API_URL}/products`

@@ -11,7 +11,7 @@ export const ProductFormValidationSchema = yup.object().shape({
   quantity: yup.number().required('Quantity is required').min(0, 'Quantity must be greater than or equal to 0'),
   price: yup.number().required('Price is required').min(0, 'Price must be greater than or equal to 0'),
   categoryId: yup.number().required('Category is required'),
-  thumbnail: yup.string().optional(),
+  thumbnail: yup.string().nullable(),
   attributes: yup.array().of(
     yup.object().shape({
       attributeId: yup.number().required('Attribute is required'),

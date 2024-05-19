@@ -108,17 +108,29 @@ export default function ProductPage({ product }: Props) {
       </Flex>
 
       <Container maxW="container.xl" py={16}>
-        <Flex justify="space-between" align="flex-start">
-          <Box border="1px solid" borderColor="gray.300" borderRadius={4}>
-            <Image src={product.thumbnail ?? image('noimage.png')} alt={product.name} width={500} height={500} />
-          </Box>
+        <Flex
+          justify="space-between"
+          align={['flex-start', 'flex-start', 'flex-start', 'stretch']}
+          flexDirection={['column', 'column', 'column', 'row']}
+          gap={2}
+        >
+          <Flex justify={['center', 'center', 'center', 'flex-start']} w="100%">
+            <Box border="1px solid" borderColor="gray.300" borderRadius={4}>
+              <Image src={product.thumbnail ?? image('noimage.png')} alt={product.name} width={500} height={500} />
+            </Box>
+          </Flex>
 
-          <Box w="600px">
-            <Flex justify="space-between" align="center">
+          <Box w={['100%', '100%', '100%', '800px']}>
+            <Flex
+              justify="space-between"
+              align="start"
+              gap={2}
+              flexDirection={['column-reverse', 'column-reverse', 'column-reverse', 'row']}
+            >
               <Text fontSize={42}>{product.name}</Text>
 
               {product.createdBy.id === user?.id && (
-                <Flex gap={2}>
+                <Flex gap={2} mt={4}>
                   <Button
                     variant="outline"
                     size="sm"

@@ -64,7 +64,7 @@ function ProductForm({ isNew }: { isNew: boolean }) {
 
   return (
     <>
-      <Flex justify="space-between" align="center">
+      <Flex justify="space-between" align="center" flexDirection={['column', 'column', 'row']} gap={4}>
         <Text textStyle="h1">{isNew ? 'Create product listing' : 'Update product'}</Text>
 
         <Button
@@ -77,7 +77,7 @@ function ProductForm({ isNew }: { isNew: boolean }) {
       </Flex>
 
       {/* Product form fields */}
-      <Flex gap={4}>
+      <Flex gap={4} flexDirection={['column', 'column', 'row']}>
         <FormControl
           flex={2}
           isRequired
@@ -109,8 +109,8 @@ function ProductForm({ isNew }: { isNew: boolean }) {
         </FormControl>
       </Flex>
 
-      <Flex gap={4}>
-        <Flex flex={2} gap={4}>
+      <Flex gap={4} flexDirection={['column', 'column', 'row']}>
+        <Flex flex={2} gap={4} flexDirection={['column', 'column', 'row']}>
           <FormControl flex={1} isRequired isInvalid={typeof errors.price !== 'undefined' && touched.price}>
             <FormLabel>Price</FormLabel>
             <NumberInput
@@ -143,8 +143,8 @@ function ProductForm({ isNew }: { isNew: boolean }) {
         <Box flex={1} />
       </Flex>
 
-      <Flex gap={4}>
-        <Flex flex={2}>
+      <Flex gap={4} flexDirection={['column', 'column', 'row']}>
+        <Flex flex={2} flexDirection={['column', 'column', 'row']}>
           <FormControl isRequired isInvalid={typeof errors.categoryId !== 'undefined' && touched.categoryId}>
             <FormLabel>Category</FormLabel>
             <Select

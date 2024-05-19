@@ -42,11 +42,11 @@ export default function ProductEditPage({ product }: Props) {
 
     uploadThumbnail
       .then(thumbnail => updateProduct(product.id, { ...values, thumbnail }))
-      .then(RevalidateProductAction)
-      .then(() => {
+      .then(_product => RevalidateProductAction(_product.id, _product.slug))
+      .then(url => {
         showSuccessToast()
 
-        push(productPageUrl(product.id, product.slug))
+        push(url)
       })
       .catch(e => {
         console.error(e)

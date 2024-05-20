@@ -29,6 +29,7 @@ import { useState } from 'react'
 
 import { deleteProduct } from 'api/Product/repository'
 import { image } from 'api/routes'
+import { useCart } from 'components/Cart'
 import NumberInput from 'components/NumberInput'
 import { useErrorToast, useSavingToast, useSuccessToast } from 'components/Toast'
 import { Product } from 'model/Product'
@@ -41,6 +42,7 @@ interface Props {
 
 export default function ProductPage({ product }: Props) {
   const { user } = useUser()
+  const { addItem } = useCart()
 
   const router = useRouter()
 
@@ -73,6 +75,10 @@ export default function ProductPage({ product }: Props) {
 
   const handleDeleteCancel = () => {
     setDeleteModalOpen(false)
+  }
+
+  const handleAddToCart = () => {
+    addItem(product.id, 1)
   }
 
   const breadcrumbBarBg = useColorModeValue('yellow.200', 'orange.700')
@@ -198,7 +204,7 @@ export default function ProductPage({ product }: Props) {
             <Flex gap={8}>
               <NumberInput inputProps={{ placeholder: 'Quantity', w: '70px' }} />
 
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" onClick={handleAddToCart}>
                 Add to cart
               </Button>
             </Flex>

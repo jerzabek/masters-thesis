@@ -1,4 +1,4 @@
-import { Logout, UserAvatar } from '@carbon/icons-react'
+import { Logout, ShoppingCart, UserAvatar } from '@carbon/icons-react'
 import { Box, Button, Flex, Grid, Text } from '@chakra-ui/react'
 import { useUser } from 'hooks/authentication'
 import NextLink from 'next/link'
@@ -52,6 +52,10 @@ export default function DesktopNavigation() {
       </Flex>
 
       <Flex top={0} p="inherit" position="absolute" right={0} h="100%" align="center" gap={4}>
+        <Link mr={4} href={isAuthenticated ? `/cart` : `/login`}>
+          <ShoppingCart width={24} height={24} />
+        </Link>
+
         <Link href={isAuthenticated ? `/profile` : `/login`}>
           {user?.avatarUrl ? (
             <Box borderRadius="50%" border="1px solid" color="gray.800">

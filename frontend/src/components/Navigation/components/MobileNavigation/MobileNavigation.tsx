@@ -1,4 +1,4 @@
-import { Logout, Menu, UserAvatar } from '@carbon/icons-react'
+import { Logout, Menu, ShoppingCart, UserAvatar } from '@carbon/icons-react'
 import { Box, Button, Collapse, Flex, Text, useDisclosure } from '@chakra-ui/react'
 import { useUser } from 'hooks/authentication'
 import NextLink from 'next/link'
@@ -50,7 +50,11 @@ const MobileDropdownNav = () => {
           </Flex>
         </NextLink>
 
-        <Box ml="auto" mr={1}>
+        <Flex ml="auto" mr={1} gap={2} align="center">
+          <Link mr={4} href={isAuthenticated ? `/cart` : `/login`}>
+            <ShoppingCart width={24} height={24} />
+          </Link>
+
           <Link href={isAuthenticated ? `/profile` : `/login`}>
             {user?.avatarUrl ? (
               <Box borderRadius="50%" border="1px solid" color="gray.800">
@@ -66,7 +70,7 @@ const MobileDropdownNav = () => {
               </Box>
             ) : null}
           </Link>
-        </Box>
+        </Flex>
 
         <Button onClick={onToggle} variant="unshield">
           <Menu width={24} height={24} />

@@ -2,13 +2,14 @@ import { createContext, useContext, useEffect, useState } from 'react'
 
 import { Cart } from 'model/Cart'
 import { Product } from 'model/Product'
+import { removeUndefined } from 'utils/arrays'
 
 import { CLEAR_CART_INTERVAL } from './const'
 
 interface ICartContext {
   cart: Cart
   isCartLoaded: boolean
-  addItem: (productId: number, quantity: number) => void
+  addItem: (productId: number, quantity: number, attributes?: Record<number, string | undefined>) => void
   removeItem: (productId: number) => void
   updateItem: (product: Product, quantity: number) => void
   clearCart: () => void
@@ -30,13 +31,14 @@ export default function CartContextProvider({ children }: { children: React.Reac
     }
   }
 
-  const addItem = (product: number, quantity: number) => {
+  const addItem = (product: number, quantity: number, attributes?: Record<number, string | undefined>) => {
     const existingItem = cart.items.find(item => item.product === product)
 
     if (existingItem) {
+      // In case of existing item we ignore possibility of changing attributes
       existingItem.quantity += quantity
     } else {
-      cart.items.push({ product, quantity, attributes: [] })
+      cart.items.push({ product, quantity, attributes: removeUndefined(attributes) })
     }
 
     setCart(cart)

@@ -6,10 +6,6 @@ export interface Cart {
 
 export interface CartItem {
   product: number
-  attributes: Array<{
-    id: number
-    name: string
-    value: number
-  }>
+  attributes: Record<number, string>
   quantity: number
 }

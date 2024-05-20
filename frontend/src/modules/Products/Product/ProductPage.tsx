@@ -36,6 +36,8 @@ import { Product } from 'model/Product'
 import { ProductAttributeType } from 'model/Product/ProductAttribute'
 import { categoryPageUrl, productEditUrl, productPageUrl } from 'utils/pages'
 
+import { areAllProductOptionsSelected } from './utils'
+
 interface Props {
   product: Product
 }
@@ -47,6 +49,7 @@ export default function ProductPage({ product }: Props) {
   const router = useRouter()
 
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
+  const [selectedOptions, setSelectedOptions] = useState<Record<number, string | undefined>>({})
 
   const { close } = useToast()
 
@@ -78,7 +81,7 @@ export default function ProductPage({ product }: Props) {
   }
 
   const handleAddToCart = () => {
-    addItem(product.id, 1)
+    addItem(product.id, 1, selectedOptions)
   }
 
   const breadcrumbBarBg = useColorModeValue('yellow.200', 'orange.700')
@@ -86,6 +89,7 @@ export default function ProductPage({ product }: Props) {
   const hasAttributesWithOptions = product.attributes.some(
     ({ attribute }) => !!attribute.options && attribute.options.length > 0
   )
+  const areAllOptionsSelected = areAllProductOptionsSelected(product, selectedOptions)
 
   return (
     <>
@@ -190,11 +194,29 @@ export default function ProductPage({ product }: Props) {
                         <Text opacity={0.7}>{attribute.name}</Text>
 
                         <Flex>
-                          {attributeOptions.map(option => (
-                            <Button key={option} variant="outline" size="sm" mr={4}>
-                              {option}
-                            </Button>
-                          ))}
+                          {attributeOptions.map(option => {
+                            const isSelected = selectedOptions[attribute.id] === option
+
+                            const handleSelectAttributeValue = (option: string) => () => {
+                              setSelectedOptions({
+                                ...selectedOptions,
+                                [attribute.id]: isSelected ? undefined : option,
+                              })
+                            }
+
+                            return (
+                              <Button
+                                key={option}
+                                variant={isSelected ? 'solid' : 'outline'}
+                                size="sm"
+                                mr={4}
+                                colorScheme={isSelected ? 'green' : 'gray'}
+                                onClick={handleSelectAttributeValue(option)}
+                              >
+                                {option}
+                              </Button>
+                            )
+                          })}
                         </Flex>
                       </Box>
                     )
@@ -204,7 +226,7 @@ export default function ProductPage({ product }: Props) {
             <Flex gap={8}>
               <NumberInput inputProps={{ placeholder: 'Quantity', w: '70px' }} />
 
-              <Button variant="outline" size="lg" onClick={handleAddToCart}>
+              <Button variant="outline" size="lg" onClick={handleAddToCart} isDisabled={!areAllOptionsSelected}>
                 Add to cart
               </Button>
             </Flex>

@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Container, Flex, Spinner, Text, useColorModeValue } from '@chakra-ui/react'
+import { Box, Button, Container, Flex, Spinner, Text, useColorModeValue } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 
 import { getProduct } from 'api/Product/repository'
@@ -24,6 +24,8 @@ export default function CartPage() {
   useEffect(() => {
     Promise.all(cart.items.map(item => getProduct(item.product)))
       .then(_products => {
+        if (!_products.length) return
+
         const productRecord: Record<number, Product> = {}
 
         _products.forEach(product => {
@@ -51,17 +53,17 @@ export default function CartPage() {
     )
   }
 
-  const areProductsLoaded = typeof products !== 'undefined'
-
   return (
     <>
       <Container maxW="container.xl" py={16}>
         <Flex
           flexDirection={['column-reverse', 'column-reverse', 'column-reverse', 'column-reverse', 'row']}
-          align="flex-start"
+          align={['stretch', 'stretch', 'stretch', 'stretch', 'flex-start']}
           gap={6}
         >
-          {areProductsLoaded && <ItemList products={products} flex={3} />}
+          <Box flex={3}>
+            <ItemList products={products} />
+          </Box>
 
           <Flex
             flex={1}
@@ -88,7 +90,7 @@ export default function CartPage() {
             >
               <Text>Total</Text>
               <Text flex={1} textAlign="end">
-                &euro; {total}
+                &euro; {total.toFixed(2)}
               </Text>
             </Flex>
 

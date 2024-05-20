@@ -55,11 +55,11 @@ export default function ProductPage({ product }: Props) {
   const handleDeleteClick = () => setDeleteModalOpen(true)
 
   const handleDeleteConfirm = () => {
-    const toastId = showSavingToast()
+    const toastId = showSavingToast('Deleting...')
 
     deleteProduct(product.id)
       .then(() => {
-        showSuccessToast()
+        showSuccessToast('Product deleted!')
         router.push('/products')
       })
       .catch(() => {

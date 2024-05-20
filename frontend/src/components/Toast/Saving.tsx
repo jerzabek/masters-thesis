@@ -4,9 +4,9 @@ import { useCallback } from 'react'
 export const useSavingToast = () => {
   const toast = useToast()
 
-  const showToast = useCallback(() => {
+  const showToast = useCallback((title = 'Saving...') => {
     return toast({
-      title: 'Saving...',
+      title,
       status: 'loading',
       position: 'bottom-right',
     })

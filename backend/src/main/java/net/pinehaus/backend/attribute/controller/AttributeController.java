@@ -1,5 +1,8 @@
 package net.pinehaus.backend.attribute.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,8 @@ public class AttributeController {
   private final AttributeService attributeService;
 
   @GetMapping
+  @Operation(summary = "Get all attributes.")
+  @ApiResponses({@ApiResponse(responseCode = "200")})
   public List<Attribute> getAllAttributes() {
     return attributeService.getAllAttributes();
   }

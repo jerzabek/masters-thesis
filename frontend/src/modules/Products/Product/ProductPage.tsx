@@ -125,7 +125,7 @@ export default function ProductPage({ product }: Props) {
             </Box>
           </Flex>
 
-          <Box w={['100%', '100%', '100%', '800px']}>
+          <Box w={['100%', '100%', '100%', '90%']}>
             <Flex
               justify="space-between"
               align="start"

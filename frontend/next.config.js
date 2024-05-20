@@ -10,7 +10,16 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.pexels.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.pinehaus.net',
+      },
     ],
+  },
+  experimental: {
+    serverActions: {
+      allowedOrigins: ['*.pinehaus.net', 'localhost:3000', 'localhost:8080'],
+    },
   },
 }
 

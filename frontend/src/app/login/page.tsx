@@ -1,15 +1,41 @@
 'use client'
 
 import { Box, Flex, Text } from '@chakra-ui/react'
-import { googleLoginRedirectRoute } from 'api/routes'
 import { useUser } from 'hooks/authentication'
 import { redirect } from 'next/navigation'
 import Script from 'next/script'
+import { useEffect, useRef } from 'react'
+
+import { googleLoginRedirectRoute } from 'api/routes'
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
 
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    google: any
+  }
+}
+
 export default function LoginPage() {
   const { isUserLoading, isAuthenticated } = useUser()
+
+  const g_sso = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (!window.google) return
+
+    window.google.accounts.id.renderButton(g_sso.current, {
+      theme: 'outline',
+      size: 'large',
+      type: 'standard',
+      text: 'signin_with',
+      shape: 'rectangular',
+      logo_alignment: 'left',
+      width: '400',
+    })
+  }, [])
 
   if (isUserLoading) {
     return null
@@ -57,6 +83,7 @@ export default function LoginPage() {
               data-size="large"
               data-logo_alignment="left"
               data-width="400"
+              ref={g_sso}
             ></div>
           </Box>
         </Flex>

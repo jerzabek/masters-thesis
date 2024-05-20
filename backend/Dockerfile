@@ -14,6 +14,9 @@ WORKDIR /app
 
 COPY --from=builder /app/target/*.jar app.jar
 
+# Directory that is mapped to CDN on host machine
+RUN mkdir -p /pinehaus/images
+
 EXPOSE 8080
 
 ENTRYPOINT ["java", "--enable-preview", "-jar", "app.jar" ]

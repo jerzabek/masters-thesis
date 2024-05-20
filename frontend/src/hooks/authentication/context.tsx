@@ -1,6 +1,7 @@
+import { FC, PropsWithChildren, createContext, useEffect, useState } from 'react'
+
 import { getMe } from 'api/repository'
 import { User } from 'model/User'
-import { FC, PropsWithChildren, createContext, useEffect, useState } from 'react'
 
 interface IUserContext {
   isLoading: boolean
@@ -11,7 +12,7 @@ const INITIAL_USER_CONTEXT_VALUE: IUserContext = { user: undefined, isLoading: t
 
 export const UserContext = createContext<IUserContext>(INITIAL_USER_CONTEXT_VALUE)
 
-export const UserProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
+export const UserProvider: FC<PropsWithChildren<object>> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User>()
   const [isLoading, setIsLoading] = useState(true)
 

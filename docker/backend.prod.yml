@@ -16,10 +16,13 @@ services:
       FRONTEND_URL: ${FRONTEND_URL}
       JWT_EXPIRATION_IN_MS: ${JWT_EXPIRATION_IN_MS}
       JWT_SECRET: ${JWT_SECRET}
+      IMAGE_PATH: /pinehaus/images
     depends_on:
       - pinehaus-database
     ports:
       - "4501:8080"
+    volumes:
+      - ${IMAGE_PATH}:/pinehaus/images
 
   pinehaus-database:
     image: postgres

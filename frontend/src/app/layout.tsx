@@ -1,4 +1,5 @@
 import { Box } from '@chakra-ui/react'
+
 import 'styles/global/globals.css'
 import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'

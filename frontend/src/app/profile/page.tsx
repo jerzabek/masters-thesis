@@ -2,25 +2,16 @@
 
 import { ChevronRight, Information } from '@carbon/icons-react'
 import { Text } from '@chakra-ui/layout'
-import {
-  Box,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  Button,
-  Container,
-  Divider,
-  Flex,
-  useToast,
-} from '@chakra-ui/react'
-import { updateUser } from 'api/User/repository'
-import { useErrorToast, useSavingToast, useSuccessToast } from 'components/Toast'
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Container, Divider, Flex, useToast } from '@chakra-ui/react'
 import { FormikHelpers } from 'formik'
 import { useUser } from 'hooks/authentication'
-import { UserForm } from 'modules/Profile'
-import { UserFormValues } from 'modules/Profile/UserForm/interface'
 import Image from 'next/image'
 import { redirect } from 'next/navigation'
+
+import { updateUser } from 'api/User/repository'
+import { useErrorToast, useSavingToast, useSuccessToast } from 'components/Toast'
+import { UserForm } from 'modules/Profile'
+import { UserFormValues } from 'modules/Profile/UserForm/interface'
 
 export default function ProfilePage() {
   const { user, isUserLoading, isAuthenticated } = useUser()
@@ -57,12 +48,12 @@ export default function ProfilePage() {
         <Image
           src="/images/banners/profile-banner.jpg"
           alt="Profile page banner"
-          objectFit="cover"
-          objectPosition="center"
           sizes="100vw"
           style={{
             opacity: 0.3,
             zIndex: -1,
+            objectFit: 'cover',
+            objectPosition: 'center',
           }}
           fill
         />

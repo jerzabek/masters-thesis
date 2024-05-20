@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
-import NextLink from 'next/link'
-import { Box, Button, Flex, Text, useDisclosure, Collapse } from '@chakra-ui/react'
-import Link from 'components/Link'
-import { useUser } from 'hooks/authentication'
 import { Logout, Menu, UserAvatar } from '@carbon/icons-react'
+import { Box, Button, Collapse, Flex, Text, useDisclosure } from '@chakra-ui/react'
+import { useUser } from 'hooks/authentication'
+import NextLink from 'next/link'
+import { useEffect, useRef } from 'react'
+
 import { logout } from 'api/repository'
+import Link from 'components/Link'
+import { USER_AVATAR_SIZE } from 'components/Navigation/const'
 
 const MobileDropdownNav = () => {
   const { isOpen, onToggle, onClose } = useDisclosure()
@@ -23,7 +25,7 @@ const MobileDropdownNav = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [containerRef, onToggle])
+  }, [containerRef, onClose, onToggle])
 
   const handleLogout = () => {
     logout()
@@ -52,12 +54,13 @@ const MobileDropdownNav = () => {
           <Link href={isAuthenticated ? `/profile` : `/login`}>
             {user?.avatarUrl ? (
               <Box borderRadius="50%" border="1px solid" color="gray.800">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={user.avatarUrl}
                   referrerPolicy="no-referrer"
                   alt="User avatar"
-                  width={48}
-                  height={48}
+                  width={USER_AVATAR_SIZE}
+                  height={USER_AVATAR_SIZE}
                   style={{ borderRadius: '50%' }}
                 />
               </Box>

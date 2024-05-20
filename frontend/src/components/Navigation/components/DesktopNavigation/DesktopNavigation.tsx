@@ -1,9 +1,11 @@
-import { Box, Button, Flex, Grid, Text } from '@chakra-ui/react'
-import NextLink from 'next/link'
-import Link from 'components/Link'
-import { useUser } from 'hooks/authentication'
 import { Logout, UserAvatar } from '@carbon/icons-react'
+import { Box, Button, Flex, Grid, Text } from '@chakra-ui/react'
+import { useUser } from 'hooks/authentication'
+import NextLink from 'next/link'
+
 import { logout } from 'api/repository'
+import Link from 'components/Link'
+import { USER_AVATAR_SIZE } from 'components/Navigation/const'
 
 export default function DesktopNavigation() {
   const { user, isAuthenticated } = useUser()
@@ -53,17 +55,18 @@ export default function DesktopNavigation() {
         <Link href={isAuthenticated ? `/profile` : `/login`}>
           {user?.avatarUrl ? (
             <Box borderRadius="50%" border="1px solid" color="gray.800">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={user.avatarUrl}
                 referrerPolicy="no-referrer"
                 alt="User avatar"
-                width={48}
-                height={48}
+                width={USER_AVATAR_SIZE}
+                height={USER_AVATAR_SIZE}
                 style={{ borderRadius: '50%' }}
               />
             </Box>
           ) : (
-            <UserAvatar width={48} height={48} />
+            <UserAvatar width={USER_AVATAR_SIZE} height={USER_AVATAR_SIZE} />
           )}
         </Link>
 

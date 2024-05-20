@@ -1,7 +1,9 @@
 import { Formik, FormikHelpers, useFormikContext } from 'formik'
-import { UserFormValidationSchema, mapUserToUserFormValues } from './utils'
-import { User } from 'model/User'
 import { Box, Button, Flex, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react'
+
+import { User } from 'model/User'
+
+import { UserFormValidationSchema, mapUserToUserFormValues } from './utils'
 import { UserFormValues } from './interface'
 
 interface Props {

@@ -1,0 +1,1 @@
+export const PRODUCT_FETCH_TAG = 'PRODUCT_FETCH'

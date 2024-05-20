@@ -53,13 +53,13 @@ public class TokenService {
 
       return true;
     } catch (MalformedJwtException ex) {
-      log.error("Invalid JWT token");
+      log.info("Invalid JWT token ({})", authToken);
     } catch (ExpiredJwtException ex) {
-      log.error("Expired JWT token");
+      log.info("Expired JWT token ({})", authToken);
     } catch (UnsupportedJwtException ex) {
-      log.error("Unsupported JWT token");
+      log.info("Unsupported JWT token ({})", authToken);
     } catch (IllegalArgumentException ex) {
-      log.error("JWT claims string is empty.");
+      log.info("JWT claims string is empty. ({})", authToken);
     }
 
     return false;

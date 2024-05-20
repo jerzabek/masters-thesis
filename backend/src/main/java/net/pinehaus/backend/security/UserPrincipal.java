@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
 
+  private UserEntity user;
   private UUID id;
   private String firstName;
   private String lastName;
@@ -32,6 +33,7 @@ public class UserPrincipal implements UserDetails {
   public UserPrincipal(UserEntity user) {
     List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(ADMIN, USER);
 
+    this.user = user;
     this.id = user.getId();
     this.firstName = user.getFirstName();
     this.lastName = user.getLastName();

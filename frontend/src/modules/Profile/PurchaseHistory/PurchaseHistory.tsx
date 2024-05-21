@@ -118,19 +118,34 @@ export default function PurchaseHistory() {
                             </Text>
                           </Box>
 
-                          <Box flex={1}>
-                            <Text fontSize={14} opacity={0.8}>
-                              Subtotal
-                            </Text>
-                            <Text>&euro;{item.price.toFixed(2)}</Text>
-                          </Box>
+                          <Flex flex={2} flexWrap="wrap" gap={4}>
+                            {item.attributes.map(({ id, name, value }) => (
+                              <Flex flexDirection="column" py={2} key={id}>
+                                <Text fontSize={11} opacity={0.8}>
+                                  {name}
+                                </Text>
+                                <Text fontWeight="bold" as="span">
+                                  {value}
+                                </Text>
+                              </Flex>
+                            ))}
+                          </Flex>
 
-                          <Box flex={1}>
-                            <Text fontSize={14} opacity={0.8}>
-                              Total
-                            </Text>
-                            <Text>&euro;{(item.price * item.quantity).toFixed(2)}</Text>
-                          </Box>
+                          <Flex flex={2} gap={4}>
+                            <Box flex={1} textAlign={['center', 'center', 'end']}>
+                              <Text fontSize={14} opacity={0.8}>
+                                Subtotal
+                              </Text>
+                              <Text>&euro;{item.price.toFixed(2)}</Text>
+                            </Box>
+
+                            <Box flex={1} textAlign={['center', 'center', 'end']}>
+                              <Text fontSize={14} opacity={0.8}>
+                                Total
+                              </Text>
+                              <Text>&euro;{(item.price * item.quantity).toFixed(2)}</Text>
+                            </Box>
+                          </Flex>
                         </Flex>
                       )
                     })}

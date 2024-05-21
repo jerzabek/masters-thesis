@@ -30,7 +30,6 @@ export default function CartPage({ products }: Props) {
           <Tbody>
             {typeof products !== 'undefined' &&
               cart.items.map(item => {
-                console.log(products, item.product)
                 const product = products[item.product]
 
                 const productOptionAttributes = product.attributes.filter(

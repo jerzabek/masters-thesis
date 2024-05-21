@@ -67,8 +67,6 @@ export default function CartContextProvider({ children }: { children: React.Reac
     try {
       const savedCart = localStorage.getItem('cart')
 
-      console.log('savedCart', savedCart)
-
       if (savedCart) {
         const parsedCart = JSON.parse(savedCart)
 

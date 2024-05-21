@@ -13,7 +13,5 @@ export const uploadImage = (file: File) => {
 
   formData.append('file', file)
 
-  console.log(formData)
-
   return postJson<I.ImageUploadResponse>(R.uploadImage(), formData)
 }

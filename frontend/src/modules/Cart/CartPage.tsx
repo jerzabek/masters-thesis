@@ -1,10 +1,13 @@
 'use client'
 
-import { Box, Button, Container, Flex, Spinner, Text, useColorModeValue } from '@chakra-ui/react'
+import { Box, Button, Container, Flex, Spinner, Text, useColorModeValue, useToast } from '@chakra-ui/react'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { getProduct } from 'api/Product/repository'
+import { purchaseCart } from 'api/Purchase/repository'
 import { useCart } from 'components/Cart'
+import { useErrorToast, useSavingToast, useSuccessToast } from 'components/Toast'
 import { Product } from 'model/Product'
 
 import { ItemList } from './components'
@@ -14,7 +17,15 @@ export default function CartPage() {
 
   const background = useColorModeValue('yellow.200', 'orange.700')
 
-  const { cart } = useCart()
+  const { cart, clearCart } = useCart()
+
+  const { close } = useToast()
+
+  const { push } = useRouter()
+
+  const showSavingToast = useSavingToast()
+  const showSuccessToast = useSuccessToast()
+  const showErrorToast = useErrorToast()
 
   const [products, setProducts] = useState<Record<number, Product>>()
   const [isLoading, setIsLoading] = useState(true)
@@ -44,6 +55,23 @@ export default function CartPage() {
       })
       .finally(() => setIsLoading(false))
   }, [cart])
+
+  const handleCheckout = () => {
+    const toastId = showSavingToast()
+
+    purchaseCart(cart.items)
+      .then(() => {
+        showSuccessToast()
+        clearCart()
+
+        push(`/profile`)
+      })
+      .catch(e => {
+        console.error(e)
+        showErrorToast()
+      })
+      .finally(() => close(toastId))
+  }
 
   if (!isCartLoaded || isLoading) {
     return (
@@ -94,7 +122,7 @@ export default function CartPage() {
               </Text>
             </Flex>
 
-            <Button variant="outline" colorScheme="green">
+            <Button variant="outline" colorScheme="green" onClick={handleCheckout}>
               Proceed to checkout
             </Button>
           </Flex>

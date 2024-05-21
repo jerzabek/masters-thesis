@@ -79,9 +79,9 @@ function ProductList() {
 
   return (
     <>
-      <Flex h="70px" bg={breadcrumbBarBg} align="center">
-        <Container maxW="container.xl" py={16}>
-          <Flex align="center" justify="space-between">
+      <Flex bg={breadcrumbBarBg} align="center">
+        <Container maxW="container.xl" py={4}>
+          <Flex align="center" justify="space-between" flexDirection={['column', 'column', 'row']} gap={4}>
             <Flex align="center" gap={4}>
               <Button variant="ghost" onClick={openFilters}>
                 Filter
@@ -93,8 +93,6 @@ function ProductList() {
               <Divider orientation="vertical" h="30px" mr={2} borderColor="yellow.700" />
 
               <Sort />
-
-              <Divider orientation="vertical" h="30px" mx={2} borderColor="yellow.700" />
             </Flex>
 
             <Box>
@@ -128,7 +126,7 @@ function ProductList() {
               Loading...
             </Flex>
           ) : products.length ? (
-            <Flex gap={6} flexWrap="wrap" justify="space-between">
+            <Flex gap={6} flexWrap="wrap" justify="space-around">
               {products.map(product => (
                 <ProductSlot product={product} key={product.id} />
               ))}

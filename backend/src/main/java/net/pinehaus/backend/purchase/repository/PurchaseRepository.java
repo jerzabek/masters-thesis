@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PurchaseRepository extends JpaRepository<Purchase, Integer> {
 
-  List<Purchase> findByCreatedBy_Id(UUID userId);
+  List<Purchase> findByCreatedBy_IdOrderByTimestampDesc(UUID userId);
+
 
 }

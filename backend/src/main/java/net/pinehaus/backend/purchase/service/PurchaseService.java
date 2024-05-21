@@ -34,6 +34,10 @@ public class PurchaseService {
 
   @Transactional
   public Purchase createPurchase(CreatePurchaseDTO request, UserEntity createdBy) {
+    if (request.getProducts().isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No products in purchase");
+    }
+
     Purchase purchase = new Purchase();
 
     purchase.setCreatedBy(createdBy);
@@ -43,6 +47,13 @@ public class PurchaseService {
 
     for (PurchasedProductDTO productRequest : request.getProducts()) {
       PurchasedProduct purchasedProduct = purchasedProductService.createPurchasedProduct(purchase, productRequest);
+
+      String invalidPurchaseReason = purchasedProductService.getInvalidPurchaseReason(purchasedProduct);
+
+      if (invalidPurchaseReason != null) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+            "Purchase is invalid (" + invalidPurchaseReason + ")");
+      }
 
       for (Entry<Integer, String> attributePair : productRequest.getAttributes().entrySet()) {
         Attribute attribute = attributeService.getById(attributePair.getKey())
@@ -75,6 +86,7 @@ public class PurchaseService {
   }
 
   public List<Purchase> getPurchasesForUser(UUID userId) {
-    return purchaseRepository.findByCreatedBy_Id(userId);
+    return purchaseRepository.findByCreatedBy_IdOrderByTimestampDesc(userId);
   }
+
 }

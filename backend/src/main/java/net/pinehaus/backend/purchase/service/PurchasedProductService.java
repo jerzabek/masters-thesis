@@ -37,4 +37,20 @@ public class PurchasedProductService {
     return purchasedProduct;
   }
 
+  public String getInvalidPurchaseReason(PurchasedProduct purchasedProduct) {
+    if (purchasedProduct.getProduct().getQuantity() < purchasedProduct.getQuantity()) {
+      return "Out of stock";
+    }
+
+    if (purchasedProduct.getProduct().getPrice() != purchasedProduct.getPrice()) {
+      return "Price mismatch";
+    }
+
+    if (purchasedProduct.getQuantity() < 1) {
+      return "Invalid quantity";
+    }
+
+    return null;
+  }
+
 }

@@ -52,9 +52,6 @@ export default function DesktopNavigation() {
         <Link href={`/products`}>
           <Text fontSize={20}>Products</Text>
         </Link>
-        <Link href={`/about-us`}>
-          <Text fontSize={20}>About</Text>
-        </Link>
       </Flex>
 
       <Flex top={0} p="inherit" position="absolute" right={0} h="100%" align="center" gap={4}>

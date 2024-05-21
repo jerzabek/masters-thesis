@@ -20,3 +20,7 @@ export interface GetProductResponse extends Product {}
 export interface UpdateProductPayload extends Omit<ProductFormValues, 'thumbnail'> {
   thumbnail?: string | null
 }
+
+export interface ProductRecommendationResponse {
+  [categoryName: string]: Product[]
+}

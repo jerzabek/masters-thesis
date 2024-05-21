@@ -35,4 +35,5 @@ public class PurchasedProductAttribute {
   @Column(nullable = false)
   private String value;
 
+
 }

@@ -22,7 +22,7 @@ public class PurchasedProductService {
   public PurchasedProduct createPurchasedProduct(Purchase purchase, PurchasedProductDTO request) {
     PurchasedProduct purchasedProduct = new PurchasedProduct();
 
-    Optional<Product> productOptional = productService.getProductById(request.getProductId());
+    Optional<Product> productOptional = productService.getProductById(request.getProduct());
 
     if (productOptional.isEmpty()) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
@@ -37,10 +37,6 @@ public class PurchasedProductService {
     purchasedProduct.setQuantity(request.getQuantity());
 
     return purchasedProduct;
-  }
-
-  public PurchasedProduct save(PurchasedProduct purchasedProduct) {
-    return purchasedProductRepository.save(purchasedProduct);
   }
 
 }

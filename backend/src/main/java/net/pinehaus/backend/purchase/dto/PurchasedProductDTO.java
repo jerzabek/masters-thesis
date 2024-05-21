@@ -1,6 +1,7 @@
 package net.pinehaus.backend.purchase.dto;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,10 +11,13 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class PurchasedProductDTO {
 
-  private int productId;
+  private int product;
 
   private int quantity;
 
-  private List<PurchasedProductAttributeDTO> attributes;
+  /**
+   * Attribute IDs mapped to their values.
+   */
+  private Map<Integer, String> attributes = new HashMap<>();
 
 }

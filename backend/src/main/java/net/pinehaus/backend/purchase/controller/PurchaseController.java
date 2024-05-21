@@ -49,7 +49,7 @@ public class PurchaseController {
     return purchaseService.getPurchasesForUser(currentUser.getId());
   }
 
-  @PostMapping("/create")
+  @PostMapping
   @Operation(summary = "Create purchase", description = "Create a new purchase.")
   @ApiResponses({@ApiResponse(responseCode = "200"), @ApiResponse(responseCode = "400")})
   @JsonView(PurchaseViews.Public.class)

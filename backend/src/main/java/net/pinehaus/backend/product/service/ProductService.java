@@ -30,24 +30,11 @@ public class ProductService {
   private final AttributeValueService attributeValueService;
   private final CategoryService categoryService;
 
-  public Page<Product> getProductsByCategoryId(int categoryId, int page, int size,
-      Sort.Direction sortOrder) {
-    return productRepository.findAllByCategoryId(categoryId,
-        PageRequest.of(page, size, Sort.by(sortOrder, "price")));
+  public Page<Product> getProducts(Optional<Integer> categoryId, double min, double max, String name, int page,
+      int size, Sort.Direction sortOrder) {
+    return productRepository.findAllByOptionalCategoryIdAndPriceBetweenAndNameContainingIgnoreCase(categoryId, min, max,
+        name, PageRequest.of(page, size, Sort.by(sortOrder, "price")));
   }
-
-  public Page<Product> getProductsByCategoryIdAndPriceBetween(int categoryId, double min,
-      double max, int page, int size, Sort.Direction sortOrder) {
-    return productRepository.findAllByCategoryIdAndPriceBetween(categoryId, min, max,
-        PageRequest.of(page, size, Sort.by(sortOrder, "price")));
-  }
-
-  public Page<Product> getProductsByPriceBetween(double min, double max, int page, int size,
-      Sort.Direction sortOrder) {
-    return productRepository.findAllByPriceBetween(min, max,
-        PageRequest.of(page, size, Sort.by(sortOrder, "price")));
-  }
-
 
   public Optional<Product> getProductById(int id) {
     return productRepository.findById(id);

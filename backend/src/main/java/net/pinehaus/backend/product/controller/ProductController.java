@@ -76,7 +76,8 @@ public class ProductController {
       @RequestParam(required = false) Optional<String> sort,
       @RequestParam(required = false) Optional<Integer> categoryId,
       @RequestParam(required = false) Optional<Double> min,
-      @RequestParam(required = false) Optional<Double> max) {
+      @RequestParam(required = false) Optional<Double> max,
+      @RequestParam(required = false) Optional<String> search) {
     int _page = page.orElse(0);
     int _size = size.orElse(PAGE_SIZE);
     Sort.Direction _sort =
@@ -84,17 +85,9 @@ public class ProductController {
 
     double _min = min.orElse(0d);
     double _max = max.orElse(Double.MAX_VALUE);
+    String _search = search.orElse("");
 
-    Page<Product> products;
-
-    if (categoryId.isEmpty()) {
-      products = productService.getProductsByPriceBetween(_min, _max, _page, _size, _sort);
-    } else {
-      products = productService.getProductsByCategoryIdAndPriceBetween(categoryId.get(), _min, _max,
-          _page,
-          _size, _sort);
-
-    }
+    Page<Product> products = productService.getProducts(categoryId, _min, _max, _search, _page, _size, _sort);
 
     return new ProductPageResponse(products);
   }

@@ -1,6 +1,6 @@
 'use client'
 
-import { ChevronRight, Edit, TrashCan } from '@carbon/icons-react'
+import { ChevronRight, Edit, Store, TrashCan } from '@carbon/icons-react'
 import {
   Box,
   Breadcrumb,
@@ -90,6 +90,8 @@ export default function ProductPage({ product }: Props) {
     ({ attribute }) => !!attribute.options && attribute.options.length > 0
   )
   const areAllOptionsSelected = areAllProductOptionsSelected(product, selectedOptions)
+  const isOutOfStock = product.quantity <= 0
+  const isLowStock = !isOutOfStock && product.quantity < 5
 
   return (
     <>
@@ -166,9 +168,17 @@ export default function ProductPage({ product }: Props) {
                 </Flex>
               )}
             </Flex>
-            <Text fontSize={24} opacity={0.7} mb={2}>
-              {product.price} &euro;
-            </Text>
+            <Flex align="center" justify="space-between">
+              <Text fontSize={24} opacity={0.8} mb={2}>
+                {product.price} &euro;
+              </Text>
+              <Text fontSize={14} opacity={0.8} as={Flex} align="center" gap={2}>
+                <Store width={24} height={24} /> Sold by:{' '}
+                <Text as="span" fontWeight="bold">
+                  {product.createdBy.username ?? 'Unknown'}
+                </Text>
+              </Text>
+            </Flex>
             <Divider mb={4} />
             <Box minH="140px" mb={4}>
               <Text>{product.description}</Text>
@@ -223,12 +233,31 @@ export default function ProductPage({ product }: Props) {
                   })}
               </Box>
             )}
-            <Flex gap={8}>
+            <Flex gap={8} align="flex-start">
               <NumberInput inputProps={{ placeholder: 'Quantity', w: '70px' }} />
 
-              <Button variant="outline" size="lg" onClick={handleAddToCart} isDisabled={!areAllOptionsSelected}>
-                Add to cart
-              </Button>
+              <Flex flexDirection="column" gap={2}>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={handleAddToCart}
+                  isDisabled={!areAllOptionsSelected || isOutOfStock}
+                >
+                  Add to cart
+                </Button>
+
+                {isLowStock ? (
+                  <Text fontSize={14} color="red.500">
+                    Less that 5 left in stock!
+                  </Text>
+                ) : (
+                  isOutOfStock && (
+                    <Text fontSize={14} color="red.500">
+                      Out of stock
+                    </Text>
+                  )
+                )}
+              </Flex>
             </Flex>
             <Divider my={4} />
             <Text fontSize={18} mb={4}>

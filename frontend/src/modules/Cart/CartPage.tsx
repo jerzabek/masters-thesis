@@ -9,6 +9,7 @@ import { purchaseCart } from 'api/Purchase/repository'
 import { useCart } from 'components/Cart'
 import { useErrorToast, useSavingToast, useSuccessToast } from 'components/Toast'
 import { Product } from 'model/Product'
+import { Error } from 'utils/api/interface'
 
 import { ItemList } from './components'
 
@@ -66,9 +67,8 @@ export default function CartPage() {
 
         push(`/profile`)
       })
-      .catch(e => {
-        console.error(e)
-        showErrorToast()
+      .catch((e: Error) => {
+        showErrorToast({ description: e.message })
       })
       .finally(() => close(toastId))
   }
@@ -80,6 +80,8 @@ export default function CartPage() {
       </Flex>
     )
   }
+
+  const isEmpty = !cart.items.length
 
   return (
     <>
@@ -122,7 +124,7 @@ export default function CartPage() {
               </Text>
             </Flex>
 
-            <Button variant="outline" colorScheme="green" onClick={handleCheckout}>
+            <Button variant="outline" colorScheme="green" onClick={handleCheckout} isDisabled={isEmpty}>
               Proceed to checkout
             </Button>
           </Flex>

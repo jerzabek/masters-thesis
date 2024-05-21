@@ -13,6 +13,9 @@ interface Props {
 export default function CartPage({ products }: Props) {
   const { cart, removeItem } = useCart()
 
+  const isLoading = typeof products === 'undefined'
+  const hasItems = cart.items.length > 0
+
   return (
     <>
       <TableContainer>
@@ -28,7 +31,7 @@ export default function CartPage({ products }: Props) {
             </Tr>
           </Thead>
           <Tbody>
-            {typeof products !== 'undefined' &&
+            {!isLoading && hasItems ? (
               cart.items.map(item => {
                 const product = products[item.product]
 
@@ -95,7 +98,14 @@ export default function CartPage({ products }: Props) {
                     </Td>
                   </Tr>
                 )
-              })}
+              })
+            ) : !hasItems ? (
+              <Tr>
+                <Td colSpan={6} textAlign="center">
+                  <Text opacity={0.8}>Your cart is empty</Text>
+                </Td>
+              </Tr>
+            ) : null}
           </Tbody>
         </Table>
       </TableContainer>

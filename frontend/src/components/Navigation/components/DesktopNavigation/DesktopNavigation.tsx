@@ -83,7 +83,7 @@ export default function DesktopNavigation() {
 
         <Link href={isAuthenticated ? `/profile` : `/login`}>
           {user?.avatarUrl ? (
-            <Box borderRadius="520%" border="1px solid" color="gray.800">
+            <Box borderRadius="50%" border="1px solid" color="gray.800">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={user.avatarUrl}

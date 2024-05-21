@@ -111,9 +111,6 @@ const MobileDropdownNav = () => {
             <Link href={`/products`} onClick={onClose}>
               <Text fontSize={20}>Products</Text>
             </Link>
-            <Link href={`/about-us`} onClick={onClose}>
-              <Text fontSize={20}>About</Text>
-            </Link>
             {isAuthenticated ? (
               <Button onClick={handleLogout} variant="unshielded">
                 <Box mr={4}>

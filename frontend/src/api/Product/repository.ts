@@ -16,3 +16,5 @@ export const updateProduct = (id: number, payload: I.UpdateProductPayload) =>
 export const createProduct = (payload: I.UpdateProductPayload) => postJson<Product>(R.createProduct(), payload)
 
 export const deleteProduct = (id: number) => deleteJson(R.deleteProduct(id))
+
+export const getProductRecommendations = () => getJson<I.ProductRecommendationResponse>(R.getProductRecommendations())

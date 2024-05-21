@@ -1,3 +1,4 @@
+export const productListPageUrl = () => `/products`
 export const productPageUrl = (productId: number, productSlug: string) => `/products/${productId}/${productSlug}`
 export const productEditUrl = (productId: number, productSlug: string) => `/products/${productId}/${productSlug}/edit`
 export const productCreateUrl = () => `/products/create`

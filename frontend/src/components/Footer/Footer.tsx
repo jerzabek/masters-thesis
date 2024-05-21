@@ -32,7 +32,6 @@ export default function Footer() {
           <Flex direction="column" gap={6} ml={[4, 4, 0]}>
             <Link href={`/`}>Home</Link>
             <Link href={`/products`}>Products</Link>
-            <Link href={`/about-us`}>About us</Link>
           </Flex>
         </Box>
 
@@ -43,7 +42,6 @@ export default function Footer() {
 
           <Flex direction="column" gap={6} ml={[4, 4, 0]}>
             <Link href={`/`}>Home</Link>
-            <Link href={`/about-us`}>About us</Link>
           </Flex>
         </Box>
         <Box flex={1} />

@@ -9,7 +9,7 @@ export default function page() {
     <>
       <Box w="100%" h="350px" position="relative">
         <Image
-          src="/images/banners/products-banner.jpg"
+          src="/images/banners/cart-banner.jpg"
           alt="Product page banner"
           sizes="100vw"
           style={{

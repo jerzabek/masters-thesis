@@ -24,7 +24,7 @@ export default function Page() {
         />
 
         <Flex flexDir="column" justify="center" align="center" h="100%">
-          <Text as="h1" textStyle="h1">
+          <Text as="h1" textStyle="h1" textAlign="center">
             Explore our products
           </Text>
 

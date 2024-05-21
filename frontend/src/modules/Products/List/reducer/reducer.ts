@@ -6,6 +6,7 @@ export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 
 export const SET_FILTERS = 'SET_FILTERS'
 export const TOGGLE_SORT = 'TOGGLE_SORT'
+export const SEARCH_PRODUCT = 'SEARCH_PRODUCT'
 
 export const reducer = (state: IProductsState, action: ProductsActions): IProductsState => {
   switch (action.type) {
@@ -34,6 +35,7 @@ export const reducer = (state: IProductsState, action: ProductsActions): IProduc
       return {
         ...state,
         filters,
+        currentPage: 1,
       }
     }
 
@@ -41,6 +43,16 @@ export const reducer = (state: IProductsState, action: ProductsActions): IProduc
       return {
         ...state,
         sort: state.sort === 'asc' ? 'desc' : 'asc',
+      }
+    }
+
+    case SEARCH_PRODUCT: {
+      const search = action.payload
+
+      return {
+        ...state,
+        search,
+        currentPage: 1,
       }
     }
 

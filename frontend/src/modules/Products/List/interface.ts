@@ -10,5 +10,6 @@ export interface IProductsState {
     min?: number
     max?: number
   }
+  search?: string
   categoryId?: number
 }

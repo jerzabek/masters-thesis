@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react'
+import { createContext, useContext, useReducer } from 'react'
 
 import { Product } from 'model/Product'
 
@@ -25,7 +25,7 @@ export const ProductsProvider = ({
 }
 
 export const useProductsState = () => {
-  const context = React.useContext(ProductsContext)
+  const context = useContext(ProductsContext)
 
   if (!context) {
     throw new Error('useProducts must be used within a ProductsProvider')
@@ -35,7 +35,7 @@ export const useProductsState = () => {
 }
 
 export const useProductsDispatch = () => {
-  const context = React.useContext(ProductsContext)
+  const context = useContext(ProductsContext)
 
   if (!context) {
     throw new Error('useProducts must be used within a ProductsProvider')

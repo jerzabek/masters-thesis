@@ -95,8 +95,8 @@ export default function ProductPage({ product }: Props) {
 
   return (
     <>
-      <Flex h="70px" bg={breadcrumbBarBg} align="center">
-        <Container maxW="container.xl" py={16}>
+      <Flex h="70px" bg={breadcrumbBarBg} align="center" overflowX="scroll" whiteSpace="nowrap">
+        <Container maxW="container.xl" px={4} w="fit-content">
           <Breadcrumb spacing="8px" separator={<ChevronRight color="gray.500" />}>
             <BreadcrumbItem>
               <BreadcrumbLink href="/">Pinehaus</BreadcrumbLink>

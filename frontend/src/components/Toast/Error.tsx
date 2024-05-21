@@ -12,6 +12,7 @@ export const useErrorToast = () => {
       title?: string
       description?: string
     } = {}) => {
+      console.log('Error toast:', title, description)
       return toast({
         title,
         description,

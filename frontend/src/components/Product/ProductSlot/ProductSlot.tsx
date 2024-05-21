@@ -30,7 +30,7 @@ export default function ProductSlot({ product }: { product: Product }) {
         </Box>
 
         <Box w={285} h={130} p={4} bg={bottomBoxBg}>
-          <Box fontSize="lg" fontWeight="semibold">
+          <Box fontSize="lg" fontWeight="semibold" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">
             {product.name}
           </Box>
 

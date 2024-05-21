@@ -1,10 +1,12 @@
-import { Logout, Menu, UserAvatar } from '@carbon/icons-react'
+import { Logout, Menu, ShoppingCart, UserAvatar } from '@carbon/icons-react'
 import { Box, Button, Collapse, Flex, Text, useDisclosure } from '@chakra-ui/react'
 import { useUser } from 'hooks/authentication'
 import NextLink from 'next/link'
 import { useEffect, useRef } from 'react'
 
 import { logout } from 'api/repository'
+import { useCart } from 'components/Cart'
+import { getCartCount } from 'components/Cart/utils'
 import Link from 'components/Link'
 import { USER_AVATAR_SIZE } from 'components/Navigation/const'
 
@@ -12,6 +14,8 @@ const MobileDropdownNav = () => {
   const { isOpen, onToggle, onClose } = useDisclosure()
 
   const containerRef = useRef<HTMLDivElement>(null)
+
+  const { cart } = useCart()
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -37,6 +41,8 @@ const MobileDropdownNav = () => {
 
   const { user, isAuthenticated } = useUser()
 
+  const cartCount = getCartCount(cart)
+
   return (
     <Flex direction="column" ref={containerRef}>
       <Flex align="center" py={2} px={4}>
@@ -50,7 +56,30 @@ const MobileDropdownNav = () => {
           </Flex>
         </NextLink>
 
-        <Box ml="auto" mr={1}>
+        <Flex ml="auto" mr={1} gap={2} align="center">
+          <Link mr={4} href={isAuthenticated ? `/cart` : `/login`}>
+            <Box position="relative">
+              <ShoppingCart width={24} height={24} />
+              {cartCount > 0 && (
+                <Flex
+                  justify="center"
+                  align="center"
+                  borderRadius="50%"
+                  bg="green"
+                  w="20px"
+                  h="20px"
+                  position="absolute"
+                  top="12px"
+                  left="12px"
+                >
+                  <Text color="white" fontSize={12}>
+                    {cartCount}
+                  </Text>
+                </Flex>
+              )}
+            </Box>
+          </Link>
+
           <Link href={isAuthenticated ? `/profile` : `/login`}>
             {user?.avatarUrl ? (
               <Box borderRadius="50%" border="1px solid" color="gray.800">
@@ -66,7 +95,7 @@ const MobileDropdownNav = () => {
               </Box>
             ) : null}
           </Link>
-        </Box>
+        </Flex>
 
         <Button onClick={onToggle} variant="unshield">
           <Menu width={24} height={24} />

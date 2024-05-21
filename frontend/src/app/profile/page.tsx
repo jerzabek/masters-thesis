@@ -2,7 +2,17 @@
 
 import { ChevronRight, Information } from '@carbon/icons-react'
 import { Text } from '@chakra-ui/layout'
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Container, Divider, Flex, useToast } from '@chakra-ui/react'
+import {
+  Box,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Container,
+  Divider,
+  Flex,
+  Spinner,
+  useToast,
+} from '@chakra-ui/react'
 import { FormikHelpers } from 'formik'
 import { useUser } from 'hooks/authentication'
 import Image from 'next/image'
@@ -10,7 +20,7 @@ import { redirect } from 'next/navigation'
 
 import { updateUser } from 'api/User/repository'
 import { useErrorToast, useSavingToast, useSuccessToast } from 'components/Toast'
-import { UserForm } from 'modules/Profile'
+import { PurchaseHistory, UserForm } from 'modules/Profile'
 import { UserFormValues } from 'modules/Profile/UserForm/interface'
 
 export default function ProfilePage() {
@@ -23,7 +33,11 @@ export default function ProfilePage() {
   const showErrorToast = useErrorToast()
 
   if (isUserLoading) {
-    return null
+    return (
+      <Flex justify="center" align="center">
+        <Spinner />
+      </Flex>
+    )
   }
 
   if (!isAuthenticated || !user) {
@@ -87,6 +101,10 @@ export default function ProfilePage() {
         <Divider mb={4} />
 
         <UserForm user={user} handleSubmit={handleSubmit} />
+      </Container>
+
+      <Container maxW="container.xl" pb={16}>
+        <PurchaseHistory />
       </Container>
     </>
   )

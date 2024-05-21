@@ -1,6 +1,6 @@
 'use client'
 
-import { ChevronRight, Edit, TrashCan } from '@carbon/icons-react'
+import { ChevronRight, Edit, Store, TrashCan } from '@carbon/icons-react'
 import {
   Box,
   Breadcrumb,
@@ -29,11 +29,14 @@ import { useState } from 'react'
 
 import { deleteProduct } from 'api/Product/repository'
 import { image } from 'api/routes'
+import { useCart } from 'components/Cart'
 import NumberInput from 'components/NumberInput'
 import { useErrorToast, useSavingToast, useSuccessToast } from 'components/Toast'
 import { Product } from 'model/Product'
 import { ProductAttributeType } from 'model/Product/ProductAttribute'
 import { categoryPageUrl, productEditUrl, productPageUrl } from 'utils/pages'
+
+import { areAllProductOptionsSelected } from './utils'
 
 interface Props {
   product: Product
@@ -41,10 +44,12 @@ interface Props {
 
 export default function ProductPage({ product }: Props) {
   const { user } = useUser()
+  const { addItem } = useCart()
 
   const router = useRouter()
 
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
+  const [selectedOptions, setSelectedOptions] = useState<Record<number, string | undefined>>({})
 
   const { close } = useToast()
 
@@ -75,11 +80,18 @@ export default function ProductPage({ product }: Props) {
     setDeleteModalOpen(false)
   }
 
+  const handleAddToCart = () => {
+    addItem(product.id, 1, selectedOptions)
+  }
+
   const breadcrumbBarBg = useColorModeValue('yellow.200', 'orange.700')
 
   const hasAttributesWithOptions = product.attributes.some(
     ({ attribute }) => !!attribute.options && attribute.options.length > 0
   )
+  const areAllOptionsSelected = areAllProductOptionsSelected(product, selectedOptions)
+  const isOutOfStock = product.quantity <= 0
+  const isLowStock = !isOutOfStock && product.quantity < 5
 
   return (
     <>
@@ -156,9 +168,17 @@ export default function ProductPage({ product }: Props) {
                 </Flex>
               )}
             </Flex>
-            <Text fontSize={24} opacity={0.7} mb={2}>
-              {product.price} &euro;
-            </Text>
+            <Flex align="center" justify="space-between">
+              <Text fontSize={24} opacity={0.8} mb={2}>
+                {product.price} &euro;
+              </Text>
+              <Text fontSize={14} opacity={0.8} as={Flex} align="center" gap={2}>
+                <Store width={24} height={24} /> Sold by:{' '}
+                <Text as="span" fontWeight="bold">
+                  {product.createdBy.username ?? 'Unknown'}
+                </Text>
+              </Text>
+            </Flex>
             <Divider mb={4} />
             <Box minH="140px" mb={4}>
               <Text>{product.description}</Text>
@@ -184,23 +204,60 @@ export default function ProductPage({ product }: Props) {
                         <Text opacity={0.7}>{attribute.name}</Text>
 
                         <Flex>
-                          {attributeOptions.map(option => (
-                            <Button key={option} variant="outline" size="sm" mr={4}>
-                              {option}
-                            </Button>
-                          ))}
+                          {attributeOptions.map(option => {
+                            const isSelected = selectedOptions[attribute.id] === option
+
+                            const handleSelectAttributeValue = (option: string) => () => {
+                              setSelectedOptions({
+                                ...selectedOptions,
+                                [attribute.id]: isSelected ? undefined : option,
+                              })
+                            }
+
+                            return (
+                              <Button
+                                key={option}
+                                variant={isSelected ? 'solid' : 'outline'}
+                                size="sm"
+                                mr={4}
+                                colorScheme={isSelected ? 'green' : 'gray'}
+                                onClick={handleSelectAttributeValue(option)}
+                              >
+                                {option}
+                              </Button>
+                            )
+                          })}
                         </Flex>
                       </Box>
                     )
                   })}
               </Box>
             )}
-            <Flex gap={8}>
+            <Flex gap={8} align="flex-start">
               <NumberInput inputProps={{ placeholder: 'Quantity', w: '70px' }} />
 
-              <Button variant="outline" size="lg">
-                Add to cart
-              </Button>
+              <Flex flexDirection="column" gap={2}>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={handleAddToCart}
+                  isDisabled={!areAllOptionsSelected || isOutOfStock}
+                >
+                  Add to cart
+                </Button>
+
+                {isLowStock ? (
+                  <Text fontSize={14} color="red.500">
+                    Less that 5 left in stock!
+                  </Text>
+                ) : (
+                  isOutOfStock && (
+                    <Text fontSize={14} color="red.500">
+                      Out of stock
+                    </Text>
+                  )
+                )}
+              </Flex>
             </Flex>
             <Divider my={4} />
             <Text fontSize={18} mb={4}>

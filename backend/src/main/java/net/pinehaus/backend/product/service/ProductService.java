@@ -30,14 +30,6 @@ public class ProductService {
   private final AttributeValueService attributeValueService;
   private final CategoryService categoryService;
 
-  public Optional<Product> getProductBySku(String sku) {
-    return productRepository.findBySku(sku);
-  }
-
-  public Optional<Product> getProductBySlug(String slug) {
-    return productRepository.findBySlug(slug);
-  }
-
   public Page<Product> getProductsByCategoryId(int categoryId, int page, int size,
       Sort.Direction sortOrder) {
     return productRepository.findAllByCategoryId(categoryId,
@@ -56,9 +48,6 @@ public class ProductService {
         PageRequest.of(page, size, Sort.by(sortOrder, "price")));
   }
 
-  public Page<Product> getAllProducts(int page, int size, Sort.Direction sortOrder) {
-    return productRepository.findAll(PageRequest.of(page, size, Sort.by(sortOrder, "price")));
-  }
 
   public Optional<Product> getProductById(int id) {
     return productRepository.findById(id);
@@ -116,9 +105,6 @@ public class ProductService {
     return productRepository.existsBySku(sku);
   }
 
-  public boolean existsBySlug(String slug) {
-    return productRepository.existsBySlug(slug);
-  }
 
   public boolean existsById(int id) {
     return productRepository.existsById(id);
@@ -150,5 +136,12 @@ public class ProductService {
 
   public void deleteProduct(int id) {
     productRepository.deleteById(id);
+  }
+
+  /**
+   * Get a random number of products from a category.
+   */
+  public List<Product> getRandomProductsFromCategory(Category category, int count) {
+    return productRepository.findAllByCategoryId(category.getId(), PageRequest.of(0, count)).getContent();
   }
 }

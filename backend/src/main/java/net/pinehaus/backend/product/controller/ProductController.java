@@ -5,8 +5,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import net.pinehaus.backend.category.model.Category;
+import net.pinehaus.backend.category.service.CategoryService;
 import net.pinehaus.backend.product.dto.CreateProductDTO;
 import net.pinehaus.backend.product.dto.ProductPageResponse;
 import net.pinehaus.backend.product.dto.UpdateProductDTO;
@@ -40,6 +45,8 @@ public class ProductController {
   private final static String DEFAULT_SORT = "asc";
 
   private final ProductService productService;
+  private final CategoryService categoryService;
+
 
   @GetMapping
   @Operation(summary = "Get paginated products list.",
@@ -147,6 +154,25 @@ public class ProductController {
     }
 
     productService.deleteProduct(id);
+  }
+
+  @GetMapping("/recommended")
+  @Operation(summary = "Recommended products", description = "Get recommended products list for a number of randomly selected categories.")
+  @ApiResponse(responseCode = "200")
+  @JsonView(ProductViews.Public.class)
+  public HashMap<String, List<Product>> getRecommendedProducts() {
+    List<Category> categories = categoryService.getAllCategories();
+    Collections.shuffle(categories);
+
+    Category randomCategory1 = categories.get(0);
+    Category randomCategory2 = categories.get(1);
+
+    HashMap<String, List<Product>> response = new HashMap<>();
+
+    response.put(randomCategory1.getName(), productService.getRandomProductsFromCategory(randomCategory1, 3));
+    response.put(randomCategory2.getName(), productService.getRandomProductsFromCategory(randomCategory2, 3));
+
+    return response;
   }
 
 }

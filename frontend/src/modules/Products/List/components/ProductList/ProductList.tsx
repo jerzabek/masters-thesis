@@ -16,6 +16,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import { debounce } from 'lodash'
+import { useParams, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { getCategories } from 'api/Category/repository'
@@ -26,12 +27,14 @@ import { Category } from 'model/Category'
 import { Product } from 'model/Product'
 import { ProductsProvider, useProductsDispatch, useProductsState } from 'modules/Products/List/context'
 import { searchProducts, setCategory, setCurrentPage, setProducts } from 'modules/Products/List/reducer/actions'
+import { categoryPageUrl } from 'utils/pages'
 
 import { Filters, Sort } from './components'
 
 interface Props {
   products: Product[]
   totalPages: number
+  categoryId?: number
 }
 
 function ProductList() {
@@ -43,6 +46,10 @@ function ProductList() {
 
   const { products, currentPage, totalPages, size, sort, filters, search, categoryId } = useProductsState()
   const dispatch = useProductsDispatch()
+
+  const { push } = useRouter()
+
+  const params = useParams<{ id: string; slug: string }>()
 
   const { isOpen: areFiltersOpen, onOpen: openFilters, onClose: onFiltersClose } = useDisclosure()
 
@@ -70,6 +77,16 @@ function ProductList() {
   useEffect(() => {
     getCategories().then(setCategories).catch(console.error)
   }, [])
+
+  useEffect(() => {
+    if (typeof categoryId === 'undefined' || typeof categories === 'undefined') return
+    if (!Number(params.id)) return
+    if (categoryId === Number(params.id)) return
+
+    const categoryName = categories?.find(category => category.id === categoryId)?.name ?? 'category'
+
+    push(categoryPageUrl(categoryId, categoryName))
+  }, [categoryId, params.id, categories])
 
   const handlePageChange = (page: number) => dispatch(setCurrentPage(page))
   const handleSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,7 +125,7 @@ function ProductList() {
               <Sort />
             </Flex>
 
-            <Flex gap={4}>
+            <Flex gap={4} flexDirection={['column', 'column', 'row']}>
               <Select
                 placeholder="Select category"
                 value={categoryId}

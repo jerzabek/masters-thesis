@@ -50,6 +50,7 @@ export default function ProductPage({ product }: Props) {
 
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState<Record<number, string | undefined>>({})
+  const [quantity, setQuantity] = useState(1)
 
   const { close } = useToast()
 
@@ -76,13 +77,11 @@ export default function ProductPage({ product }: Props) {
       })
   }
 
-  const handleDeleteCancel = () => {
-    setDeleteModalOpen(false)
-  }
+  const handleDeleteCancel = () => setDeleteModalOpen(false)
 
-  const handleAddToCart = () => {
-    addItem(product.id, 1, selectedOptions)
-  }
+  const handleAddToCart = () => addItem(product.id, quantity, selectedOptions)
+
+  const handleQuantityChange = (_str: string, num: number) => setQuantity(num)
 
   const breadcrumbBarBg = useColorModeValue('yellow.200', 'orange.700')
 
@@ -95,7 +94,7 @@ export default function ProductPage({ product }: Props) {
 
   return (
     <>
-      <Flex h="70px" bg={breadcrumbBarBg} align="center" overflowX="scroll" whiteSpace="nowrap">
+      <Flex h="70px" bg={breadcrumbBarBg} align="center" overflowX="auto" whiteSpace="nowrap">
         <Container maxW="container.xl" px={4} w="fit-content">
           <Breadcrumb spacing="8px" separator={<ChevronRight color="gray.500" />}>
             <BreadcrumbItem>
@@ -234,7 +233,10 @@ export default function ProductPage({ product }: Props) {
               </Box>
             )}
             <Flex gap={8} align="flex-start">
-              <NumberInput inputProps={{ placeholder: 'Quantity', w: '70px' }} />
+              <NumberInput
+                inputProps={{ placeholder: 'Quantity', w: '70px' }}
+                numberInputProps={{ value: quantity, onChange: handleQuantityChange }}
+              />
 
               <Flex flexDirection="column" gap={2}>
                 <Button

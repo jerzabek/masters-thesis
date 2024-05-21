@@ -10,25 +10,31 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Select,
   Text,
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react'
 import { debounce } from 'lodash'
+import { useParams, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import { getCategories } from 'api/Category/repository'
 import { getProducts } from 'api/Product/repository'
 import Pagination from 'components/Pagination'
 import { ProductSlot } from 'components/Product'
+import { Category } from 'model/Category'
 import { Product } from 'model/Product'
 import { ProductsProvider, useProductsDispatch, useProductsState } from 'modules/Products/List/context'
-import { searchProducts, setCurrentPage, setProducts } from 'modules/Products/List/reducer/actions'
+import { searchProducts, setCategory, setCurrentPage, setProducts } from 'modules/Products/List/reducer/actions'
+import { categoryPageUrl } from 'utils/pages'
 
 import { Filters, Sort } from './components'
 
 interface Props {
   products: Product[]
   totalPages: number
+  categoryId?: number
 }
 
 function ProductList() {
@@ -36,9 +42,14 @@ function ProductList() {
 
   const [isLoading, setIsLoading] = useState(false)
   const [searchQuery, setSearchQuery] = useState<string | undefined>('')
+  const [categories, setCategories] = useState<Category[]>()
 
-  const { products, currentPage, totalPages, size, sort, filters, search } = useProductsState()
+  const { products, currentPage, totalPages, size, sort, filters, search, categoryId } = useProductsState()
   const dispatch = useProductsDispatch()
+
+  const { push } = useRouter()
+
+  const params = useParams<{ id: string; slug: string }>()
 
   const { isOpen: areFiltersOpen, onOpen: openFilters, onClose: onFiltersClose } = useDisclosure()
 
@@ -57,11 +68,25 @@ function ProductList() {
 
     setIsLoading(true)
 
-    getProducts({ page: currentPage - 1, size, sort, min: filters.min, max: filters.max, search })
+    getProducts({ page: currentPage - 1, size, sort, min: filters.min, max: filters.max, search, categoryId })
       .then(({ products, totalPages }) => dispatch(setProducts(products, totalPages)))
       .catch(console.error)
       .finally(() => setIsLoading(false))
-  }, [dispatch, currentPage, size, sort, filters, search])
+  }, [dispatch, currentPage, size, sort, filters, search, categoryId])
+
+  useEffect(() => {
+    getCategories().then(setCategories).catch(console.error)
+  }, [])
+
+  useEffect(() => {
+    if (typeof categoryId === 'undefined' || typeof categories === 'undefined') return
+    if (!Number(params.id)) return
+    if (categoryId === Number(params.id)) return
+
+    const categoryName = categories?.find(category => category.id === categoryId)?.name ?? 'category'
+
+    push(categoryPageUrl(categoryId, categoryName))
+  }, [categoryId, params.id, categories])
 
   const handlePageChange = (page: number) => dispatch(setCurrentPage(page))
   const handleSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +100,11 @@ function ProductList() {
 
     setSearchQuery(undefined)
     dispatch(searchProducts(undefined))
+  }
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const _categoryId = e.target.value ? Number(e.target.value) : undefined
+
+    dispatch(setCategory(_categoryId))
   }
 
   return (
@@ -95,7 +125,22 @@ function ProductList() {
               <Sort />
             </Flex>
 
-            <Box>
+            <Flex gap={4} flexDirection={['column', 'column', 'row']}>
+              <Select
+                placeholder="Select category"
+                value={categoryId}
+                onChange={handleCategoryChange}
+                name="categoryId"
+                variant="filled"
+              >
+                {!!categories?.length &&
+                  categories.map(category => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+              </Select>
+
               <InputGroup size="md">
                 <Input
                   pr="4.5rem"
@@ -110,7 +155,7 @@ function ProductList() {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-            </Box>
+            </Flex>
           </Flex>
         </Container>
       </Flex>

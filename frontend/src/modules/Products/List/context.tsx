@@ -14,12 +14,24 @@ interface IProductsContext {
 
 const ProductsContext = createContext<IProductsContext>({} as IProductsContext)
 
+interface ProviderProps {
+  products: Product[]
+  totalPages: number
+  categoryId?: number
+}
+
 export const ProductsProvider = ({
   children,
   products,
   totalPages,
-}: React.PropsWithChildren<{ products: Product[]; totalPages: number }>) => {
-  const [state, dispatch] = useReducer(reducer, { ...INITIAL_PRODUCTS_STATE, products, totalPages } as IProductsState)
+  categoryId,
+}: React.PropsWithChildren<ProviderProps>) => {
+  const [state, dispatch] = useReducer(reducer, {
+    ...INITIAL_PRODUCTS_STATE,
+    products,
+    totalPages,
+    categoryId,
+  } as IProductsState)
 
   return <ProductsContext.Provider value={{ state, dispatch }}>{children}</ProductsContext.Provider>
 }

@@ -19,9 +19,12 @@ export type ToggleSortAction = Action<'TOGGLE_SORT', undefined>
 
 export type SearchProductAction = Action<'SEARCH_PRODUCT', string | undefined>
 
+export type SetCategoryAction = Action<'SET_CATEGORY', number | undefined>
+
 export type ProductsActions =
   | SetProductsAction
   | SetCurrentPageAction
   | SetFiltersAction
   | ToggleSortAction
   | SearchProductAction
+  | SetCategoryAction

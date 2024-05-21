@@ -8,6 +8,7 @@ export interface ProductListFilters {
   categoryId?: number
   min?: number
   max?: number
+  search?: string
 }
 
 export interface ProductListResponse {

@@ -3292,6 +3292,7 @@ __metadata:
     "@chakra-ui/react": "npm:^2.8.2"
     "@emotion/react": "npm:^11"
     "@emotion/styled": "npm:^11"
+    "@types/lodash": "npm:^4"
     "@types/node": "npm:20.4.8"
     "@types/react": "npm:18.2.18"
     "@types/react-dom": "npm:18.2.7"
@@ -3305,6 +3306,7 @@ __metadata:
     file-system-access: "npm:^1.0.4"
     formik: "npm:^2.4.5"
     framer-motion: "npm:^6"
+    lodash: "npm:^4.17.21"
     next: "npm:14.1.0"
     prettier: "npm:^3.0.1"
     react: "npm:18.2.0"
@@ -3410,6 +3412,13 @@ __metadata:
   version: 4.14.202
   resolution: "@types/lodash@npm:4.14.202"
   checksum: 10/1bb9760a5b1dda120132c4b987330d67979c95dbc22612678682cd61b00302e190f4207228f3728580059cdab5582362262e3819aea59960c1017bd2b9fb26f6
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:^4":
+  version: 4.17.4
+  resolution: "@types/lodash@npm:4.17.4"
+  checksum: 10/3ec19f9fc48200006e71733e08bcb1478b0398673657fcfb21a8643d41a80bcce09a01000077c3b23a3c6d86b9b314abe0672a8fdfc0fd66b893bd41955cfab8
   languageName: node
   linkType: hard
 

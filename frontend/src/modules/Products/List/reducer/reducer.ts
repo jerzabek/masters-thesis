@@ -7,6 +7,7 @@ export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 export const SET_FILTERS = 'SET_FILTERS'
 export const TOGGLE_SORT = 'TOGGLE_SORT'
 export const SEARCH_PRODUCT = 'SEARCH_PRODUCT'
+export const SET_CATEGORY = 'SET_CATEGORY'
 
 export const reducer = (state: IProductsState, action: ProductsActions): IProductsState => {
   switch (action.type) {
@@ -52,6 +53,17 @@ export const reducer = (state: IProductsState, action: ProductsActions): IProduc
       return {
         ...state,
         search,
+        currentPage: 1,
+      }
+    }
+
+    case SET_CATEGORY: {
+      const categoryId = action.payload
+
+      return {
+        ...state,
+        categoryId,
+        search: undefined,
         currentPage: 1,
       }
     }

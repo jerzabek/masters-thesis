@@ -6,6 +6,8 @@ Directory structure:
 - 🌐 `frontend/` - NextJS frontend application
 - 🖥️ `backend/` - Spring Boot backend application
 
+.
+
 ## Prepare environment
 
 Copy the environment file and fill it with the necessary data.

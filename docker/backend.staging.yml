@@ -3,7 +3,6 @@ version: "3.9"
 services:
   pinehaus-backend-staging:
     image: pinehaus-backend-staging:1.0.0
-    container_name: pinehaus-backend-staging
     build:
       context: ../backend
       dockerfile: Dockerfile
@@ -19,8 +18,9 @@ services:
       IMAGE_PATH: /pinehaus/images
     depends_on:
       - pinehaus-database-staging
+    restart: always
     ports:
-      - "5501:8080"
+      - 8080
     volumes:
       - ${IMAGE_PATH}:/pinehaus/images
 
@@ -34,3 +34,18 @@ services:
       POSTGRES_PASSWORD: ${PINEHAUS_DB_PASSWORD}
     ports:
       - "5502:5432"
+    volumes:
+      - postgres_data_staging:/var/lib/postgresql/data
+
+  pinehaus-backend-staging-proxy:
+    image: nginx:latest
+    volumes:
+      - ../nginx/nginx.staging.conf:/etc/nginx/nginx.conf
+    ports:
+      - "5501:80"
+    restart: always
+    depends_on:
+      - pinehaus-backend-staging
+
+volumes:
+  postgres_data_staging:

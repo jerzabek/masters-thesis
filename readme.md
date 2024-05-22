@@ -5,6 +5,7 @@ Directory structure:
 - ☁️ `docker/` - Docker services definitions
 - 🌐 `frontend/` - NextJS frontend application
 - 🖥️ `backend/` - Spring Boot backend application
+- 🚪 `nginx/` - NGINX configuration for backend proxy layer
 
 ## Prepare environment
 

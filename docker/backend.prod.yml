@@ -40,7 +40,7 @@ services:
     volumes:
       - ../nginx/nginx.prod.conf:/etc/nginx/nginx.conf
     ports:
-      - "4501:80"
+      - "80:4501"
     restart: always
     depends_on:
       - pinehaus-backend

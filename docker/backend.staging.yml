@@ -40,7 +40,7 @@ services:
     volumes:
       - ../nginx/nginx.staging.conf:/etc/nginx/nginx.conf
     ports:
-      - "5501:80"
+      - "80:5501"
     restart: always
     depends_on:
       - pinehaus-backend-staging

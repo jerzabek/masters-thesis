@@ -10,10 +10,3 @@ services:
     restart: always
     ports:
       - "5500:3000"
-    networks:
-      - pinehaus_network
-
-networks:
-  pinehaus_network:
-    driver: bridge
-    external: true

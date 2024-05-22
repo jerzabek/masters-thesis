@@ -3,7 +3,6 @@ version: "3.9"
 services:
   pinehaus-backend:
     image: pinehaus-backend:1.0.0
-    container_name: pinehaus-backend
     build:
       context: ../backend
       dockerfile: Dockerfile

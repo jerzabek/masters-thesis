@@ -19,8 +19,9 @@ services:
       IMAGE_PATH: /pinehaus/images
     depends_on:
       - pinehaus-database
+    restart: always
     ports:
-      - "4501:8080"
+      - 8080
     volumes:
       - ${IMAGE_PATH}:/pinehaus/images
 
@@ -34,3 +35,13 @@ services:
       POSTGRES_PASSWORD: ${PINEHAUS_DB_PASSWORD}
     ports:
       - "4502:5432"
+
+  pinehaus-backend-proxy:
+    image: nginx:latest
+    volumes:
+      - ../nginx/nginx.prod.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:4501"
+    restart: always
+    depends_on:
+      - pinehaus-backend

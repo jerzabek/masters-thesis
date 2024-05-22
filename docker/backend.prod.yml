@@ -21,6 +21,8 @@ services:
     restart: always
     ports:
       - 8080
+    networks:
+      - pinehaus_network
     volumes:
       - ${IMAGE_PATH}:/pinehaus/images
 
@@ -34,6 +36,8 @@ services:
       POSTGRES_PASSWORD: ${PINEHAUS_DB_PASSWORD}
     ports:
       - "4502:5432"
+    networks:
+      - pinehaus_network
 
   pinehaus-backend-proxy:
     image: nginx:latest
@@ -41,6 +45,12 @@ services:
       - ../nginx/nginx.prod.conf:/etc/nginx/nginx.conf
     ports:
       - "4501:80"
+    networks:
+      - pinehaus_network
     restart: always
     depends_on:
       - pinehaus-backend
+
+networks:
+  pinehaus_network:
+    driver: bridge

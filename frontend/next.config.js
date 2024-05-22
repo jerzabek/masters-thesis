@@ -18,7 +18,7 @@ const nextConfig = {
   },
   experimental: {
     serverActions: {
-      allowedOrigins: ['*.pinehaus.net', 'localhost:3000', 'localhost:8080'],
+      allowedOrigins: ['pinehaus.net', '*.pinehaus.net', 'localhost:3000', 'localhost:8080'],
     },
   },
 }

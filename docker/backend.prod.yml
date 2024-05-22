@@ -34,6 +34,8 @@ services:
       POSTGRES_PASSWORD: ${PINEHAUS_DB_PASSWORD}
     ports:
       - "4502:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   pinehaus-backend-proxy:
     image: nginx:latest
@@ -44,3 +46,6 @@ services:
     restart: always
     depends_on:
       - pinehaus-backend
+
+volumes:
+  postgres_data:

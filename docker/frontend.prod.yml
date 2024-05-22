@@ -16,3 +16,4 @@ services:
 networks:
   pinehaus_network:
     driver: bridge
+    external: true

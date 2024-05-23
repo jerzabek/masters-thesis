@@ -6,6 +6,7 @@ Directory structure:
 - 🌐 `frontend/` - NextJS frontend application
 - 🖥️ `backend/` - Spring Boot backend application
 - 🚪 `nginx/` - NGINX configuration for backend proxy layer
+- 📦 `scripts/` - Utility scripts for building and running containers
 
 ## Prepare environment
 

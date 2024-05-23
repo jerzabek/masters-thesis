@@ -15,22 +15,33 @@ Copy the environment file and fill it with the necessary data.
 cp .env.example .env
 ```
 
-## Build
+## Scripts
+
+There exist utility scripts whcih handle docker commands for building and running containers.
+
+Prerequisite: Make the scripts executable.
 
 ```bash
-docker compose -f docker/backend.staging.yml build
+chmod u+x scripts/backend.sh
+chmod u+x scripts/frontend.sh
+```
+
+### Build and run
+
+```bash
+./scripts/backend.sh build
 ```
 
 ```bash
-docker compose -f docker/frontend.staging.yml build
+./scripts/frontend.sh build
 ```
 
-## Run
+### Run
 
 ```bash
-docker compose -f docker/backend.staging.yml --env-file .env up
+./scripts/backend.sh
 ```
 
 ```bash
-docker compose -f docker/frontend.staging.yml up
+./scripts/frontend.sh
 ```

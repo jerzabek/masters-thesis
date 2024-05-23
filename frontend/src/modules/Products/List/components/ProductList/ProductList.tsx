@@ -80,7 +80,6 @@ function ProductList() {
 
   useEffect(() => {
     if (typeof categoryId === 'undefined' || typeof categories === 'undefined') return
-    if (!Number(params.id)) return
     if (categoryId === Number(params.id)) return
 
     const categoryName = categories?.find(category => category.id === categoryId)?.name ?? 'category'

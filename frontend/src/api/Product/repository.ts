@@ -5,7 +5,8 @@ import { PRODUCT_FETCH_TAG } from './const'
 import * as I from './interface'
 import * as R from './routes'
 
-export const getProducts = (query: I.ProductListFilters) => getJson<I.ProductListResponse>(R.getProductList(query))
+export const getProducts = (query: I.ProductListFilters) =>
+  getJson<I.ProductListResponse>(R.getProductList(query), { next: { tags: [PRODUCT_FETCH_TAG] } })
 
 export const getProduct = (id: number) =>
   getJson<I.GetProductResponse>(R.getProduct(id), { next: { tags: [PRODUCT_FETCH_TAG] } })

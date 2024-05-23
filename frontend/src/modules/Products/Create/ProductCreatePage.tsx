@@ -1,6 +1,7 @@
 'use client'
 
 import { Container, Flex, Spinner, useToast } from '@chakra-ui/react'
+import { RevalidateProductAction, RevalidateProductListAction } from 'actions'
 import { FormikHelpers } from 'formik'
 import { useUser } from 'hooks/authentication'
 import { redirect, useRouter } from 'next/navigation'
@@ -10,7 +11,6 @@ import { createProduct } from 'api/Product/repository'
 import { image as imageUrl } from 'api/routes'
 import { ProductForm, ProductFormValues } from 'components/Product'
 import { useErrorToast, useSavingToast, useSuccessToast } from 'components/Toast'
-import { productPageUrl } from 'utils/pages'
 
 export default function ProductCreatePage() {
   const { isUserLoading, isAuthenticated, user } = useUser()
@@ -34,10 +34,16 @@ export default function ProductCreatePage() {
 
     uploadThumbnail
       .then(thumbnail => createProduct({ ...values, thumbnail }))
-      .then(product => {
+      .then()
+      .then(_product => {
+        RevalidateProductListAction().catch(console.error)
+
+        return RevalidateProductAction(_product.id, _product.slug)
+      })
+      .then(url => {
         showSuccessToast()
 
-        push(productPageUrl(product.id, product.slug))
+        push(url)
       })
       .catch(e => {
         console.error(e)

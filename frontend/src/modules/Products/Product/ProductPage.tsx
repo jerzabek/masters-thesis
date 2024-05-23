@@ -21,6 +21,7 @@ import {
   useColorModeValue,
   useToast,
 } from '@chakra-ui/react'
+import { RevalidateProductAction, RevalidateProductListAction } from 'actions'
 import { useUser } from 'hooks/authentication'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -64,9 +65,11 @@ export default function ProductPage({ product }: Props) {
     const toastId = showSavingToast('Deleting...')
 
     deleteProduct(product.id)
-      .then(() => {
+      .then(() => RevalidateProductAction(product.id, product.slug))
+      .then(RevalidateProductListAction)
+      .then(url => {
         showSuccessToast('Product deleted!')
-        router.push('/products')
+        router.push(url)
       })
       .catch(() => {
         showErrorToast()

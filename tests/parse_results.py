@@ -27,20 +27,17 @@ def plot_errors_per_interval(data):
 
 
 def plot_avg_latency_per_second(data):
+    # Pronađi najmanji timeStamp kao početak vremena
     start_time = data['timeStamp'].min()
 
+    # Pretvori timeStamp u sekunde od početka
     data['timeStamp_seconds'] = (data['timeStamp'] - start_time) / 1000
 
-    try:
-        data['Latency'] = pd.to_numeric(data['Latency'])
-    except ValueError as e:
-        print(f"Greška pri pretvorbi: {e}")
+    # Grupiranje po sekundama i izračun prosjeka latencije po sekundi
+    avg_latency_per_second = data.groupby(data['timeStamp_seconds'].astype(int))[
+        'Latency'].mean().fillna(0)
 
-    data = data.dropna(subset=['Latency'])
-
-    avg_latency_per_second = data.groupby(
-        'timeStamp_seconds')['Latency'].mean()
-
+    # Priprema podataka za graf
     seconds = avg_latency_per_second.index
     latency_values = avg_latency_per_second.values
 

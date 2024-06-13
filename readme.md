@@ -7,6 +7,7 @@ Directory structure:
 - 🖥️ `backend/` - Spring Boot backend application
 - 🚪 `nginx/` - NGINX configuration for backend proxy layer
 - 📦 `scripts/` - Utility scripts for building and running containers
+- 📊 `tests/` - Performance testing scripts using JMeter
 
 ## Prepare environment
 

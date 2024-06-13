@@ -7,7 +7,7 @@ Directory structure:
 
 - ➗ `results/` - CSV files containing JMeter test results
 - 📊 `figures/` - graphs generated using the python script
-- 📦 `scripts/` - utility scripts for generating graphs
+- 📦 `scripts/` - Scripts for generating graphs and running the test
 
 ## Generate graphs
 
